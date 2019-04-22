@@ -6,6 +6,13 @@ import Login from "./container/LoginContainer";
 import Home from "./container/HomeContainer";
 import BlankPage from "./container/BlankPageContainer";
 import Sidebar from "./container/SidebarContainer";
+import Search from "./stories/screens/Search";
+import ListOfDepartments from "./stories/screens/ListOfDepartments";
+import ListOfMakets from "./stories/screens/ListOfMakets";
+//import SearchOfDepartments from "./stories/screens/SearchDepartments";
+
+
+
 import SQLite from "react-native-sqlite-storage";
 
  const errorCB = (err)=> {
@@ -33,25 +40,32 @@ console.log(res, "query complete");
 });
 	});
 
-const Drawer = DrawerNavigator(
-	{
-		Home: { screen: Home },
-	},
-	{
-		initialRouteName: "Home",
-		contentComponent: props => <Sidebar {...props} />,
-	}
-);
 
+	const Drawer = DrawerNavigator(
+		{
+			Home: { screen: Home },
+		},
+		{
+			initialRouteName: "Home",
+			contentComponent: props => <Sidebar {...props} />,
+		}
+	);
 const App = StackNavigator(
 	{
 		Login: { screen: Login },
 		BlankPage: { screen: BlankPage },
-		Drawer: { screen: Drawer },
+		Home: { screen: Home },
+		Search: { screen: Search },
+		//ListOfDepartments: { screen: ListOfDepartments},
+		ListOfMakets: { screen: ListOfMakets },
+		//SearchOfDepartments: { screen: SearchOfDepartments }
+				Drawer: { screen: Drawer }
+
+
 	},
 	{
 		initialRouteName: "Login",
-		headerMode: "none",
+		headerMode: "none"
 	}
 );
 

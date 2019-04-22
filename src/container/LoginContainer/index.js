@@ -30,7 +30,7 @@ class LoginForm extends React.Component<Props, State> {
   renderInput({ input, label, type, meta: { touched, error, warning } }) {
     return (
       <Item error={error && touched}>
-        <Icon active name={input.name === "email" ? "person" : "unlock"} />
+        <Icon active name={input.name === "login" ? "person" : "unlock"} />
         <Input
           ref={c => (this.textInput = c)}
           placeholder={input.name === "login" ? "login" : "Password"}

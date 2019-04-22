@@ -1,17 +1,20 @@
 import * as React from "react";
-import { Container, Header, Title, Content, Text, Button, Icon, Left, Right, Body, Footer, Form, Item, Label,Input } from "native-base";
+import { Container, Header, Title, Content, Text, Button, Icon, Left, Right, Body, Footer, Form, Item, Label,Input, Tab, Tabs, View } from "native-base";
 
 import styles from "./styles";
 export interface Props {
 	navigation: any;
 }
+
+
+
 export interface State {}
 class BlankPage extends React.Component<Props, State> {
 	render() {
 		const param = this.props.navigation.state.params;
 		return (
 			<Container style={styles.container}>
-				<Header>
+				<Header hasTabs>
 					<Left>
 						<Button transparent onPress={() => this.props.navigation.goBack()}>
 							<Icon name="ios-arrow-back" />
@@ -24,9 +27,17 @@ class BlankPage extends React.Component<Props, State> {
 
 					<Right />
 				</Header>
-
-				<Content padder>
-				<Form>
+				<Tabs>
+          <Tab heading="Tab1" >
+		  <Form>
+            <Item floatingLabel>
+              <Label>Username</Label>
+              <Input />
+            </Item>
+          </Form>
+		  </Tab>
+          <Tab heading="Tab2" >
+		  <Form>
             <Item floatingLabel>
               <Label>Username</Label>
               <Input />
@@ -36,7 +47,10 @@ class BlankPage extends React.Component<Props, State> {
               <Input />
             </Item>
           </Form>
-				</Content>
+
+		  </Tab>
+        </Tabs>
+				<Content padder />
 				<Footer >
 					<Content>
 					<Button full block primary>
