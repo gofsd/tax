@@ -39,7 +39,7 @@
     "lodash": "4.17.4",
     "native-base": "2.3.5",
     "react": "16.2.0",
-    "react-native": "0.51.0",
+    "react-native": "0.55.4",
     "react-native-action-button": "^2.8.5",
     "react-native-modal-picker": "0.0.16",
     "react-native-modal-selector": "^1.0.3",
