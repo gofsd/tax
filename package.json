@@ -49,6 +49,7 @@
     "react-navigation": "1.0.0-beta.21",
     "react-navigation-redux-helpers": "^3.0.2",
     "react-redux": "5.0.6",
+    "realm": "^2.26.1",
     "redux": "3.7.2",
     "redux-devtools-extension": "^2.13.5",
     "redux-form": "7.2.0",
