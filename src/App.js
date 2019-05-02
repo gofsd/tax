@@ -7,10 +7,7 @@ import Home from "./container/HomeContainer";
 import BlankPage from "./container/BlankPageContainer";
 import Sidebar from "./container/SidebarContainer";
 import Search from "./stories/screens/Search";
-import ListOfDepartments from "./stories/screens/ListOfDepartments";
 import ListOfMakets from "./stories/screens/ListOfMakets";
-import Realm from "realm";
-//import SearchOfDepartments from "./stories/screens/SearchDepartments";
 
 
 
@@ -23,7 +20,7 @@ import Realm from "realm";
 			contentComponent: props => <Sidebar {...props} />,
 		}
 	);
-const App = StackNavigator(
+const getStackNavigator = (defaultScreen) => StackNavigator(
 	{
 		Login: { screen: Login },
 		BlankPage: { screen: BlankPage },
@@ -32,18 +29,21 @@ const App = StackNavigator(
 		//ListOfDepartments: { screen: ListOfDepartments},
 		ListOfMakets: { screen: ListOfMakets },
 		//SearchOfDepartments: { screen: SearchOfDepartments }
-				Drawer: { screen: Drawer }
+				Drawer: { screen: Drawer },
 
 
 	},
 	{
-		initialRouteName: "Login",
+		initialRouteName: defaultScreen ? defaultScreen : "ListOfMakets",
 		headerMode: "none"
 	}
 );
 
-export default () => (
+export default (props) =>{
+	const App = getStackNavigator(props.defaultScreen);
+	return (
 	<Root>
 		<App />
 	</Root>
-);
+	);
+};

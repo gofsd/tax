@@ -1,6 +1,6 @@
-import connect from "./connect";
+//import connect from "./connect";
 import migration from "./migration";
-import addInterface from "./dml";
+//import addInterface from "./dml";
 const prepareDb = async () => {
     const db = await connect;
     await migration(db);
@@ -10,6 +10,6 @@ const prepareDb = async () => {
     return db;
 
 };
-const db = prepareDb();
-
+//const db = prepareDb();
+const db = {}
 export default db;

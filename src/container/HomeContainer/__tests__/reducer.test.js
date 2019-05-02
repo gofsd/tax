@@ -1,4 +1,4 @@
-import reducer from "../reducer";
+import reducer from "../../../reducers/homeContainer";
 
 describe("list reducer", () => {
 	it("should return the initial state", () => {

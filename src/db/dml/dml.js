@@ -4,7 +4,7 @@ export const select = (params) => {
     const { tableName, ...selected } = params;
     let select = "*";
     if (!isEmptyObj(selected)) {
-
+        
     }
 
     return `select ${select} from ${tableName}`;

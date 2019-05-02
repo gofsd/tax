@@ -3,15 +3,12 @@ import { StyleProvider } from "native-base";
 import { Provider } from "react-redux";
 
 import configureStore from "./configureStore";
-import App from "../App";
+import Main from "../container/Main";
 import getTheme from "../theme/components";
 import variables from "../theme/variables/platform";
-export interface Props {}
-export interface State {
-  store: Object;
-  isLoading: boolean;
-}
-export default class Setup extends React.Component<Props, State> {
+
+
+export default class Setup extends React.Component{
   constructor() {
     super();
     this.state = {
@@ -24,7 +21,7 @@ export default class Setup extends React.Component<Props, State> {
     return (
       <StyleProvider style={getTheme(variables)}>
         <Provider store={this.state.store}>
-          <App />
+          <Main />
         </Provider>
       </StyleProvider>
     );

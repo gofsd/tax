@@ -17,7 +17,9 @@ import {
   Form,
   Picker,
   Label,
-  Input
+  Input,
+  Footer,
+  FooterTab,
 } from "native-base";
 import ModalSelector from "react-native-modal-selector";
 import ActionButton from "react-native-action-button";
@@ -31,10 +33,92 @@ export interface Props {
 export interface State {}
 
 
+import SectionedMultiSelect from 'react-native-sectioned-multi-select';
+
+// This is how you can load a local icon
+// You can remove this if you'd like
+
+const items = [
+  {
+    name: 'Fruits',
+    id: 0,
+    children: [
+      {
+        name: 'Apple',
+        id: 10,
+      },
+      {
+        name: 'Strawberry',
+        id: 17,
+      },
+      {
+        name: 'Pineapple',
+        id: 13,
+      },
+      {
+        name: 'Banana',
+        id: 14,
+      },
+      {
+        name: 'Watermelon',
+        id: 15,
+      },
+      {
+        name: 'Kiwi fruit',
+        id: 16,
+      },
+    ],
+  },
+  {
+    name: 'Gems',
+    id: 1,
+    icon: { uri: 'https://cdn4.iconfinder.com/data/icons/free-crystal-icons/512/Gemstone.png' }, // web uri
+    children: [
+      {
+        name: 'Quartz',
+        id: 20,
+      },
+      {
+        name: 'Zircon',
+        id: 21,
+      },
+      {
+        name: 'Sapphire',
+        id: 22,
+      },
+      {
+        name: 'Topaz',
+        id: 23,
+      },
+    ],
+  },
+  {
+    name: 'Plants',
+    id: 2,
+    icon: 'filter_vintage', // material icons icon name
+    children: [
+      {
+        name: "Mother In Law's Tongue",
+        id: 30,
+      },
+      {
+        name: 'Yucca',
+        id: 31,
+      },
+      {
+        name: 'Monsteria',
+        id: 32,
+      },
+      {
+        name: 'Palm',
+        id: 33,
+      },
+    ],
+  },
+];
 
 
-
-class Home extends React.Component<Props, State> {
+class ListOfMakets extends React.Component<Props, State> {
   onValueChange = (value: string) => {
     this.setState({
       selected: value
@@ -42,8 +126,13 @@ class Home extends React.Component<Props, State> {
   };
       state = {
       selected: "key1",
-                  textInputValue: ""
+                  textInputValue: "",
+                        selectedItems: [],
+
     }
+  onSelectedItemsChange = (selectedItems) => {
+    this.setState({ selectedItems });
+  };
   render() {
             let index = 0;
         const data = [
@@ -89,7 +178,18 @@ class Home extends React.Component<Props, State> {
         <Content>
         <Form>
           <Body>
-              <View>
+              <View style={{width: 1000, height: 1000}}>
+                        <SectionedMultiSelect
+          items={items}
+          uniqueKey="id"
+          subKey="children"
+          iconKey="icon"
+          selectText="Choose some things..."
+          showDropDowns={true}
+          readOnlyHeadings={true}
+          onSelectedItemsChange={this.onSelectedItemsChange}
+          selectedItems={this.state.selectedItems}
+        />
 
                 <ModalSelector
                     data={data}
@@ -125,25 +225,33 @@ class Home extends React.Component<Props, State> {
             </Body>
           </Form>
         </Content>
-        <ActionButton buttonColor="rgba(231,76,60,1)">
-          <ActionButton.Item buttonColor="#9b59b6" title="New Task" onPress={() => console.log("notes tapped!")}>
-            <Icon name="md-create" style={styles.actionButtonIcon} />
-          </ActionButton.Item>
-          <ActionButton.Item buttonColor="#3498db" title="Search" onPress={() =>
-                  this.props.navigation.navigate("BlankPage", {
-                    name: { text: "Some text" }
-                  })}>
-            <Icon name="md-notifications-off" style={styles.actionButtonIcon} />
-          </ActionButton.Item>
-
-        </ActionButton>
+        <Footer >
+				<FooterTab>
+            <Button vertical>
+              <Icon name="settings" />
+              <Text>Налаштування</Text>
+            </Button>
+            <Button vertical>
+              <Icon name="grid" />
+              <Text>Видалити</Text>
+            </Button>
+            <Button vertical active>
+              <Icon active name="paper" />
+              <Text>Зберегти</Text>
+            </Button>
+            <Button vertical>
+              <Icon name="add" />
+              <Text>Каталоги/Видiли</Text>
+            </Button>
+          </FooterTab>
+					</Footer>
       </Container>
     );
   }
 }
 
-Home.defaultProps = {
+ListOfMakets.defaultProps = {
   list: ["First ittem", "second item"],
 };
 
-export default Home;
+export default ListOfMakets;
