@@ -7,9 +7,10 @@ import Home from "./container/HomeContainer";
 import BlankPage from "./container/BlankPageContainer";
 import Sidebar from "./container/SidebarContainer";
 import Search from "./stories/screens/Search";
-import ListOfMakets from "./stories/screens/ListOfMakets";
-
-
+//import FilterOfForestry from "./stories/screens/FilterOfForestry";
+import FilterOfForestry from "./container/FilterForestryContainer";
+import FilterOfDepartment from "./container/FilterOfDepartment";
+import SelectDepartmentsAndMaquette from "./container/SelectDepartmentsAndMaquette";
 
 	const Drawer = DrawerNavigator(
 		{
@@ -26,15 +27,15 @@ const getStackNavigator = (defaultScreen) => StackNavigator(
 		BlankPage: { screen: BlankPage },
 		Home: { screen: Home },
 		Search: { screen: Search },
-		//ListOfDepartments: { screen: ListOfDepartments},
-		ListOfMakets: { screen: ListOfMakets },
-		//SearchOfDepartments: { screen: SearchOfDepartments }
-				Drawer: { screen: Drawer },
+		Drawer: { screen: Drawer },
+		FilterOfForestry:{ screen: FilterOfForestry },
+		FilterOfDepartment: { screen: FilterOfDepartment },
+		SelectDepartmentsAndMaquette: { screen: SelectDepartmentsAndMaquette }
 
 
 	},
 	{
-		initialRouteName: defaultScreen ? defaultScreen : "ListOfMakets",
+		initialRouteName: defaultScreen ? defaultScreen : "Login",
 		headerMode: "none"
 	}
 );

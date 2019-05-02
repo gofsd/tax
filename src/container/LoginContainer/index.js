@@ -43,7 +43,7 @@ class LoginForm extends React.Component<Props, State> {
 
   login() {
     if (this.props.valid) {
-      this.props.navigation.navigate("ListOfMakets");
+      this.props.navigation.navigate("FilterOfForestry");
     } else {
       Toast.show({
         text: "Enter Valid Username & password!",

@@ -123,9 +123,9 @@ class BlankPage extends React.Component<Props, State> {
               <Icon active name="paper" />
               <Text>Зберегти</Text>
             </Button>
-            <Button vertical>
+            <Button vertical onPress={() => this.props.navigation.navigate("SelectDepartmentsAndMaquette")}>
               <Icon name="add" />
-              <Text>Каталоги/Видiли</Text>
+              <Text>Макети/Видiли</Text>
             </Button>
           </FooterTab>
 					</Footer>
