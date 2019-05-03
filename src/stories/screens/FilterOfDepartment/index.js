@@ -128,12 +128,40 @@ class ListOfMakets extends React.Component<Props, State> {
       selected: "key1",
                   textInputValue: "",
                         selectedItems: [],
+      company: [],
+      forestery: [],
+      quartal: [],
+      department: []
 
     }
   onSelectedItemsChange = (selectedItems) => {
     this.setState({ selectedItems });
   };
+  selectFilter = (option) => {
+    let filteredArray = [];
+    console.log(option, "string from select filter", this.props);
+    if (this.props.OBLA.find(it => it.NAME == option.label))
+    {
+      if (this.state.company.id != option.id){
+        console.log(this.state, "from check id true", option.id);
+        this.setState({company: { arr: [], id: option.id}});
+      } else {
+                console.log(this.state, "from check id false", option.id);
+
+         this.setState({company: { arr:this.props.KALG.filter(it => it.OBLA == option.id).map((it, idx, arr) => ({label: it.NAME, id: idx}))}, id: option.id});
+      }
+    }
+    if (this.props.KAIG.find(it => it.NAME == option.label))
+        {this.props.KAIG.map((it, idx, arr) => ({label: it.NAME, id: idx}));}
+    if (this.props.M00.find(it => it.KAWN == option.label))
+        {this.props.M00.map((it, idx, arr) => ({label: it.KAWN, id: idx}));}
+    if (this.props.M01.find(it => it.KAVN == option.label))
+        {this.props.M01.map((it, idx, arr) => ({label: it.KAVN, id: idx}));}
+
+    return filteredArray;
+  }
   render() {
+    console.log(this.props, "props");
             let index = 0;
         const data = [
             { key: index++, label: "Red Apples" },
@@ -180,24 +208,49 @@ class ListOfMakets extends React.Component<Props, State> {
           <Body>
               <View style={{width: 1000, height: 1000}}>
 
+              <ModalSelector
+                    data={this.props.OBLA.map((it, idx, arr) => ({label: it.NAME, id: it.OBLA}))}
+                    initValue="Оберiть область"
+                    supportedOrientations={["landscape"]}
+                    accessible={true}
+                    scrollViewAccessibilityLabel={"Scrollable options"}
+                    cancelButtonAccessibilityLabel={"Cancel Button"}
+                    onChange={ this.selectFilter } />
 
                 <ModalSelector
-                    data={data}
+                    data={this.state.company.arr}
+                    initValue="Оберiть пiдприэмство"
+                    supportedOrientations={["landscape"]}
+                    accessible={true}
+                    scrollViewAccessibilityLabel={"Scrollable options"}
+                    cancelButtonAccessibilityLabel={"Cancel Button"}
+                    onChange={this.selectFilter} />
+
+                <ModalSelector
+                    data={this.state.forestery}
+                    initValue="Оберiть лiсництво"
+                    supportedOrientations={["landscape"]}
+                    accessible={true}
+                    scrollViewAccessibilityLabel={"Scrollable options"}
+                    cancelButtonAccessibilityLabel={"Cancel Button"}
+                    onChange={this.selectFilter} />
+                <ModalSelector
+                    data={this.state.quartal}
                     initValue="Оберiть квартал"
                     supportedOrientations={["landscape"]}
                     accessible={true}
                     scrollViewAccessibilityLabel={"Scrollable options"}
                     cancelButtonAccessibilityLabel={"Cancel Button"}
-                    onChange={(option)=>{ this.setState({textInputValue:option.label});}} />
+                    onChange={this.selectFilter} />
 
                 <ModalSelector
-                    data={data}
+                    data={this.state.department}
                     initValue="Оберiть видiл"
                     supportedOrientations={["landscape"]}
                     accessible={true}
                     scrollViewAccessibilityLabel={"Scrollable options"}
                     cancelButtonAccessibilityLabel={"Cancel Button"}
-                    onChange={(option)=>{ this.setState({textInputValue:option.label});}} />
+                    onChange={this.selectFilter} />
 
 
                     <Button full info onPress={() => this.props.navigation.navigate("BlankPage")}>

@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Container, Header, Title, Content, Text, Button, Icon, Left, Right, Body, Footer, Form, Item, Label,Input, Tab, Tabs, View, FooterTab } from "native-base";
+import { Picker, Container, Header, Title, Content, Text, Button, Icon, Left, Right, Body, Footer, Form, Item, Label,Input, Tab, Tabs, View, FooterTab } from "native-base";
+import ModalSelector from "react-native-modal-selector";
 
 import styles from "./styles";
 export interface Props {
@@ -10,7 +11,41 @@ export interface Props {
 
 export interface State {}
 class BlankPage extends React.Component<Props, State> {
+	state = {
+		      selected2: undefined
+	}
+	  onValueChange2(value: string) {
+    this.setState({
+      selected2: value
+    });
+	}
+
+	selectedItem = (date, lable) => {
+		return (
+			<Item style={{flexDirection: "column"}}>
+							<Text style={{fontSize: 20}}>{lable}</Text>
+              <Picker
+                mode="dropdown"
+                iosIcon={<Icon name="arrow-down" />}
+                style={{ width: 800 }}
+                placeholder="Select your SIM"
+                placeholderStyle={{ color: "#bfc6ea" }}
+                placeholderIconColor="#007aff"
+                selectedValue={this.state.selected2}
+                onValueChange={this.onValueChange2.bind(this)}
+              >
+							{date.filter(it=>{
+								return it.NAME != null;
+							}).map((it, idx, arr) =>
+							(<Picker.Item label={it.NAME} value={lable + idx}/>))}
+
+              </Picker>
+            </Item>
+);
+	}
+
 	render() {
+		console.log(this.props, "from main screen");
 		const param = this.props.navigation.state.params;
 		return (
 			<Container style={styles.container}>
@@ -35,76 +70,82 @@ class BlankPage extends React.Component<Props, State> {
 						<Tabs>
 							<Tab heading="Поточний">
 							<Form>
-
-            <Item floatingLabel>
-							<Label>Пiдприэмство</Label>
+							<Item floatingLabel>
+							<Label>Виділ</Label>
 
               <Input  />
             </Item>
             <Item floatingLabel>
-							<Label>Лiсництво</Label>
+							<Label>Підвиділ</Label>
 
               <Input  />
             </Item>
 						<Item floatingLabel>
-							<Label>Рiк теперiшнього лiсовпорядкування</Label>
+							<Label>Площа виділу (підвиділу) </Label>
 
               <Input  />
             </Item>
+								{
+									this.selectedItem(this.props.KAKZ, "Категорія земель")
+								}
+																{
+									this.selectedItem(this.props.KAKI, "Ознака земель переданих в тимчасове користування")
+								}
+ 								{
+									this.selectedItem(this.props.KAZU, "Ознака особливо захисних ділянок лісів")
+								}
+
+
             <Item floatingLabel>
-							<Label>Площа лiсництва, га</Label>
+							<Label>Рік таксації</Label>
 
               <Input  />
             </Item>
-						<Item floatingLabel>
-								<Label>Адмiнiстративна область</Label>
 
-              <Input/>
-            </Item>
           </Form>
 							</Tab>
 							<Tab heading="Попередн.">
 							<Form>
-            <Item>
-              <Input placeholder="Username" />
+							<Item floatingLabel>
+							<Label>Виділ</Label>
+
+              <Input  />
             </Item>
-            <Item last>
-              <Input placeholder="Password" />
+            <Item floatingLabel>
+							<Label>Підвиділ</Label>
+
+              <Input  />
             </Item>
+						<Item floatingLabel>
+							<Label>Площа виділу (підвиділу) </Label>
+
+              <Input  />
+            </Item>
+								{
+									this.selectedItem(this.props.KAKZ, "Категорія земель")
+								}
+								{
+									this.selectedItem(this.props.KAKI, "Ознака земель переданих в тимчасове користування")
+								}
+ 								{
+									this.selectedItem(this.props.KAZU, "Ознака особливо захисних ділянок лісів")
+								}
+
+
+            <Item floatingLabel>
+							<Label>Рік таксації</Label>
+
+              <Input  />
+            </Item>
+
           </Form>
+
 							</Tab>
 						</Tabs>
 					</Tab>
-					<Tab heading="M2" />
-					<Tab heading="M3" />
-					<Tab heading="M4" />
-					<Tab heading="M5" />
-					<Tab heading="M6" />
-					<Tab heading="M7" />
-					<Tab heading="M8" />
-					<Tab heading="M9" />
-					<Tab heading="M10" />
-					<Tab heading="M11" />
-					<Tab heading="M12" />
-					<Tab heading="M13" />
-					<Tab heading="M14" />
-					<Tab heading="M15" />
-        </Tabs>
+       </Tabs>
 					</Tab>
-					<Tab heading="2" />
-					<Tab heading="3" />
-					<Tab heading="4" />
-					<Tab heading="5" />
-					<Tab heading="6" />
-					<Tab heading="7" />
-					<Tab heading="8" />
-					<Tab heading="9" />
-					<Tab heading="10" />
-					<Tab heading="11" />
-					<Tab heading="12" />
-					<Tab heading="13" />
-					<Tab heading="14" />
-					<Tab heading="15" />
+
         </Tabs>
 
 
