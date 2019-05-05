@@ -129,7 +129,7 @@ class ListOfMakets extends React.Component<Props, State> {
                   textInputValue: "",
                         selectedItems: [],
       company: [],
-      forestery: [],
+      forestery: {},
       quartal: [],
       department: []
 
@@ -139,26 +139,11 @@ class ListOfMakets extends React.Component<Props, State> {
   };
   selectFilter = (option) => {
     let filteredArray = [];
-    console.log(option, "string from select filter", this.props);
-    if (this.props.OBLA.find(it => it.NAME == option.label))
-    {
-      if (this.state.company.id != option.id){
-        console.log(this.state, "from check id true", option.id);
-        this.setState({company: { arr: [], id: option.id}});
-      } else {
-                console.log(this.state, "from check id false", option.id);
 
-         this.setState({company: { arr:this.props.KALG.filter(it => it.OBLA == option.id).map((it, idx, arr) => ({label: it.NAME, id: idx}))}, id: option.id});
-      }
-    }
-    if (this.props.KAIG.find(it => it.NAME == option.label))
-        {this.props.KAIG.map((it, idx, arr) => ({label: it.NAME, id: idx}));}
-    if (this.props.M00.find(it => it.KAWN == option.label))
-        {this.props.M00.map((it, idx, arr) => ({label: it.KAWN, id: idx}));}
-    if (this.props.M01.find(it => it.KAVN == option.label))
-        {this.props.M01.map((it, idx, arr) => ({label: it.KAVN, id: idx}));}
 
-    return filteredArray;
+   this.setState({quartal: [].filter(it => it.KAIG === option.id).map((it, idx, arr) => ({label: it.KAWN, id: idx}))});
+
+    return this.props.KAIG.map((it, idx, arr) => ({label: it.NAME, id: idx}));
   }
   render() {
     console.log(this.props, "props");
@@ -181,53 +166,21 @@ class ListOfMakets extends React.Component<Props, State> {
     return (
       <Container style={styles.container}>
         <Header>
-          <Left>
-            <Button transparent>
-              <Icon
-                active
-                name="menu"
-                onPress={() => this.props.navigation.navigate("DrawerOpen")}
-              />
-            </Button>
-          </Left>
+
           <Body>
             <Title>Виконавець: Дмитро</Title>
           </Body>
-          <Right >
-          <Button transparent>
-              <Icon
-                active
-                name="setting"
-                onPress={() => this.props.navigation.navigate("DrawerOpen")}
-              />
-            </Button>
-          </Right>
+
         </Header>
         <Content>
         <Form>
           <Body>
               <View style={{width: 1000, height: 1000}}>
 
-              <ModalSelector
-                    data={this.props.OBLA.map((it, idx, arr) => ({label: it.NAME, id: it.OBLA}))}
-                    initValue="Оберiть область"
-                    supportedOrientations={["landscape"]}
-                    accessible={true}
-                    scrollViewAccessibilityLabel={"Scrollable options"}
-                    cancelButtonAccessibilityLabel={"Cancel Button"}
-                    onChange={ this.selectFilter } />
+
 
                 <ModalSelector
-                    data={this.state.company.arr}
-                    initValue="Оберiть пiдприэмство"
-                    supportedOrientations={["landscape"]}
-                    accessible={true}
-                    scrollViewAccessibilityLabel={"Scrollable options"}
-                    cancelButtonAccessibilityLabel={"Cancel Button"}
-                    onChange={this.selectFilter} />
-
-                <ModalSelector
-                    data={this.state.forestery}
+                    data={this.props.KAIG.map((it, idx, arr) => ({label: it.NAME, id: it.KAIG}))}
                     initValue="Оберiть лiсництво"
                     supportedOrientations={["landscape"]}
                     accessible={true}
@@ -243,14 +196,7 @@ class ListOfMakets extends React.Component<Props, State> {
                     cancelButtonAccessibilityLabel={"Cancel Button"}
                     onChange={this.selectFilter} />
 
-                <ModalSelector
-                    data={this.state.department}
-                    initValue="Оберiть видiл"
-                    supportedOrientations={["landscape"]}
-                    accessible={true}
-                    scrollViewAccessibilityLabel={"Scrollable options"}
-                    cancelButtonAccessibilityLabel={"Cancel Button"}
-                    onChange={this.selectFilter} />
+
 
 
                     <Button full info onPress={() => this.props.navigation.navigate("BlankPage")}>

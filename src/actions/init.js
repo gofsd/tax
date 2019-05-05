@@ -1,13 +1,14 @@
-import  * as seeds from "../db/seeds"
-import { INIT_METADATA } from "../constants/actions"
+import  * as metadata from "../db/seeds";
+import { INIT_METADATA } from "../constants/actions";
 
 export const initMetadata = () => {
-    const { M99, M00, M01, STRUCTURERBD } = seeds
-
-    const params = { M99, M00, M01, STRUCTURERBD }
-    params.STRUCTURERBD.forEach(item => params[item.RELATION] = seeds[item.RELATION])
+    const { STRUCTURERBD, maket_availability } = metadata;
+    console.log(metadata, "from init");
+    const params = { STRUCTURERBD, maket_availability };
+    params.STRUCTURERBD.forEach(item => params[item.RELATION] = metadata[item.RELATION]);
     return {
         type: INIT_METADATA,
         payload: params
-    }
+    };
 }
+;

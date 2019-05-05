@@ -1,51 +1,50 @@
 import * as React from "react";
 import { Picker, Container, Header, Title, Content, Text, Button, Icon, Left, Right, Body, Footer, Form, Item, Label,Input, Tab, Tabs, View, FooterTab } from "native-base";
 import ModalSelector from "react-native-modal-selector";
-
+import MForm1 from "../../../container/MaquetteForm";
 import styles from "./styles";
-export interface Props {
-	navigation: any;
-}
 
 
 
-export interface State {}
-class BlankPage extends React.Component<Props, State> {
-	state = {
-		      selected2: undefined
-	}
-	  onValueChange2(value: string) {
-    this.setState({
-      selected2: value
-    });
+
+class BlankPage extends React.Component{
+
+  constructor(props) {
+		super();
+		this.state = {
+			MForm: props.MForm,
+			lantCatId: 3
+
+		};
 	}
 
-	selectedItem = (date, lable) => {
+	renderMaqTabs = (num) => {
+		let maqName = "";
+				if (String(num).length == 1){
+           maqName = "M0" + num;
+				} else {
+					maqName = "M" + num;
+				}
+
 		return (
-			<Item style={{flexDirection: "column"}}>
-							<Text style={{fontSize: 20}}>{lable}</Text>
-              <Picker
-                mode="dropdown"
-                iosIcon={<Icon name="arrow-down" />}
-                style={{ width: 800 }}
-                placeholder="Select your SIM"
-                placeholderStyle={{ color: "#bfc6ea" }}
-                placeholderIconColor="#007aff"
-                selectedValue={this.state.selected2}
-                onValueChange={this.onValueChange2.bind(this)}
-              >
-							{date.filter(it=>{
-								return it.NAME != null;
-							}).map((it, idx, arr) =>
-							(<Picker.Item label={it.NAME} value={lable + idx}/>))}
+								<Tab heading={maqName} >
+						<Tabs>
+							<Tab heading="Поточний">
+							<this.state.MForm maquette={maqName}  stateIn={"Поточний"} changeLandCategory = {(id) =>{console.log(id, "set category"); this.setState({lantCatId: id});}}/>
 
-              </Picker>
-            </Item>
-);
+							</Tab>
+							<Tab heading="Попередн.">
+							<this.state.MForm maquette={maqName} stateIn={"Попередн."}/>
+
+							</Tab>
+						</Tabs>
+					</Tab>
+		);
 	}
 
 	render() {
 		console.log(this.props, "from main screen");
+		let MForm = this.props;
 		const param = this.props.navigation.state.params;
 		return (
 			<Container style={styles.container}>
@@ -66,85 +65,12 @@ class BlankPage extends React.Component<Props, State> {
 				<Tabs>
 					<Tab heading="1" >
 					<Tabs>
-					<Tab heading="M1" >
-						<Tabs>
-							<Tab heading="Поточний">
-							<Form>
-							<Item floatingLabel>
-							<Label>Виділ</Label>
+						{this.props.maket_availability.filter(item => item.kakz == this.state.lantCatId && item.available == 2).map((it) => this.renderMaqTabs(it.tabl))}
 
-              <Input  />
-            </Item>
-            <Item floatingLabel>
-							<Label>Підвиділ</Label>
-
-              <Input  />
-            </Item>
-						<Item floatingLabel>
-							<Label>Площа виділу (підвиділу) </Label>
-
-              <Input  />
-            </Item>
-								{
-									this.selectedItem(this.props.KAKZ, "Категорія земель")
-								}
-																{
-									this.selectedItem(this.props.KAKI, "Ознака земель переданих в тимчасове користування")
-								}
- 								{
-									this.selectedItem(this.props.KAZU, "Ознака особливо захисних ділянок лісів")
-								}
-
-
-            <Item floatingLabel>
-							<Label>Рік таксації</Label>
-
-              <Input  />
-            </Item>
-
-          </Form>
-							</Tab>
-							<Tab heading="Попередн.">
-							<Form>
-							<Item floatingLabel>
-							<Label>Виділ</Label>
-
-              <Input  />
-            </Item>
-            <Item floatingLabel>
-							<Label>Підвиділ</Label>
-
-              <Input  />
-            </Item>
-						<Item floatingLabel>
-							<Label>Площа виділу (підвиділу) </Label>
-
-              <Input  />
-            </Item>
-								{
-									this.selectedItem(this.props.KAKZ, "Категорія земель")
-								}
-								{
-									this.selectedItem(this.props.KAKI, "Ознака земель переданих в тимчасове користування")
-								}
- 								{
-									this.selectedItem(this.props.KAZU, "Ознака особливо захисних ділянок лісів")
-								}
-
-
-            <Item floatingLabel>
-							<Label>Рік таксації</Label>
-
-              <Input  />
-            </Item>
-
-          </Form>
-
-							</Tab>
-						</Tabs>
-					</Tab>
        </Tabs>
 					</Tab>
+
+
 
         </Tabs>
 
