@@ -1,20 +1,20 @@
 // @flow
 import * as React from "react";
 import { connect } from "react-redux";
-import App from "../../App"
-import * as db from "../../actions/db"
-import { initMetadata } from "../../actions/init"
+import App from "../../App";
+import * as db from "../../actions/db";
+import { initMetadata } from "../../actions/init";
 
 
 
 class MainContainer extends React.Component {
 	componentDidMount() {
-        this.props.initMetadata()
+        //this.props.initMetadata()
         setTimeout(() => {
-            initMetadata()
+            initMetadata();
         }, 1000);
     }
-    
+
 	render() {
 		return <App {...this.props}/>;
 	}
@@ -25,7 +25,7 @@ class MainContainer extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
     initMetadata: () => dispatch(initMetadata())
-})
+});
 
 const mapStateToProps = state => ({
     defaultScreen: state.navigation.defaultScreen

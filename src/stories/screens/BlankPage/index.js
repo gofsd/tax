@@ -17,6 +17,17 @@ class BlankPage extends React.Component{
 
 		};
 	}
+	renderMainTabs = () => {
+		return (
+							<Tabs  style={{flex: 0.2}}>
+					<Tab heading="1" >
+						<Tabs>
+						{this.props.maket_availability.filter(item => item.kakz == this.state.lantCatId && item.available == 2).map((it) => this.renderMaqTabs(it.tabl))}
+      		 </Tabs>
+					</Tab>
+        </Tabs>
+		);
+	}
 
 	renderMaqTabs = (num) => {
 		let maqName = "";
@@ -29,14 +40,8 @@ class BlankPage extends React.Component{
 		return (
 								<Tab heading={maqName} >
 						<Tabs>
-							<Tab heading="Поточний">
-							<this.state.MForm maquette={maqName}  stateIn={"Поточний"} changeLandCategory = {(id) =>{console.log(id, "set category"); this.setState({lantCatId: id});}}/>
-
-							</Tab>
-							<Tab heading="Попередн.">
-							<this.state.MForm maquette={maqName} stateIn={"Попередн."}/>
-
-							</Tab>
+							<Tab heading="Поточний" />
+							<Tab heading="Попередн." />
 						</Tabs>
 					</Tab>
 		);
@@ -47,7 +52,7 @@ class BlankPage extends React.Component{
 		let MForm = this.props;
 		const param = this.props.navigation.state.params;
 		return (
-			<Container style={styles.container}>
+			<Container style={[styles.container, {flex: 1}]}>
 				<Header hasTabs>
 					<Left>
 						<Button transparent onPress={() => this.props.navigation.goBack()}>
@@ -61,20 +66,12 @@ class BlankPage extends React.Component{
 
 					<Right />
 				</Header>
+{this.renderMainTabs()}
 
-				<Tabs>
-					<Tab heading="1" >
-					<Tabs>
-						{this.props.maket_availability.filter(item => item.kakz == this.state.lantCatId && item.available == 2).map((it) => this.renderMaqTabs(it.tabl))}
+<Content>
+					<this.state.MForm maquette={"M01"}  stateIn={"Поточний"} changeLandCategory = {(id) =>{console.log(id, "set category"); this.setState({lantCatId: id});}}/>
 
-       </Tabs>
-					</Tab>
-
-
-
-        </Tabs>
-
-
+</Content>
 
 									<Footer >
 				<FooterTab>

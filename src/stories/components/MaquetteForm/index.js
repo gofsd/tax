@@ -97,7 +97,7 @@ selected2: value
   render() {
 
     return (
-        <Form>
+        <Form style={{height:1000}}>
           {
             this.props.metadata.STRUCTURERBD.filter(item => item.TABL === this.props.maquette).map(this.chooseInput)
 
