@@ -118,8 +118,8 @@ const items = [
 ];
 
 
-class ListOfMakets extends React.Component<Props, State> {
-  onValueChange = (value: string) => {
+class FilterOfDepartment extends React.Component{
+  onValueChange = (value) => {
     this.setState({
       selected: value
     });
@@ -141,9 +141,9 @@ class ListOfMakets extends React.Component<Props, State> {
     let filteredArray = [];
 
 
-   this.setState({quartal: [].filter(it => it.KAIG === option.id).map((it, idx, arr) => ({label: it.KAWN, id: idx}))});
+   //this.setState({quartal: this.props.M00.filter(it => it.KAIG === option.id).map((it, idx, arr) => ({label: it.KAWN, id: idx}))});
 
-    return this.props.KAIG.map((it, idx, arr) => ({label: it.NAME, id: idx}));
+    //return this.props.KAIG.map((it, idx, arr) => ({label: it.NAME, id: idx}));
   }
   render() {
     console.log(this.props, "props");
@@ -180,7 +180,7 @@ class ListOfMakets extends React.Component<Props, State> {
 
 
                 <ModalSelector
-                    data={this.props.KAIG.map((it, idx, arr) => ({label: it.NAME, id: it.KAIG}))}
+                    data={/*this.props.KAIG.map((it, idx, arr) => ({label: it.NAME, id: it.KAIG}))*/ []}
                     initValue="Оберiть лiсництво"
                     supportedOrientations={["landscape"]}
                     accessible={true}
@@ -228,8 +228,8 @@ class ListOfMakets extends React.Component<Props, State> {
   }
 }
 
-ListOfMakets.defaultProps = {
+FilterOfDepartment.defaultProps = {
   list: ["First ittem", "second item"],
 };
 
-export default ListOfMakets;
+export default FilterOfDepartment;

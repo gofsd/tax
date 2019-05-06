@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Picker, Container, Header, Title, Content, Text, Button, Icon, Left, Right, Body, Footer, Form, Item, Label,Input, Tab, Tabs, View, FooterTab } from "native-base";
+import { Picker, Container, Header, Title, Content, Text, Button, Icon, Left, Right, Body, Footer, Spinner, ScrollableTab, Form, Item, Label,Input, Tab, Tabs, View, FooterTab } from "native-base";
 import ModalSelector from "react-native-modal-selector";
 import MForm1 from "../../../container/MaquetteForm";
 import styles from "./styles";
@@ -13,22 +13,22 @@ class BlankPage extends React.Component{
 		super();
 		this.state = {
 			MForm: props.MForm,
-			lantCatId: 3
-
+			lantCatId: 3,
+			maquette: "M01"
 		};
 	}
 	renderMainTabs = () => {
 		return (
-							<Tabs  style={{flex: 0.2}}>
+				<Tabs  style={{flex: 0.2}}>
 					<Tab heading="1" >
-						<Tabs>
-						{this.props.maket_availability.filter(item => item.kakz == this.state.lantCatId && item.available == 2).map((it) => this.renderMaqTabs(it.tabl))}
+						<Tabs  renderTabBar={()=> <ScrollableTab />} onChangeTab={(obj)=> obj.i !== obj.from ? this.setState({maquette : obj.ref.props.heading}) : null}>
+						{this.props.maket_availability.filter(item => item.kakz == this.state.lantCatId && item.available == 1).map((it) => this.renderMaqTabs(it.tabl))}
       		 </Tabs>
 					</Tab>
         </Tabs>
 		);
 	}
-
+//
 	renderMaqTabs = (num) => {
 		let maqName = "";
 				if (String(num).length == 1){
@@ -69,7 +69,8 @@ class BlankPage extends React.Component{
 {this.renderMainTabs()}
 
 <Content>
-					<this.state.MForm maquette={"M01"}  stateIn={"Поточний"} changeLandCategory = {(id) =>{console.log(id, "set category"); this.setState({lantCatId: id});}}/>
+<this.state.MForm maquette={this.state.maquette}  stateIn={"Поточний"} changeLandCategory = {(id) =>{console.log(id, "set category"); this.setState({lantCatId: id});}}/>
+
 
 </Content>
 

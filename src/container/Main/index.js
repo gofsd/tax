@@ -9,10 +9,10 @@ import { initMetadata } from "../../actions/init";
 
 class MainContainer extends React.Component {
 	componentDidMount() {
-        //this.props.initMetadata()
+        this.props.initMetadata();
         setTimeout(() => {
-            initMetadata();
-        }, 1000);
+            this.props.initMetadata();
+        }, 3000);
     }
 
 	render() {

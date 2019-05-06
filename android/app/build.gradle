@@ -136,6 +136,12 @@ android {
 
         }
     }
+
+    lintOptions { 
+
+        checkReleaseBuilds false
+
+    }
     // applicationVariants are e.g. debug, release
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
