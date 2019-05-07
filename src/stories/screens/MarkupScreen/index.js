@@ -1,46 +1,39 @@
 import * as React from "react";
 import { Image, Platform } from "react-native";
 import { Container, Content, Header, Body, Title, Button, Text, View, Icon, Footer } from "native-base";
-//import styles from "./styles";
-export interface Props {
-	loginForm: any,
-	onLogin: Function,
-}
-export interface State {}
-class Login extends React.Component<Props, State> {
+import {FooterTab, Left, Right} from "../BlankPage";
+
+class Login extends React.Component {
+	renderButtons = () => {
+		let buttons = [];
+
+		for (let i = 0; i < 8; i++) {
+			buttons.push(
+				<Button
+					key={i}
+					style={{height: 70, width: 70, flex: 1, justifyContent: 'center', backgroundColor: '#333333'}}
+				>
+					<Text style={{fontSize: 17}}>{i}</Text>
+				</Button>
+			)
+		}
+		return buttons
+	};
+
 	render() {
 		return (
 			<Container>
-				<Header style={{ height: 200 }}>
-					<Body style={{ alignItems: "center" }}>
-						<Icon name="flash" style={{ fontSize: 104 }} />
-						<Title>Tax</Title>
-						<View padder>
-							<Text style={{ color: Platform.OS === "ios" ? "#000" : "#FFF" }}>
-								Some text
-							</Text>
-						</View>
+				<Header>
+					<Body>
+						<Title style={{width: '100%', margin: 'auto'}}>{"Лiсництво 1, квартал 1, видiл 1, Поточний"}</Title>
 					</Body>
 				</Header>
-				<Content>
-					{this.props.loginForm}
-					<View padder>
-						<Button block onPress={() => this.props.onLogin()}>
-							<Text>Login</Text>
-						</Button>
+				<Content style={{height: '100%', backgroundColor: '#000', display: 'flex'}}>
+					<View style={{ height: 1000, width: 70, overflowY: 'scroll', backgroundColor: 'red'}}>
+						{this.renderButtons()}
 					</View>
 				</Content>
-				<Footer style={{ backgroundColor: "#F8F8F8" }}>
-					<View style={{ alignItems: "center", opacity: 0.5, flexDirection: "row" }}>
-						<View padder>
-							<Text style={{ color: "#000" }}>Made with love at </Text>
-						</View>
-						<Image
-							source={{ uri: "https://geekyants.com/images/logo-dark.png" }}
-							style={{ width: 422 / 4, height: 86 / 4 }}
-						/>
-					</View>
-				</Footer>
+				<Footer/>
 			</Container>
 		);
 	}

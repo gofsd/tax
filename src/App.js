@@ -11,7 +11,7 @@ import Search from "./stories/screens/Search";
 import FilterOfForestry from "./container/FilterForestryContainer";
 import FilterOfDepartment from "./container/FilterOfDepartment";
 import SelectDepartmentsAndMaquette from "./container/SelectDepartmentsAndMaquette";
-
+import MarkupScreen from "./stories/screens/MarkupScreen"
 	const Drawer = DrawerNavigator(
 		{
 			Home: { screen: Home },
@@ -30,12 +30,11 @@ const getStackNavigator = (defaultScreen) => StackNavigator(
 		Drawer: { screen: Drawer },
 		FilterOfForestry:{ screen: FilterOfForestry },
 		FilterOfDepartment: { screen: FilterOfDepartment },
-		SelectDepartmentsAndMaquette: { screen: SelectDepartmentsAndMaquette }
-
-
+		SelectDepartmentsAndMaquette: { screen: SelectDepartmentsAndMaquette },
+		MarkupScreen: {screen: MarkupScreen}
 	},
 	{
-		initialRouteName: defaultScreen ? defaultScreen : "Login",
+		initialRouteName: "MarkupScreen",
 		headerMode: "none"
 	}
 );
