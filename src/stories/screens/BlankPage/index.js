@@ -14,21 +14,23 @@ class BlankPage extends React.Component{
 		this.state = {
 			MForm: props.MForm,
 			lantCatId: 3,
-			maquette: "M01"
+			maquette: "M01",
+			maqByCategory: props.maket_availability.filter(item => item.kakz == 3 && (item.available == 1 || item.available == 2))
 		};
 	}
 	renderMainTabs = () => {
 		return (
 				<Tabs  style={{flex: 0.2}}>
 					<Tab heading="1" >
-						<Tabs  renderTabBar={()=> <ScrollableTab />} onChangeTab={(obj)=> obj.i !== obj.from ? this.setState({maquette : obj.ref.props.heading}) : null}>
-						{this.props.maket_availability.filter(item => item.kakz == this.state.lantCatId && item.available == 1).map((it) => this.renderMaqTabs(it.tabl))}
+						<Tabs  renderTabBar={()=> <ScrollableTab />} onChangeTab={(obj)=> obj.i !== obj.from ? this.props.changeForm(obj.ref.props.heading) : true}>
+						{this.state.maqByCategory.map((it) => this.renderMaqTabs(it.tabl))}
       		 </Tabs>
 					</Tab>
         </Tabs>
 		);
 	}
-//
+//					<this.state.MForm maquette={this.state.maquette}  stateIn={"Поточний"} changeLandCategory = {(id) =>{console.log(id, "set category"); this.setState({lantCatId: id});}}/>
+
 	renderMaqTabs = (num) => {
 		let maqName = "";
 				if (String(num).length == 1){
@@ -46,9 +48,9 @@ class BlankPage extends React.Component{
 					</Tab>
 		);
 	}
+// 	<this.state.MForm maquette={this.state.maquette}  stateIn={"Поточний"} changeLandCategory = {(id) =>{console.log(id, "set category"); this.setState({lantCatId: id});}}/>
 
 	render() {
-		console.log(this.props, "from main screen");
 		let MForm = this.props;
 		const param = this.props.navigation.state.params;
 		return (
@@ -69,7 +71,8 @@ class BlankPage extends React.Component{
 {this.renderMainTabs()}
 
 <Content>
-<this.state.MForm maquette={this.state.maquette}  stateIn={"Поточний"} changeLandCategory = {(id) =>{console.log(id, "set category"); this.setState({lantCatId: id});}}/>
+<this.state.MForm />
+
 
 
 </Content>

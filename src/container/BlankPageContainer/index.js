@@ -3,10 +3,11 @@ import { connect } from "react-redux";
 
 import BlankPage from "../../stories/screens/BlankPage";
 import MForm from "../MaquetteForm";
+import { changeForm } from "../../actions/filter";
 
 
 const mapDispatchToProps = dispatch => ({
-
+	changeForm: (name) => dispatch(changeForm(name))
 });
 
 const mapStateToProps = state => ({
@@ -21,7 +22,7 @@ const mapStateToProps = state => ({
 	KAVQ: state.metadata.NDI15500009,
 	PPGH: state.metadata.NDI15500009,
 	MForm,
-	maket_availability: state.metadata.maket_availability
+	maket_availability: state.metadata.maket_availability,
 	// quarter_num: state.filter.kv_num,
 	// forestry_name: state.filter.name,
 	// department_num: state.department,

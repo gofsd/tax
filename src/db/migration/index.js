@@ -1,5 +1,9 @@
-import { STRUCTURERBD } from "../seeds";
+import * as metadata from "../seeds";
 import Realm from "realm";
+
+const { STRUCTURERBD, maket_availability } = metadata;
+const params = { STRUCTURERBD, maket_availability };
+metadata.STRUCTURERBD.forEach(item => params[item.RELATION] = metadata[item.RELATION]);
 
 // Define your models and their properties
 const getRealmType = (type) => {
@@ -13,9 +17,17 @@ const getRealmType = (type) => {
     }
 };
 
-const schemas = STRUCTURERBD.reduce((ac, item, i, arr) => {
+const addToStructurerBdMetadata = () => {
+  Object.keys(params).forEach(metaTabl => {
+    console.log(params[metaTabl], "from add to structure bd metadata");
+  } );
+};
+
+
+export const schemas = metadata.STRUCTURERBD.reduce((ac, item, i, arr) => {
     if (!ac[item.TABL]) {
         const properties = {};
+        properties.state = getRealmType("INTEGER");
         properties[item.CODE] = getRealmType(item.TYPS);
         ac[item.TABL] = {
             name: item.TABL,
@@ -24,9 +36,13 @@ const schemas = STRUCTURERBD.reduce((ac, item, i, arr) => {
     } else {
         ac[item.TABL].properties[item.CODE] = getRealmType(item.TYPS);
     }
+
     //console.log(ac, item, i, arr, 'from migration:')
     return ac;
 }, {});
+
+
+
 console.log(schemas, "after all");
 const arrSchemas = Object.keys(schemas).map(item => schemas[item]);
 console.log(arrSchemas);

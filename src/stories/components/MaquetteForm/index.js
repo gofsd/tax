@@ -40,22 +40,22 @@ class MaquetteForm extends React.Component {
         return null;
       }
 		return (
-			<Item style={{flexDirection: "column"}}>
+			<Item style={{flexDirection: "column"}} picker>
 							<Text style={{fontSize: 20}}>{lable}</Text>
               <Picker
                 mode="dropdown"
                 iosIcon={<Icon name="arrow-down" />}
-                style={{ width: 800 }}
-                placeholder="Select your SIM"
+                style={{ width: "100%" }}
+                placeholder="Select"
                 placeholderStyle={{ color: "#bfc6ea" }}
                 placeholderIconColor="#007aff"
-                selectedValue={this.state.selected2}
-                onValueChange={changeLandCategory ? changeLandCategory : this.onValueChange2.bind(this)}
+                selectedValue={this.state.selected2[CODE]}
+                onValueChange={this.onValueChange2}
               >
 							{data.filter(it=>{
 								return it.NAME != null;
 							}).map((it, idx, arr) =>
-							(<Picker.Item label={it.NAME} value={it.CODE}/>))}
+							(<Picker.Item label={it.NAME} value={`${CODE}_${idx}`}/>))}
 
               </Picker>
             </Item>
@@ -66,14 +66,14 @@ class MaquetteForm extends React.Component {
     const { NAME } = item;
     return (<Item floatingLabel>
               <Label>{NAME}</Label>
-              <Input/>
+              <Input keyboardType="numeric"/>
           </Item>
           );
   }
 
   chooseInput = (item) => {
     const { maquette, changeLandCategory } = this.props;
-    console.log(this.props, "from choose");
+    ///console.log(item, "FROM CHOOSE INPUTE");
     if (!item.RELATION) {
       return this.inputItem(item, item.CODE);
     } else {
@@ -86,21 +86,25 @@ class MaquetteForm extends React.Component {
     }
   }
   state = {
-    selected2: undefined
-}
-onValueChange2(value) {
-this.setState({
-selected2: value
-});
-}
+    selected2: {}
+  }
+
+  onValueChange2 = (value, some) => {
+    const params = value.split("_");
+    const { selected2 } = this.state;
+    selected2[params[0]] = value;
+    console.log(value, "ssd", some);
+    this.setState({
+      selected2
+    });
+  }
 
   render() {
 
     return (
         <Form style={{height:1000}}>
           {
-            this.props.metadata.STRUCTURERBD.filter(item => item.TABL === this.props.maquette).map(this.chooseInput)
-
+            this.props.metadata.struct.filter(item => item.TABL === this.props.maquetteName).filter(item => item.num).map(this.chooseInput)
           }
         </Form>
 

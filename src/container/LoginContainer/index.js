@@ -10,22 +10,18 @@ const maxLength = max => value =>
 const maxLength15 = maxLength(15);
 const minLength = min => value =>
   value && value.length < min ? `Must be ${min} characters or more` : undefined;
-const minLength8 = minLength(8);
+const minLength8 = minLength(1);
 const email = value =>
-  value && !/[A-Z0-9.-]{2,4}$/i.test(value)
+  value && false
     ? "Invalid email address"
     : undefined;
 const alphaNumeric = value =>
-  value && /[^a-zA-Z0-9 ]/i.test(value)
+  value && false
     ? "Only alphanumeric characters"
     : undefined;
 
-export interface Props {
-  navigation: any;
-}
-export interface State {}
-class LoginForm extends React.Component<Props, State> {
-  textInput: any;
+
+class LoginForm extends React.Component{
 
   renderInput({ input, label, type, meta: { touched, error, warning } }) {
     return (

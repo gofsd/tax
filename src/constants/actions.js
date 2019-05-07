@@ -1,2 +1,7 @@
-export const SET_FILTER = "SET_FILTER"
-export const INIT_METADATA = "INIT_METADATA"
+export const SET_FILTER = "SET_FILTER";
+export const INIT_METADATA = "INIT_METADATA";
+export const SAVE_MAQUETTE = "SAVE_MAQUETTE";
+export const DELETE_MAQUETTE = "DELETE_MAQUETTE";
+export const GET_MAQUETTE = "GET_MAQUETTE";
+export const CHANGE_MAQUETTE = "CHANGE_MAQUETTE"
+;
