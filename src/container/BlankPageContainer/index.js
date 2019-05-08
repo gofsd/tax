@@ -1,7 +1,7 @@
 // @flow
 import { connect } from "react-redux";
 
-import BlankPage from "../../stories/screens/BlankPage";
+import BlankPage from "../../stories/screens/MarkupScreen";
 import MForm from "../MaquetteForm";
 import { changeForm } from "../../actions/filter";
 

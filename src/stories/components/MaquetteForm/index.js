@@ -45,7 +45,7 @@ class MaquetteForm extends React.Component {
               <Picker
                 mode="dropdown"
                 iosIcon={<Icon name="arrow-down" />}
-                style={{ width: "100%" }}
+                style={{ width:"100%" }}
                 placeholder="Select"
                 placeholderStyle={{ color: "#bfc6ea" }}
                 placeholderIconColor="#007aff"
