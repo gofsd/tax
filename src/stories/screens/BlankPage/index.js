@@ -45,7 +45,6 @@ class BlankPage extends React.Component {
             <Tabs style={{flex: 0.2}}>
                 <Tab heading="1">
                     <Tabs
-                        style={style.tabs}
                         renderTabBar={() => <ScrollableTab/>}
                         onChangeTab={(obj) => obj.i !== obj.from ? this.props.changeForm(obj.ref.props.heading) : true}
                     >
@@ -73,7 +72,7 @@ class BlankPage extends React.Component {
                 </Tabs>
             </Tab>
         );
-    }
+    };
 
 // 	<this.state.MForm maquette={this.state.maquette}  stateIn={"Поточний"} changeLandCategory = {(id) =>{console.log(id, "set category"); this.setState({lantCatId: id});}}/>
 
@@ -124,13 +123,5 @@ class BlankPage extends React.Component {
         );
     }
 }
-
-const style = StyleSheet.create({
-    tabs: {
-        flex: 1,
-        flexDirection: 'column',
-        height: 200,
-    },
-});
 
 export default BlankPage;
