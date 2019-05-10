@@ -64,27 +64,6 @@ class Login extends React.Component {
                     </ScrollView>
                 </View>
 
-<<<<<<< HEAD
-				<Footer>
-					<FooterTab style={{backgroundColor: "#333"}}>
-						<Button vertical>
-							<Icon name="add-circle"/>
-							<Text>Додати</Text>
-						</Button>
-						<Button vertical>
-							<Icon name="trash"/>
-							<Text>Видалити</Text>
-						</Button>
-						<Button vertical>
-							<Icon active name="paper"/>
-							<Text>Зберегти</Text>
-						</Button>
-					</FooterTab>
-				</Footer>
-			</Container>
-		);
-	}
-=======
                 <Footer style={{borderTopWidth: 1, borderColor: '#000', height: 75}}>
                     <FooterTab style={{backgroundColor: "#333"}}>
                         <Button vertical style={{width: 75, height: 75, flex: 0, backgroundColor: '#333', borderWidth: 1, borderColor: '#000'}}>
@@ -110,7 +89,6 @@ class Login extends React.Component {
             </Container>
         );
     }
->>>>>>> 64fb15d90dd0a8074bc3a0422721e96844742946
 }
 
 const style = StyleSheet.create({
