@@ -84,7 +84,7 @@ constructor(props) {
 							<Icon active name="paper"/>
 							<Text>Зберегти</Text>
 						</Button>
-					git</FooterTab>
+					</FooterTab>
 				</Footer>
 			</Container>
 		);
