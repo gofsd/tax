@@ -12,16 +12,17 @@ class ButtonsScrollable extends React.Component {
             saw: null,
             is10sActive: false,
             m10Active: 0,
+            buttons: [],
         };
-        this.layout = [];
         this.saw = [];
+        this.layout = [];
         this.layoutChildrens = [];
     }
 
     componentDidMount() {
         const { number, flag } = this.props;
 
-        this.renderButtons(number, flag, 18 );
+        this.createButtons(number, flag, 18 );
     }
 
     createButtons = (number, flag, m10s) => {
@@ -45,11 +46,14 @@ class ButtonsScrollable extends React.Component {
                 />
             );
         }
+        this.setState({
+            buttons: this[flag],
+        })
     };
 
     handlePress = (flag, i) => {
         const {changeForm } = this.props;
-        if (flag == "layout") {changeForm(`M${(i < 9) ? "0" : ""}${i + 1}`);}
+        if (flag === "layout") {changeForm(`M${(i < 9) ? "0" : ""}${i + 1}`);}
         if (i === 9) {
             this.setState((prev) => ({
                 is10sActive: !prev.is10sActive,
@@ -129,7 +133,7 @@ class ButtonsScrollable extends React.Component {
 
     render () {
         const { number, flag } = this.props;
-        return this.renderButtons(number, flag, 12);
+        return this.state.buttons;
     }
 }
 
