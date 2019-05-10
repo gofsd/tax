@@ -22,6 +22,7 @@ import {
   FooterTab,
   Item
 } from "native-base";
+import { ScrollView } from "react-native";
 import ModalSelector from "react-native-modal-selector";
 import ActionButton from "react-native-action-button";
 
@@ -41,11 +42,11 @@ class MaquetteForm extends React.Component {
       }
 		return (
 			<Item style={{flexDirection: "column"}} picker>
-							<Text style={{fontSize: 20}}>{lable}</Text>
+							<Text style={{fontSize: 20, padding: 5}}>{lable}</Text>
               <Picker
                 mode="dropdown"
                 iosIcon={<Icon name="arrow-down" />}
-                style={{ width:"100%" }}
+                itemStyle={{ width:"100%", borderRadius: 8, borderColor: '#D9D5DC',borderWidth: 2, marginBottom: 5 }}
                 placeholder="Select"
                 placeholderStyle={{ color: "#bfc6ea" }}
                 placeholderIconColor="#007aff"
@@ -64,9 +65,9 @@ class MaquetteForm extends React.Component {
 
   inputItem = (item) => {
     const { NAME } = item;
-    return (<Item floatingLabel>
-              <Label>{NAME}</Label>
-              <Input keyboardType="numeric"/>
+    return (<Item style={{ flexDirection: "column", alignItems: "flex-start", borderBottomWidth: 0, marginLeft: 0, borderColor: '#000', marginTop: 5 }}>
+              <Label style={{marginLeft: 5, marginBottom: 5, color: "#000"}}>{NAME}</Label>
+              <Input style={{ width: "100%", borderRadius: 8, borderColor: '#D9D5DC',borderWidth: 2, marginBottom: 5}} keyboardType="numeric"/>
           </Item>
           );
   }
@@ -102,10 +103,12 @@ class MaquetteForm extends React.Component {
   render() {
 
     return (
-        <Form style={{height:1000}}>
+        <Form style={{}} >
+            <ScrollView>
           {
             this.props.metadata.struct.filter(item => item.TABL === this.props.maquetteName).filter(item => item.num).map(this.chooseInput)
           }
+          </ScrollView>
         </Form>
 
     );
