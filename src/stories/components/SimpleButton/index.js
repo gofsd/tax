@@ -1,10 +1,12 @@
 import * as React from "react";
 import { Button, Text, Icon, View } from "native-base";
 import { StyleSheet } from "react-native";
+import ButtonScrollable from '../ButtonsScrollable'
 
 class SimpleButton extends React.Component {
     render() {
-        const { text, isActive, isChildren } = this.props;
+        const { isActive, isChildren, onPress, id, flag } = this.props;
+        const isM10 = id === 9 && !isChildren && flag !== 'saw';
 
         const styleButton = (isActive && isChildren)
             ? style.activeM10
@@ -14,9 +16,17 @@ class SimpleButton extends React.Component {
                     ? style.activeButton
                     : style.button;
 
-        return <Button style={styleButton}>
-            <Text style={{fontSize: 16, paddingLeft: 0, paddingRight: 0}}>{text}</Text>
-        </Button>
+        return <View>
+            <Button
+                style={styleButton}
+                onPress={() => onPress(flag, id)}
+                key={`${flag}${id}`}
+            >
+                <Text style={(isM10) ? style.textM10 : {fontSize: 16, paddingLeft: 0, paddingRight: 0}}>{`${(flag === "saw") ? `${id + 1}` : `M${(id < 9) ? "0" : ""}${id + 1}`}`}</Text>
+                {(isM10) ? <Icon name={`${(isActive) ? 'arrow-down' : 'arrow-up'}`} style={{marginLeft: 0, marginRight: 0, paddingRight: 4}}/> : null}
+            </Button>
+            {(isM10 && isActive) ? <ButtonScrollable number={5} flag={'children'}/> : null}
+        </View>
     }
 }
 
@@ -60,6 +70,10 @@ const style = StyleSheet.create({
         borderWidth: 1,
         marginLeft: 15,
         borderColor: '#000',
+    },
+    textM10: {
+        fontSize: 16,
+        paddingRight: 4
     }
 });
 
