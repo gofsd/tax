@@ -8,15 +8,11 @@ class ButtonsScrollable extends React.Component {
     constructor () {
         super();
         this.state = {
-            layout: null,
-            saw: null,
-            is10sActive: false,
-            m10Active: 0,
+            layout: 0,
+            saw: 0,
+            children: 0,
             buttons: [],
         };
-        this.saw = [];
-        this.layout = [];
-        this.layoutChildrens = [];
     }
 
     componentDidMount() {
@@ -26,42 +22,27 @@ class ButtonsScrollable extends React.Component {
     }
 
     createButtons = (number, flag, m10s) => {
+        let buttons = [];
+
         for (let i = 0; i < number; i++) {
-            this[flag].push(
-                <SimpleButton
-                    key={`${flag}${i}`}
-                    text={`${(flag === "saw") ? `${i + 1}` : `M${(i < 9) ? "0" : ""}${i + 1}`}`}
-                    isActive={false}
-                    isChildren={false}
-                />
-            );
+            buttons.push({
+                id: i,
+                flag: flag,
+                isActive: false,
+                isChildren: flag === 'children'
+            });
         }
-        for (let i = 0; i < m10s; i++) {
-            this.layoutChildrens.push(
-                <SimpleButton
-                    key={`m10${flag}${i}`}
-                    text={`M10.${i + 1}`}
-                    isActive={false}
-                    isChildren={true}
-                />
-            );
-        }
+
         this.setState({
-            buttons: this[flag],
+            buttons: buttons,
         })
     };
 
     handlePress = (flag, i) => {
-        const {changeForm } = this.props;
-        if (flag === "layout") {changeForm(`M${(i < 9) ? "0" : ""}${i + 1}`);}
-        if (i === 9) {
-            this.setState((prev) => ({
-                is10sActive: !prev.is10sActive,
-            }));
-        }
-        this.setState({
-            [flag]: i,
-        });
+        const { changeForm } = this.props;
+        if (flag === "layout" && this.state.layout !== i) {changeForm(`M${(i < 9) ? "0" : ""}${i + 1}`);}
+
+        this.setState({[flag]: i});
     };
 
     renderButtons = (number, flag, m10s) => {
@@ -132,8 +113,17 @@ class ButtonsScrollable extends React.Component {
     };
 
     render () {
-        const { number, flag } = this.props;
-        return this.state.buttons;
+        const {flag} = this.props;
+        const { [flag]: activeID } = this.state;
+
+        return this.state.buttons.map((button) => <SimpleButton
+            id={button.id}
+            key={`${button.flag}${button.id}`}
+            flag={button.flag}
+            isActive={button.id === activeID && button.flag === flag}
+            isChildren={button.isChildren}
+            onPress={this.handlePress}
+        />);
     }
 }
 
