@@ -1,9 +1,10 @@
 import * as React from "react";
-import {Image, Platform} from "react-native";
 import {Container, Content, Header, Body, Title, Button, Text, Icon, Footer, Left, FooterTab, Right} from "native-base";
 // import {FooterTab} from "../BlankPage";
-import {ScrollView, StyleSheet, View} from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import ButtonsScrollable from "../../../stories/components/ButtonsScrollable";
+import ModalInner from '../../../stories/components/ModalInner'
+import Modal from 'react-native-modal'
 
 class Login extends React.Component {
 //<this.state.MForm maquette={this.state.maquette}  stateIn={"Поточний"} changeLandCategory = {(id) =>{console.log(id, "set category"); this.setState({lantCatId: id});}}/>
@@ -14,7 +15,8 @@ class Login extends React.Component {
             MForm: props.MForm,
             lantCatId: 3,
             maquette: "M01",
-            maqByCategory: props.maket_availability.filter(item => item.kakz == 3 && (item.available == 1 || item.available == 2))
+            maqByCategory: props.maket_availability.filter(item => item.kakz === 3 && (item.available === 1 || item.available === 2)),
+            isVisible: false
         };
     }
 
@@ -58,6 +60,16 @@ class Login extends React.Component {
                                 this.setState({lantCatId: id});
                             }}/>
                         </ScrollView>
+                        <Modal
+                            isVisible={this.state.isVisible}
+                            onSwipeComplete={() => this.setState({ isVisible: false })}
+                            swipeDirection="left"
+                            onBackdropPress={() => this.setState({ isVisible: false })}
+                        >
+                            <View style={{ flex: 1, backgroundColor: '#fff' }}>
+                                <ModalInner/>
+                            </View>
+                        </Modal>
                     </View>
                     <ScrollView style={style.rightButtonsContainer}>
                         <ButtonsScrollable number={18} flag={"saw"}/>
@@ -66,7 +78,12 @@ class Login extends React.Component {
 
                 <Footer style={{borderTopWidth: 1, borderColor: '#000', height: 75}}>
                     <FooterTab style={{backgroundColor: "#333"}}>
-                        <Button vertical style={{width: 75, height: 75, flex: 0, backgroundColor: '#333', borderWidth: 1, borderColor: '#000'}}>
+                        <Button
+                            vertical style={{width: 75, height: 75, flex: 0, backgroundColor: '#333', borderWidth: 1, borderColor: '#000'}}
+                            onPress={() => {
+                                this.setState({isVisible: true});
+                            }}
+                        >
                             <Icon name="add-circle"/>
                         </Button>
                         <Button vertical>
@@ -93,8 +110,6 @@ class Login extends React.Component {
 
 const style = StyleSheet.create({
     buttonPagination: {
-        // height: 75,
-        // width: 75,
         justifyContent: "center",
         backgroundColor: "#333333",
         borderStyle: "solid",
