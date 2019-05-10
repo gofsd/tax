@@ -1,24 +1,28 @@
 import * as React from "react";
-import { Button, Text, Icon, View } from "native-base";
+import { Button, Text, Icon, View, Container, Footer, FooterTab, Header, Content } from "native-base";
 import { StyleSheet } from "react-native";
 import Modal from 'react-native-modal'
 
-class AddModal extends React.Component {
-    state = {
-        visible: true
-    }
+class ModalInner extends React.Component {
+
     render() {
-        const { setModalVisible, visible } = this.props;
-        console.log(this.props, 'from add modal')
-        return <Modal
-            visible={visible}
-            onBackdropPress={() => setModalVisible({visible: !visible})}
-        >
-            <View style={{ flex: 1, backgroundColor: '#000' }}>
-                <Text>I am the modal content!</Text>
-            </View>
-        </Modal>
+        return <Container>
+            <Header>
+
+            </Header>
+            <Content>
+
+            </Content>
+            <Footer>
+                <FooterTab>
+                    <Button vertical>
+                        <Icon name="paper"/>
+                        <Text>Підтвердити</Text>
+                    </Button>
+                </FooterTab>
+            </Footer>
+        </Container>
     }
 }
 
-export default AddModal;
+export default ModalInner;

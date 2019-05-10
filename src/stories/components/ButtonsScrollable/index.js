@@ -18,10 +18,10 @@ class ButtonsScrollable extends React.Component {
     componentDidMount() {
         const { number, flag } = this.props;
 
-        this.createButtons(number, flag, 18 );
+        this.createButtons(number, flag);
     }
 
-    createButtons = (number, flag, m10s) => {
+    createButtons = (number, flag) => {
         let buttons = [];
 
         for (let i = 0; i < number; i++) {
