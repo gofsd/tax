@@ -22,7 +22,9 @@ class SimpleButton extends React.Component {
                 onPress={() => onPress(flag, id)}
                 key={`${flag}${id}`}
             >
-                <Text style={(isM10) ? style.textM10 : {fontSize: 16, paddingLeft: 0, paddingRight: 0}}>{`${(flag === "saw") ? `${id + 1}` : `M${(id < 9) ? "0" : ""}${id + 1}`}`}</Text>
+                <Text style={(isM10) ? style.textM10 : {fontSize: 16, paddingLeft: 0, paddingRight: 0}}>
+                    {`${(flag === 'children') ? `M10.${id + 1}` : (flag === "saw") ? `${id + 1}` : `M${(id < 9) ? "0" : ""}${id + 1}`}`}
+                </Text>
                 {(isM10) ? <Icon name={`${(isActive) ? 'arrow-down' : 'arrow-up'}`} style={{marginLeft: 0, marginRight: 0, paddingRight: 4}}/> : null}
             </Button>
             {(isM10 && isActive) ? <ButtonScrollable number={5} flag={'children'}/> : null}
