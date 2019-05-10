@@ -43,7 +43,7 @@ constructor(props) {
 					<ScrollView style={style.leftButtonsContainer}>
 						<ButtonsScrollable changeForm={this.props.changeForm} number={18} flag={"layout"}/>
 					</ScrollView>
-					<View style={{ width: 450}}>
+					<View style={{ flex: 1}}>
 						<View style={{flex: -1, flexDirection: "row"}}>
 							<Button style={style.buttonPagination}>
 								<Text>Попередня</Text>
@@ -84,7 +84,7 @@ constructor(props) {
 							<Icon active name="paper"/>
 							<Text>Зберегти</Text>
 						</Button>
-					</FooterTab>
+					git</FooterTab>
 				</Footer>
 			</Container>
 		);
@@ -105,12 +105,16 @@ const style = StyleSheet.create({
 	leftButtonsContainer: {
 		height: 850,
 		width: 75,
+		flexGrow: 0,
+		flexShrink: 0,
 		overflow: "scroll",
 		backgroundColor: "#000",
 	},
 	rightButtonsContainer: {
 		minHeight: 850,
 		width: 75,
+		flexGrow: 0,
+		flexShrink: 0,
 		overflow: "scroll",
 		backgroundColor: "#000",
 	}
