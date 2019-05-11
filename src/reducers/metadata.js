@@ -6,7 +6,7 @@ const initialState = {
 export default function(state = initialState, action) {
     switch (action.type) {
         case INIT_METADATA:
-            return { ...action.payload }
+            return { ...action.payload };
         default:
             break;
     }
