@@ -3,11 +3,12 @@ import { connect } from "react-redux";
 
 import BlankPage from "../../stories/screens/MarkupScreen";
 import MForm from "../MaquetteForm";
-import { changeForm } from "../../actions/filter";
+import { changeForm, createMakets } from "../../actions/filter";
 
 
 const mapDispatchToProps = dispatch => ({
-	changeForm: (name) => dispatch(changeForm(name))
+	changeForm: (name) => dispatch(changeForm(name)),
+	createMakets: (M, children) => dispatch(createMakets(M, children))
 });
 
 const mapStateToProps = state => ({
@@ -23,6 +24,10 @@ const mapStateToProps = state => ({
 	PPGH: state.metadata.NDI15500009,
 	MForm,
 	maket_availability: state.metadata.maket_availability,
+
+	makets: state.mainForm.makets,
+
+	selectedKakz: 60,
 	// quarter_num: state.filter.kv_num,
 	// forestry_name: state.filter.name,
 	// department_num: state.department,

@@ -11,7 +11,7 @@ import Search from "./stories/screens/Search";
 import FilterOfForestry from "./container/FilterForestryContainer";
 import FilterOfDepartment from "./container/FilterOfDepartment";
 import SelectDepartmentsAndMaquette from "./container/SelectDepartmentsAndMaquette";
-import MarkupScreen from "./container/MarkupPageConteiner";
+import MarkupScreen from "./stories/screens/MarkupScreen";
 	const Drawer = DrawerNavigator(
 		{
 			Home: { screen: Home },
