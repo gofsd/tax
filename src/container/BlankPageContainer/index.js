@@ -23,6 +23,8 @@ const mapStateToProps = state => ({
 	PPGH: state.metadata.NDI15500009,
 	MForm,
 	maket_availability: state.metadata.maket_availability,
+	prop: state.markup.prop,
+
 	// quarter_num: state.filter.kv_num,
 	// forestry_name: state.filter.name,
 	// department_num: state.department,
