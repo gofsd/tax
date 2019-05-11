@@ -165,7 +165,7 @@ class FilterOfDepartment extends React.Component{
         ];
     return (
       <Container style={styles.container}>
-        <Header>
+        <Header style={{backgroundColor: "#333"}}>
 
           <Body>
             <Title>Виконавець: Дмитро</Title>
@@ -199,7 +199,7 @@ class FilterOfDepartment extends React.Component{
 
 
 
-                    <Button full info onPress={() => this.props.navigation.navigate("BlankPage")}>
+                    <Button style={{backgroundColor: "#333"}} full info onPress={() => this.props.navigation.navigate("BlankPage")}>
             <Text>Шукати</Text>
           </Button>
 
@@ -211,8 +211,8 @@ class FilterOfDepartment extends React.Component{
             </Body>
           </Form>
         </Content>
-        <Footer >
-				<FooterTab>
+        <Footer>
+				<FooterTab style={{backgroundColor: "#333"}}>
             <Button vertical>
               <Icon name="navigate" />
               <Text>Карта</Text>

@@ -2,6 +2,7 @@ import * as React from "react";
 import { Image, Platform } from "react-native";
 import { Container, Content, Header, Body, Title, Button, Text, View, Icon, Footer } from "native-base";
 //import styles from "./styles";
+// import { Image } from "react-native";
 export interface Props {
 	loginForm: any,
 	onLogin: Function,
@@ -11,9 +12,13 @@ class Login extends React.Component<Props, State> {
 	render() {
 		return (
 			<Container>
-				<Header style={{ height: 200 }}>
-					<Body style={{ alignItems: "center" }}>
-						<Icon name="flash" style={{ fontSize: 104 }} />
+				<Header style={{ height: 200, backgroundColor: "#333" }}>
+					<Body style={{ alignItems: "center", backgroundColor: "#333" }}>
+						{/* <Icon name="flash" style={{ fontSize: 104 }} /> */}
+						<Image
+						  style={{width: 200, height: 150}}
+              source={require("../../../img/logo.jpg")}
+            />
 						<Title>Tax</Title>
 						<View padder>
 							<Text style={{ color: Platform.OS === "ios" ? "#000" : "#FFF" }}>
@@ -25,7 +30,7 @@ class Login extends React.Component<Props, State> {
 				<Content>
 					{this.props.loginForm}
 					<View padder>
-						<Button block onPress={() => this.props.onLogin()}>
+						<Button style={{backgroundColor: "#333"}} block onPress={() => this.props.onLogin()}>
 							<Text>Login</Text>
 						</Button>
 					</View>
