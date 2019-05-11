@@ -5,13 +5,15 @@ import homeReducer from "./homeContainer";
 import navigation from "./navigation";
 import metadata from "./metadata";
 import mainForm from "./maquetteForm";
+import markup from './markup'
 
 const rootReducer = combineReducers({
     form: formReducer,
     homeReducer,
     navigation,
     metadata,
-    mainForm
+    mainForm,
+    markup,
 });
 
 export default rootReducer;

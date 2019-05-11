@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Container, Content, Header, Body, Title, Button, Text, Icon, Footer, Left, FooterTab, Right} from "native-base";
 // import {FooterTab} from "../BlankPage";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View, Alert } from "react-native";
 import ButtonsScrollable from "../../../stories/components/ButtonsScrollable";
 import ModalInner from '../../../stories/components/ModalInner'
 import Modal from 'react-native-modal'
@@ -21,7 +21,6 @@ class Login extends React.Component {
     }
 
     render() {
-        console.log(this.props);
         return (
             <Container>
                 <Header style={{backgroundColor: "#333", height: 64}} androidStatusBarColor={"#333"}>
@@ -68,6 +67,7 @@ class Login extends React.Component {
                         >
                             <View style={{ flex: 1, backgroundColor: '#fff' }}>
                                 <ModalInner/>
+                                <Text>{this.props.prop}</Text>
                             </View>
                         </Modal>
                     </View>
