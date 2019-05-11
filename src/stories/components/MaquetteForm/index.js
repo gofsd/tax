@@ -22,7 +22,6 @@ import {
   FooterTab,
   Item
 } from "native-base";
-import { ScrollView } from "react-native";
 import ModalSelector from "react-native-modal-selector";
 import ActionButton from "react-native-action-button";
 
@@ -41,13 +40,12 @@ class MaquetteForm extends React.Component {
         return null;
       }
 		return (
-      <View style={{flexDirection: "column"}}>
-							<Text style={{fontSize: 17, padding: 5, marginLeft: 5, marginBottom: 5}}>{lable}</Text>
-			<Item style={{flexDirection: "column", marginLeft: 0, borderLeftWidth: 2, borderRightWidth: 2, borderTopWidth: 2, borderRadius: 8, height: 50}} picker>
+			<Item style={{flexDirection: "column"}} picker>
+							<Text style={{fontSize: 20}}>{lable}</Text>
               <Picker
                 mode="dropdown"
                 iosIcon={<Icon name="arrow-down" />}
-                itemStyle={{ width:"100%"}}
+                style={{ width:"100%" }}
                 placeholder="Select"
                 placeholderStyle={{ color: "#bfc6ea" }}
                 placeholderIconColor="#007aff"
@@ -57,19 +55,18 @@ class MaquetteForm extends React.Component {
 							{data.filter(it=>{
 								return it.NAME != null;
 							}).map((it, idx, arr) =>
-              (<Picker.Item label={it.NAME} style={{marginLeft: 0}} value={`${CODE}_${idx}`}/>))}
+							(<Picker.Item label={it.NAME} value={`${CODE}_${idx}`}/>))}
 
               </Picker>
             </Item>
-            </View>
 );
   }
 
   inputItem = (item) => {
     const { NAME } = item;
-    return (<Item style={{ flexDirection: "column", alignItems: "flex-start", borderBottomWidth: 0, marginLeft: 0, borderColor: "#000", marginTop: 5 }}>
-              <Label style={{marginLeft: 5, marginBottom: 5, color: "#000"}}>{NAME}</Label>
-              <Input style={{ width: "100%", borderRadius: 8, borderColor: "#D9D5DC",borderWidth: 2, marginBottom: 5}} keyboardType="numeric"/>
+    return (<Item floatingLabel>
+              <Label>{NAME}</Label>
+              <Input keyboardType="numeric"/>
           </Item>
           );
   }
@@ -103,15 +100,12 @@ class MaquetteForm extends React.Component {
   }
 
   render() {
-    console.log(this.state.selected2);
+
     return (
-        <Form style={{}} >
-            <ScrollView>
-              <Text>M01</Text>
+        <Form style={{height:1000}}>
           {
             this.props.metadata.struct.filter(item => item.TABL === this.props.maquetteName).filter(item => item.num).map(this.chooseInput)
           }
-          </ScrollView>
         </Form>
 
     );
