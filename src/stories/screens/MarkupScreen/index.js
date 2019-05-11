@@ -3,8 +3,8 @@ import {Container, Content, Header, Body, Title, Button, Text, Icon, Footer, Lef
 // import {FooterTab} from "../BlankPage";
 import { ScrollView, StyleSheet, View, Alert } from "react-native";
 import ButtonsScrollable from "../../../stories/components/ButtonsScrollable";
-import ModalInner from '../../../stories/components/ModalInner'
-import Modal from 'react-native-modal'
+import ModalInner from "../../../stories/components/ModalInner";
+import Modal from "react-native-modal";
 
 class Markup extends React.Component {
     constructor(props) {
@@ -47,7 +47,6 @@ class Markup extends React.Component {
     };
 
     render() {
-        console.log('rendering', this.props.makets)
         return (
             <Container>
                 <Header style={{backgroundColor: "#333", height: 64}} androidStatusBarColor={"#333"}>
@@ -96,7 +95,7 @@ class Markup extends React.Component {
                             swipeDirection="left"
                             onBackdropPress={() => this.setState({ isVisible: false })}
                         >
-                            <View style={{ flex: 1, backgroundColor: '#fff' }}>
+                            <View style={{ flex: 1, backgroundColor: "#fff" }}>
                                 <ModalInner/>
                                 <Text>{this.props.prop}</Text>
                             </View>
@@ -107,10 +106,10 @@ class Markup extends React.Component {
                     </ScrollView>
                 </View>
 
-                <Footer style={{borderTopWidth: 1, borderColor: '#000', height: 75}}>
+                <Footer style={{borderTopWidth: 1, borderColor: "#000", height: 75}}>
                     <FooterTab style={{backgroundColor: "#333"}}>
                         <Button
-                            vertical style={{width: 75, height: 75, flex: 0, backgroundColor: '#333', borderWidth: 1, borderColor: '#000'}}
+                            vertical style={{width: 75, height: 75, flex: 0, backgroundColor: "#333", borderWidth: 1, borderColor: "#000"}}
                             onPress={() => {
                                 this.setState({isVisible: true});
                             }}
@@ -132,7 +131,7 @@ class Markup extends React.Component {
                             <Icon active name="paper"/>
                             <Text>Зберегти</Text>
                         </Button>
-                        <Button vertical style={{width: 75, height: 75, flex: 0, backgroundColor: '#333', borderWidth: 1, borderColor: '#000'}}>
+                        <Button vertical style={{width: 75, height: 75, flex: 0, backgroundColor: "#333", borderWidth: 1, borderColor: "#000"}}>
                             <Icon name="add-circle"/>
                         </Button>
                     </FooterTab>

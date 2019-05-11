@@ -1,14 +1,12 @@
 import * as React from "react";
 import { Image, Platform } from "react-native";
 import { Container, Content, Header, Body, Title, Button, Text, View, Icon, Footer } from "native-base";
-//import styles from "./styles";
-// import { Image } from "react-native";
-export interface Props {
-	loginForm: any,
-	onLogin: Function,
-}
-export interface State {}
-class Login extends React.Component<Props, State> {
+import DeviceInfo from "react-native-device-info";
+const DeviceUUID = DeviceInfo.getUniqueID();
+
+
+
+class Login extends React.Component{
 	render() {
 		return (
 			<Container>
@@ -22,7 +20,7 @@ class Login extends React.Component<Props, State> {
 						<Title>Tax</Title>
 						<View padder>
 							<Text style={{ color: Platform.OS === "ios" ? "#000" : "#FFF" }}>
-								Some text
+								{`Device UID: ${DeviceUUID}`}
 							</Text>
 						</View>
 					</Body>

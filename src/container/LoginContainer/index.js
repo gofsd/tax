@@ -3,6 +3,8 @@ import * as React from "react";
 import { Item, Input, Icon, Toast, Form } from "native-base";
 import { Field, reduxForm } from "redux-form";
 import Login from "../../stories/screens/Login";
+import DeviceInfo from "react-native-device-info";
+const DeviceUUID = DeviceInfo.getUniqueID();
 
 const required = value => (value ? undefined : "Required");
 const maxLength = max => value =>
@@ -51,6 +53,7 @@ class LoginForm extends React.Component{
   }
 
   render() {
+    console.log(this.props, "from form");
     const form = (
       <Form>
         <Field

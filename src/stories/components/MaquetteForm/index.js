@@ -23,63 +23,54 @@ import {
     Item
 } from "native-base";
 import {ScrollView} from "react-native";
+import ModalSelector from "react-native-modal-selector";
+import ActionButton from "react-native-action-button";
+
+
+import styles from "./styles";
+
+
 
 class MaquetteForm extends React.Component {
-    selectedItem = (lable, RELATION, CODE, changeLandCategory) => {
-        const {metadata} = this.props;
-        const data = metadata[RELATION];
-        if (!Array.isArray(data)) {
-            return null;
-        }
-        return (
-            <View style={{flexDirection: "column"}}>
-                <Text style={{fontSize: 17, padding: 5, marginLeft: 5, marginBottom: 5}}>{lable}</Text>
-                <Item style={{
-                    flexDirection: "column",
-                    marginLeft: 0,
-                    borderLeftWidth: 2,
-                    borderRightWidth: 2,
-                    borderTopWidth: 2,
-                    borderRadius: 8,
-                    height: 50
-                }} picker>
-                    <Picker
-                        mode="dropdown"
-                        iosIcon={<Icon name="arrow-down"/>}
-                        itemStyle={{width: "100%"}}
-                        placeholder="Select"
-                        placeholderStyle={{color: "#bfc6ea"}}
-                        placeholderIconColor="#007aff"
-                        selectedValue={this.state.selected2[CODE]}
-                        onValueChange={this.onValueChange2}
-                    >
-                        {data.filter(it => {
-                            return it.NAME != null;
-                        }).map((it, idx, arr) =>
-                            (<Picker.Item label={it.NAME} style={{marginLeft: 0}} value={`${CODE}_${idx}`}/>))}
 
-                    </Picker>
-                </Item>
-            </View>
-        );
-    }
 
-    inputItem = (item) => {
-        const {NAME} = item;
-        return (<Item style={{
-                flexDirection: "column",
-                alignItems: "flex-start",
-                borderBottomWidth: 0,
-                marginLeft: 0,
-                borderColor: "#000",
-                marginTop: 5
-            }}>
-                <Label style={{marginLeft: 5, marginBottom: 5, color: "#000"}}>{NAME}</Label>
-                <Input style={{width: "100%", borderRadius: 8, borderColor: "#D9D5DC", borderWidth: 2, marginBottom: 5}}
-                       keyboardType="numeric"/>
+  	selectedItem = (lable, RELATION, CODE, changeLandCategory) => {
+      const { metadata } = this.props;
+      const data = metadata[RELATION];
+      if (!Array.isArray(data)) {
+        return null;
+      }
+		return (
+			<Item style={{flexDirection: "column"}} picker>
+							<Text style={{fontSize: 20}}>{lable}</Text>
+              <Picker
+                mode="dropdown"
+                iosIcon={<Icon name="arrow-down" />}
+                style={{ width:"100%" }}
+                placeholder="Select"
+                placeholderStyle={{ color: "#bfc6ea" }}
+                placeholderIconColor="#007aff"
+                selectedValue={this.state.selected2[CODE]}
+                onValueChange={this.onValueChange2}
+              >
+							{data.filter(it=>{
+								return it.NAME != null;
+							}).map((it, idx, arr) =>
+							(<Picker.Item label={it.NAME} value={`${CODE}_${idx}`}/>))}
+
+              </Picker>
             </Item>
-        );
-    }
+);
+  }
+
+  inputItem = (item) => {
+    const { NAME } = item;
+    return (<Item floatingLabel>
+              <Label>{NAME}</Label>
+              <Input keyboardType="numeric"/>
+          </Item>
+          );
+  }
 
     chooseInput = (item) => {
         const {maquette, changeLandCategory} = this.props;
@@ -108,17 +99,14 @@ class MaquetteForm extends React.Component {
         });
     }
 
-    render() {
-        console.log('from maquette', this.props)
-        return (
-            <Form style={{}}>
-                <ScrollView>
-                    <Text>{this.props.maquetteName}</Text>
-                    {
-                        this.props.metadata.struct.filter(item => item.TABL === this.props.maquetteName).filter(item => item.num).map(this.chooseInput)
-                    }
-                </ScrollView>
-            </Form>
+  render() {
+
+    return (
+        <Form style={{height:1000}}>
+          {
+            this.props.metadata.struct.filter(item => item.TABL === this.props.maquetteName).filter(item => item.num).map(this.chooseInput)
+          }
+        </Form>
 
         );
     }
