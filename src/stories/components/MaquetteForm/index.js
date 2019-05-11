@@ -1,27 +1,28 @@
 import * as React from "react";
 import {
-  Container,
-  Header,
-  Title,
-  Content,
-  Text,
-  Button,
-  Icon,
-  Left,
-  Body,
-  Right,
-  List,
-  ListItem,
-  SwipeRow,
-  View,
-  Form,
-  Picker,
-  Label,
-  Input,
-  Footer,
-  FooterTab,
-  Item
+    Container,
+    Header,
+    Title,
+    Content,
+    Text,
+    Button,
+    Icon,
+    Left,
+    Body,
+    Right,
+    List,
+    ListItem,
+    SwipeRow,
+    View,
+    Form,
+    Picker,
+    Label,
+    Input,
+    Footer,
+    FooterTab,
+    Item
 } from "native-base";
+import {ScrollView} from "react-native";
 import ModalSelector from "react-native-modal-selector";
 import ActionButton from "react-native-action-button";
 
@@ -71,33 +72,32 @@ class MaquetteForm extends React.Component {
           );
   }
 
-  chooseInput = (item) => {
-    const { maquette, changeLandCategory } = this.props;
-    ///console.log(item, "FROM CHOOSE INPUTE");
-    if (!item.RELATION) {
-      return this.inputItem(item, item.CODE);
-    } else {
-         //   return this.inputItem(item);
-      if (item.TABL === "M01" && item.CODE === "KAKZ")
-      {
-        return this.selectedItem(item.NAME, item.RELATION, item.CODE, changeLandCategory);
-      }
-      return this.selectedItem(item.NAME, item.RELATION, item.CODE);
+    chooseInput = (item) => {
+        const {maquette, changeLandCategory} = this.props;
+        ///console.log(item, "FROM CHOOSE INPUTE");
+        if (!item.RELATION) {
+            return this.inputItem(item, item.CODE);
+        } else {
+            //   return this.inputItem(item);
+            if (item.TABL === "M01" && item.CODE === "KAKZ") {
+                return this.selectedItem(item.NAME, item.RELATION, item.CODE, changeLandCategory);
+            }
+            return this.selectedItem(item.NAME, item.RELATION, item.CODE);
+        }
     }
-  }
-  state = {
-    selected2: {}
-  }
+    state = {
+        selected2: {}
+    }
 
-  onValueChange2 = (value, some) => {
-    const params = value.split("_");
-    const { selected2 } = this.state;
-    selected2[params[0]] = value;
-    console.log(value, "ssd", some);
-    this.setState({
-      selected2
-    });
-  }
+    onValueChange2 = (value, some) => {
+        const params = value.split("_");
+        const {selected2} = this.state;
+        selected2[params[0]] = value;
+        console.log(value, "ssd", some);
+        this.setState({
+            selected2
+        });
+    }
 
   render() {
 
@@ -108,12 +108,12 @@ class MaquetteForm extends React.Component {
           }
         </Form>
 
-    );
-  }
+        );
+    }
 }
 
 MaquetteForm.defaultProps = {
-  list: ["First ittem", "second item"],
+    list: ["First ittem", "second item"],
 };
 
 export default MaquetteForm;

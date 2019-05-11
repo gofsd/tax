@@ -6,9 +6,7 @@ import ButtonsScrollable from "../../../stories/components/ButtonsScrollable";
 import ModalInner from "../../../stories/components/ModalInner";
 import Modal from "react-native-modal";
 
-class Login extends React.Component {
-//<this.state.MForm maquette={this.state.maquette}  stateIn={"Поточний"} changeLandCategory = {(id) =>{console.log(id, "set category"); this.setState({lantCatId: id});}}/>
-
+class Markup extends React.Component {
     constructor(props) {
         super();
         this.state = {
@@ -16,12 +14,39 @@ class Login extends React.Component {
             lantCatId: 3,
             maquette: "M01",
             maqByCategory: props.maket_availability.filter(item => item.kakz === 3 && (item.available === 1 || item.available === 2)),
-            isVisible: false
+            isVisible: false,
         };
     }
 
+    componentDidMount() {
+        this.findAvailable()
+    }
+
+    findAvailable = () => {
+        const { selectedKakz, maket_availability, createMakets } = this.props;
+
+        let makets = [];
+        let maketsM10 = [];
+
+        maket_availability.map((item) => {
+            if (item.kakz === selectedKakz && item.subtable === 0 && item.available !== 0) {
+                makets.push({
+                    id: Number(item.tabl),
+                    availability: item.available,
+                })
+            }
+            if (item.kakz === selectedKakz && item.subtable !== 0 && item.available !== 0) {
+                maketsM10.push({
+                    id: Number(item.subtable),
+                    availability: item.available,
+                })
+            }
+        });
+
+        createMakets(makets, maketsM10)
+    };
+
     render() {
-        console.log(this.props, "from markupo");
         return (
             <Container>
                 <Header style={{backgroundColor: "#333", height: 64}} androidStatusBarColor={"#333"}>
@@ -43,7 +68,12 @@ class Login extends React.Component {
                     style={{backgroundColor: "#fff", flexDirection: "row", flex: 1, justifyContent: "space-between"}}
                 >
                     <ScrollView style={style.leftButtonsContainer}>
-                        <ButtonsScrollable changeForm={this.props.changeForm} number={18} flag={"layout"}/>
+                        <ButtonsScrollable
+                            changeForm={this.props.changeForm}
+                            data={this.props.makets.M}
+                            children={this.props.makets.children}
+                            flag={"layout"}
+                        />
                     </ScrollView>
                     <View style={{flex: 1}}>
                         <View style={{flex: -1, flexDirection: "row"}}>
@@ -56,7 +86,6 @@ class Login extends React.Component {
                         </View>
                         <ScrollView style={{padding: 10}}>
                             <this.state.MForm stateIn={"Поточний"} changeLandCategory={(id) => {
-                                console.log(id, "set category");
                                 this.setState({lantCatId: id});
                             }}/>
                         </ScrollView>
@@ -73,7 +102,7 @@ class Login extends React.Component {
                         </Modal>
                     </View>
                     <ScrollView style={style.rightButtonsContainer}>
-                        <ButtonsScrollable number={18} flag={"saw"}/>
+                        <ButtonsScrollable data={[1, 2, 3, 4, 5]} flag={"saw"}/>
                     </ScrollView>
                 </View>
 
@@ -95,7 +124,10 @@ class Login extends React.Component {
                             <Icon name="trash"/>
                             <Text>Видалити</Text>
                         </Button>
-                        <Button vertical>
+                        <Button
+                            vertical
+                            onPress={() => this.findAvailable()}
+                        >
                             <Icon active name="paper"/>
                             <Text>Зберегти</Text>
                         </Button>
@@ -136,4 +168,4 @@ const style = StyleSheet.create({
     }
 });
 
-export default Login;
+export default Markup;
