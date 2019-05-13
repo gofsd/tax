@@ -20,33 +20,69 @@ class ButtonsScrollable extends React.Component {
         this.createButtons(data, flag)
     }
 
+    componentWillMount() {
+        const { data, flag } = this.props;
+
+        if (flag === 'children') this.createButtons(data, flag)
+    }
+
     createButtons = (data, flag) => {
         let buttons = [];
 
-        data.map((item) => {
-            buttons.push({
-                id: (flag === 'saw') ? item : (item.availability === 2) ? item.id : null,
-                flag: flag,
-                isActive: item.id === 1,
-                isChildren: flag === 'children'
+        if (flag === 'layout') {
+            data.M.map((item, index) => {
+                buttons.push({
+                    id: (item.availability === 2 || item.on) ? item.id : null,
+                    flag: flag,
+                    isActive: index === 0,
+                });
             });
-        });
 
-        if (this.props.children && this.props.children.length > 0) {
-            buttons.push({
-                id: 10,
-                flag: flag,
-                isActive: false,
+            let isM10 = false;
+
+            data.children.forEach((item) => {
+                if (item.availability === 2 || item.on) {
+                    isM10 = true
+                }
+            });
+
+            if (isM10) {
+                buttons.push({
+                    id: 10,
+                    flag: flag,
+                    isActive: false,
+                });
+            }
+        }
+
+        if (flag === 'saw') {
+            data.map((item, index) => {
+                buttons.push({
+                    id: (item.on) ? item.id : null,
+                    flag: flag,
+                    isActive: index === 0,
+                });
+            })
+        }
+
+        if (flag === 'children') {
+            data.map((item, index) => {
+                buttons.push({
+                    id: (item.availability === 2 || item.on) ? item.id : null,
+                    flag: flag,
+                    isActive: index === 0,
+                    isChildren: true,
+                });
             });
         }
 
         buttons.sort((a, b) => {
-            return a.id - b.id
+            return a.id - b.id;
         });
 
         this.setState({
             buttons: buttons
-        })
+        });
     };
 
     handlePress = (flag, i) => {
@@ -57,7 +93,7 @@ class ButtonsScrollable extends React.Component {
     };
 
     render () {
-        const { flag, children } = this.props;
+        const { flag, data } = this.props;
         const { [flag]: activeID } = this.state;
 
         return this.state.buttons.map((button) => (button.id) ? <SimpleButton
@@ -66,7 +102,7 @@ class ButtonsScrollable extends React.Component {
             flag={button.flag}
             isActive={button.id === activeID && button.flag === flag}
             isChildren={button.isChildren}
-            children={children}
+            children={(button.id === 10 && flag === 'layout') ? data.children : null}
             onPress={this.handlePress}
         /> : null);
     }

@@ -77,7 +77,6 @@ class MaquetteForm extends React.Component {
 
     chooseInput = (item) => {
         const {maquette, changeLandCategory} = this.props;
-        ///console.log(item, "FROM CHOOSE INPUTE");
         if (!item.RELATION) {
             return this.inputItem(item, item.CODE);
         } else {
@@ -96,7 +95,6 @@ class MaquetteForm extends React.Component {
         const params = value.split("_");
         const {selected2} = this.state;
         selected2[params[0]] = value;
-        console.log(value, "ssd", some);
         this.setState({
             selected2
         });

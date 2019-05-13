@@ -27,7 +27,7 @@ const mapStateToProps = state => ({
 
 	makets: state.mainForm.makets,
 
-	selectedKakz: 60,
+	selectedKakz: 3,
 	// quarter_num: state.filter.kv_num,
 	// forestry_name: state.filter.name,
 	// department_num: state.department,

@@ -11,7 +11,6 @@ export const initMetadata = () => async (dispatch, getState) => {
     await dispatch(importMaquette("M01", maquetteData));
     console.log(params, maquetteData, "from init metadata");
     const { STRUCTURERBD, maket_availability, struct } = metadata;
-    console.log(metadata, "from init");
     const params = { STRUCTURERBD, maket_availability, struct };
     params.STRUCTURERBD.forEach(item => params[item.RELATION] = metadata[item.RELATION]);
 

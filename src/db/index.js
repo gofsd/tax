@@ -6,7 +6,6 @@ const prepareDb = async () => {
     await migration(db);
     const withInterface = addInterface(db);
     const resData = await withInterface.select();
-    console.log(resData, "from db idx");
     return db;
 
 };
