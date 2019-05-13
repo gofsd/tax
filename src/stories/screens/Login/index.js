@@ -17,10 +17,10 @@ class Login extends React.Component{
 						  style={{width: 200, height: 150}}
               source={require("../../../img/logo.jpg")}
             />
-						<Title>Tax</Title>
+						<Title>Таксатор</Title>
 						<View padder>
 							<Text style={{ color: Platform.OS === "ios" ? "#000" : "#FFF" }}>
-								{`Device UID: ${DeviceUUID}`}
+								{`ID пристрою: ${DeviceUUID}`}
 							</Text>
 						</View>
 					</Body>
@@ -29,20 +29,11 @@ class Login extends React.Component{
 					{this.props.loginForm}
 					<View padder>
 						<Button style={{backgroundColor: "#333"}} block onPress={() => this.props.onLogin()}>
-							<Text>Login</Text>
+							<Text>Вхід</Text>
 						</Button>
 					</View>
 				</Content>
-				<Footer style={{ backgroundColor: "#F8F8F8" }}>
-					<View style={{ alignItems: "center", opacity: 0.5, flexDirection: "row" }}>
-						<View padder>
-							<Text style={{ color: "#000" }}>Made with love at </Text>
-						</View>
-						<Image
-							source={{ uri: "https://geekyants.com/images/logo-dark.png" }}
-							style={{ width: 422 / 4, height: 86 / 4 }}
-						/>
-					</View>
+				<Footer style={{ backgroundColor: "transparent" }}>
 				</Footer>
 			</Container>
 		);
