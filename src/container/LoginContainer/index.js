@@ -53,7 +53,6 @@ class LoginForm extends React.Component{
   }
 
   render() {
-    console.log(this.props, "from form");
     const form = (
       <Form>
         <Field
