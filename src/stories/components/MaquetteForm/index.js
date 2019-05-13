@@ -22,9 +22,11 @@ import {
     FooterTab,
     Item
 } from "native-base";
-import {ScrollView} from "react-native";
+import {ScrollView, StyleSheet} from "react-native";
 import ModalSelector from "react-native-modal-selector";
 import ActionButton from "react-native-action-button";
+// import SearchableDropdown from "react-native-searchable-dropdown";
+import RNPicker from "rn-modal-picker";
 
 
 import styles from "./styles";
@@ -40,10 +42,23 @@ class MaquetteForm extends React.Component {
       if (!Array.isArray(data)) {
         return null;
       }
+
+      // const items = {data.filter(it=>{ return it.NAME != null;}).map((it, idx, arr) => ({
+      // name: it.NAME,
+      // id: {`${CODE}_${idx}`}
+      // })))}
+
+      const items = data.filter(it => it.NAME != null).map((it, idx) => ({
+        name: it.NAME,
+        id: `${CODE}_${idx}`
+      }) );
+
+      console.info(items);
+
 		return (
       <View>
 			<Text style={{fontSize: 17, marginLeft: 5, marginTop: 5}}>{lable}</Text>
-			<Item style={{flexDirection: "column", borderColor: "#d9d9d9", borderLeftWidth: 2, borderRightWidth: 2, borderTopWidth: 2, marginLeft: 0, marginTop: 5, borderRadius: 8, flex: 0, height: 50}} picker>
+			{/* <Item style={{flexDirection: "column", borderColor: "#d9d9d9", borderLeftWidth: 2, borderRightWidth: 2, borderTopWidth: 2, marginLeft: 0, marginTop: 5, borderRadius: 8, flex: 0, height: 50}} picker>
               <Picker
                 mode="dropdown"
                 iosIcon={<Icon name="arrow-down" />}
@@ -55,13 +70,65 @@ class MaquetteForm extends React.Component {
                 selectedValue={this.state.selected2[CODE]}
                 onValueChange={this.onValueChange2}
               >
-							{data.filter(it=>{
+							{/* {data.filter(it=>{
 								return it.NAME != null;
 							}).map((it, idx, arr) =>
-							(<Picker.Item label={it.NAME} value={`${CODE}_${idx}`}/>))}
+              ({
+              name: it.NAME,
+              id: {`${CODE}_${idx}`}
+              }))} */}
 
-              </Picker>
-            </Item>
+              {/* </Picker> */}
+            {/* // </Item> */ }
+            {/* ///// */}
+            <RNPicker
+          dataSource={items}
+          dummyDataSource={items}
+          defaultValue={false}
+          pickerTitle={"Country Picker"}
+          showSearchBar={true}
+          disablePicker={false}
+          changeAnimation={"none"}
+          searchBarPlaceHolder={"Search....."}
+          showPickerTitle={true}
+          // searchBarContainerStyle={this.props.searchBarContainerStyle}
+          pickerStyle={Styles.pickerStyle}
+          selectedLabel={this.onValueChange2}
+          placeHolderLabel={this.state.placeHolderText}
+          selectLabelTextStyle={Styles.selectLabelTextStyle}
+          placeHolderTextStyle={Styles.placeHolderTextStyle}
+          dropDownImageStyle={Styles.dropDownImageStyle}
+          // dropDownImage={require("./res/ic_drop_down.png")}
+          selectedValue={this.state.selected2[CODE]}
+        />
+            
+            {/* <SearchableDropdown
+        onTextChange={items}
+        this.state.selected2[CODE]
+        onItemSelect={this.onValueChange2}
+        containerStyle={{ padding: 5 }}
+        textInputStyle={{
+          padding: 12,
+          borderWidth: 1,
+          borderColor: "#ccc",
+          borderRadius: 5,
+        }}
+        itemStyle={{
+          padding: 10,
+          marginTop: 2,
+          backgroundColor: "#ddd",
+          borderColor: "#bbb",
+          borderWidth: 1,
+          borderRadius: 5,
+        }}
+        itemTextStyle={{ color: "#222" }}
+        itemsContainerStyle={{ maxHeight: 140 }}
+        items={items}
+        defaultIndex={1}
+        placeholder="placeholder"
+        resetValue={false}
+        underlineColorAndroid="transparent"
+      /> */}
             </View>
 );
   }
@@ -116,5 +183,70 @@ class MaquetteForm extends React.Component {
 MaquetteForm.defaultProps = {
     list: ["First ittem", "second item"],
 };
+const Styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+
+  searchBarContainerStyle: {
+    marginBottom: 10,
+    flexDirection: "row",
+    height: 40,
+    shadowOpacity: 1.0,
+    shadowRadius: 5,
+    shadowOffset: {
+      width: 1,
+      height: 1
+    },
+    backgroundColor: "rgba(255,255,255,1)",
+    shadowColor: "#d3d3d3",
+    borderRadius: 10,
+    elevation: 3,
+    marginLeft: 10,
+    marginRight: 10
+  },
+
+  selectLabelTextStyle: {
+    color: "#000",
+    textAlign: "left",
+    width: "99%",
+    padding: 10,
+    flexDirection: "row"
+  },
+  placeHolderTextStyle: {
+    color: "#D3D3D3",
+    padding: 10,
+    textAlign: "left",
+    width: "99%",
+    flexDirection: "row"
+  },
+  dropDownImageStyle: {
+    marginLeft: 10,
+    width: 10,
+    height: 10,
+    alignSelf: "center"
+  },
+
+  pickerStyle: {
+    marginLeft: 18,
+    elevation:3,
+    paddingRight: 25,
+    marginRight: 10,
+    marginBottom: 2,
+    shadowOpacity: 1.0,
+    shadowOffset: {
+      width: 1,
+      height: 1
+    },
+    borderWidth:1,
+    shadowRadius: 10,
+    backgroundColor: "rgba(255,255,255,1)",
+    shadowColor: "#d3d3d3",
+    borderRadius: 5,
+    flexDirection: "row"
+  }
+});
 
 export default MaquetteForm;
