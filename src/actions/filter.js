@@ -1,5 +1,5 @@
 import seeds from "../db/seeds";
-import { SET_FILTER, CHANGE_MAQUETTE, CREATE_MAKETS, SET_MAKETS } from "../constants/actions";
+import { SET_FILTER, CHANGE_MAQUETTE, CREATE_MAKETS, SET_MAKETS, SELECT_SAW } from "../constants/actions";
 
 
 const setFilter = (params) => {
@@ -7,6 +7,13 @@ const setFilter = (params) => {
         type: SET_FILTER,
         payload: params
     };
+};
+
+export const selectSaw = (id) => {
+    return {
+        type: SELECT_SAW,
+        payload: id,
+    }
 };
 
 export const changeForm = (name) => {

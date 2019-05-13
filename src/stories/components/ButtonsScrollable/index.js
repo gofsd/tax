@@ -56,9 +56,10 @@ class ButtonsScrollable extends React.Component {
         }
 
         if (flag === 'saw') {
+            console.log(data, 'data')
             data.map((item, index) => {
                 buttons.push({
-                    id: (item.on) ? item.id : null,
+                    id: item.id,
                     flag: flag,
                     isActive: index === 0,
                 });

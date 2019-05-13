@@ -7,7 +7,8 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = (state) => ({
-    data: state.mainForm.makets,
+    data: state.mainForm.saws[state.mainForm.selectedSaw],
+    saws: state.mainForm.saws,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModalInner);

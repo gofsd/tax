@@ -14,6 +14,7 @@ class Markup extends React.Component {
             maquette: "M01",
             maqByCategory: props.maket_availability.filter(item => item.kakz === 3 && (item.available === 1 || item.available === 2)),
             isVisible: false,
+            isVisible2: false,
         };
     }
 
@@ -45,6 +46,17 @@ class Markup extends React.Component {
         });
 
         createMakets(makets, maketsM10)
+    };
+
+    getSaws = () => {
+        const { saws } = this.props;
+
+        return saws.map((saw) => {
+            return {
+                id: (saw.on) ? saw.id : null,
+                on: saw.on,
+            }
+        })
     };
 
     render() {
@@ -96,12 +108,22 @@ class Markup extends React.Component {
                             onBackdropPress={() => this.setState({ isVisible: false })}
                         >
                             <View style={{ flex: 1, backgroundColor: "#fff" }}>
-                                <ModalInner/>
+                                <ModalInner flag={'layout'}/>
+                            </View>
+                        </Modal>
+                        <Modal
+                            isVisible={this.state.isVisible2}
+                            onSwipeComplete={() => this.setState({ isVisible2: false })}
+                            swipeDirection="left"
+                            onBackdropPress={() => this.setState({ isVisible2: false })}
+                        >
+                            <View style={{ flex: 1, backgroundColor: "#fff" }}>
+                                <ModalInner flag={'saw'}/>
                             </View>
                         </Modal>
                     </View>
                     <ScrollView style={style.rightButtonsContainer}>
-                        <ButtonsScrollable data={[{id: 1, on: true}, {id: 2, on: true}]} flag={"saw"}/>
+                        <ButtonsScrollable data={this.getSaws()} flag={"saw"}/>
                     </ScrollView>
                 </View>
 
@@ -130,7 +152,12 @@ class Markup extends React.Component {
                             <Icon active name="paper"/>
                             <Text>Зберегти</Text>
                         </Button>
-                        <Button vertical style={{width: 75, height: 75, flex: 0, backgroundColor: "#333", borderWidth: 1, borderColor: "#000"}}>
+                        <Button
+                            vertical style={{width: 75, height: 75, flex: 0, backgroundColor: "#333", borderWidth: 1, borderColor: "#000"}}
+                            onPress={() => {
+                                this.setState({isVisible2: true});
+                            }}
+                        >
                             <Icon name="add-circle"/>
                         </Button>
                     </FooterTab>
