@@ -1,5 +1,4 @@
 import * as metadata from "../seeds";
-import Realm from "realm";
 
 const { STRUCTURERBD, maket_availability } = metadata;
 const params = { STRUCTURERBD, maket_availability };
@@ -9,11 +8,11 @@ metadata.STRUCTURERBD.forEach(item => params[item.RELATION] = metadata[item.RELA
 const getRealmType = (type) => {
     switch (type) {
         case "SMALLINT":
-            return "int";
+            return "int?";
         case "INTEGER":
-            return "int";
+            return "int?";
         default:
-            return "float";
+            return "float?";
     }
 };
 
@@ -26,11 +25,20 @@ const addToStructurerBdMetadata = () => {
 
 export const schemas = metadata.STRUCTURERBD.reduce((ac, item, i, arr) => {
     if (!ac[item.TABL]) {
-        const properties = {};
+        const properties = {
+          id: "string",
+          CODEGIS: "string?",
+          KALG: "int?",
+          KAIG: "int?",
+          KAWN: "int?",
+          KAVN: "int?",
+          KARN: "int?"
+        };
         properties.state = getRealmType("INTEGER");
         properties[item.CODE] = getRealmType(item.TYPS);
         ac[item.TABL] = {
             name: item.TABL,
+            primaryKey: "id",
             properties
         };
     } else {
@@ -64,39 +72,39 @@ const PersonSchema = {
   }
 };
 
-Realm.open({schema: [CarSchema, PersonSchema]})
-  .then(realm => {
-    // Create Realm objects and write to local storage
-    realm.write(() => {
-      const myCar = realm.create("Car", {
-        make: "Honda",
-        model: "Civic",
-        miles: 1000,
-      });
-      myCar.miles += 20; // Update a property value
-    });
+// Realm.open({schema: [CarSchema, PersonSchema]})
+//   .then(realm => {
+//     // Create Realm objects and write to local storage
+//     realm.write(() => {
+//       const myCar = realm.create("Car", {
+//         make: "Honda",
+//         model: "Civic",
+//         miles: 1000,
+//       });
+//       myCar.miles += 20; // Update a property value
+//     });
 
-    // Query Realm for all cars with a high mileage
-    const cars = realm.objects("Car").filtered("miles > 1000");
+//     // Query Realm for all cars with a high mileage
+//     const cars = realm.objects("Car").filtered("miles > 1000");
 
-    // Will return a Results object with our 1 car
-    console.log(cars.length, "from realm"); // => 1
+//     // Will return a Results object with our 1 car
+//     console.log(cars.length, "from realm"); // => 1
 
-    // Add another car
-    realm.write(() => {
-      const myCar = realm.create("Car", {
-        make: "Ford",
-        model: "Focus",
-        miles: 2000,
-      });
-    });
+//     // Add another car
+//     realm.write(() => {
+//       const myCar = realm.create("Car", {
+//         make: "Ford",
+//         model: "Focus",
+//         miles: 2000,
+//       });
+//     });
 
-    // Query results are updated in realtime
-    cars.length; // => 2
-  })
-  .catch(error => {
-    console.log(error);
-  });
+//     // Query results are updated in realtime
+//     cars.length; // => 2
+//   })
+//   .catch(error => {
+//     console.log(error);
+//   });
 
 
 const migrateDb = (db) => {

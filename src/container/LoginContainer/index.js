@@ -1,9 +1,11 @@
 // @flow
 import * as React from "react";
 import { Item, Input, Icon, Toast, Form } from "native-base";
-import { Field, reduxForm } from "redux-form";
+import { Field, reduxForm, formValueSelector } from "redux-form";
+import { connect } from "react-redux";
 import Login from "../../stories/screens/Login";
 import DeviceInfo from "react-native-device-info";
+import { loginRequest } from "../../actions/api";
 const DeviceUUID = DeviceInfo.getUniqueID();
 
 const required = value => (value ? undefined : "Required");
@@ -39,10 +41,22 @@ class LoginForm extends React.Component{
     );
   }
 
-  login() {
+  login = async () => {
+    const { username, password } = this.props;
     if (this.props.valid) {
-      this.props.navigation.navigate("FilterOfDepartment");
+        const res = await this.props.login({username, password});
+        if (res.status == 200){
+          this.props.navigation.navigate("FilterOfDepartment");
         } else {
+          Toast.show({
+            text: res.data.message,
+            duration: 2000,
+            position: "top",
+            textStyle: { textAlign: "center" }
+          });
+        }
+
+      } else {
       Toast.show({
         text: "Enter Valid Username & password!",
         duration: 2000,
@@ -79,4 +93,18 @@ class LoginForm extends React.Component{
 const LoginContainer = reduxForm({
   form: "login"
 })(LoginForm);
-export default LoginContainer;
+const selector = formValueSelector("login");
+const mapStateToProps = (state) => {
+  return {
+      username: selector(state, "login"),
+      password: selector(state, "password")
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    login: (params) => dispatch(loginRequest(params))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer);

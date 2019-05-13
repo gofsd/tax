@@ -41,12 +41,14 @@ class MaquetteForm extends React.Component {
         return null;
       }
 		return (
-			<Item style={{flexDirection: "column"}} picker>
-							<Text style={{fontSize: 20}}>{lable}</Text>
+      <View>
+			<Text style={{fontSize: 17, marginLeft: 5, marginTop: 5}}>{lable}</Text>
+			<Item style={{flexDirection: "column", borderColor: "#d9d9d9", borderLeftWidth: 2, borderRightWidth: 2, borderTopWidth: 2, marginLeft: 0, marginTop: 5, borderRadius: 8, flex: 0, height: 50}} picker>
               <Picker
                 mode="dropdown"
                 iosIcon={<Icon name="arrow-down" />}
-                style={{ width:"100%" }}
+                style={{ width:"100%", borderLeftWidth: 2, borderColor: "#d9d9d9" }}
+                itemStyle={{marginTop: 50}}
                 placeholder="Select"
                 placeholderStyle={{ color: "#bfc6ea" }}
                 placeholderIconColor="#007aff"
@@ -60,14 +62,15 @@ class MaquetteForm extends React.Component {
 
               </Picker>
             </Item>
+            </View>
 );
   }
 
   inputItem = (item) => {
     const { NAME } = item;
-    return (<Item floatingLabel>
-              <Label>{NAME}</Label>
-              <Input keyboardType="numeric"/>
+    return (<Item style={{ flexDirection: "column", alignItems: "flex-start", borderBottomWidth: 0, marginLeft: 0, borderColor: "#000", marginTop: 5 }}>
+    <Label style={{marginLeft: 5, marginBottom: 5, color: "#000"}}>{NAME}</Label>
+    <Input style={{ width: "100%", borderRadius: 8, flex: 0, borderColor: "#D9D5DC",borderWidth: 2, marginBottom: 5}} keyboardType="numeric"/>
           </Item>
           );
   }
