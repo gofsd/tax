@@ -1,9 +1,8 @@
 import * as React from "react";
 import {Container, Content, Header, Body, Title, Button, Text, Icon, Footer, Left, FooterTab, Right} from "native-base";
-// import {FooterTab} from "../BlankPage";
 import { ScrollView, StyleSheet, View, Alert } from "react-native";
 import ButtonsScrollable from "../../../stories/components/ButtonsScrollable";
-import ModalInner from "../../../stories/components/ModalInner";
+import ModalInner from "../../../container/ModalContainer";
 import Modal from "react-native-modal";
 
 class Markup extends React.Component {
@@ -33,12 +32,14 @@ class Markup extends React.Component {
                 makets.push({
                     id: Number(item.tabl),
                     availability: item.available,
+                    on: item.available === 2,
                 })
             }
             if (item.kakz === selectedKakz && item.subtable !== 0 && item.available !== 0) {
                 maketsM10.push({
                     id: Number(item.subtable),
                     availability: item.available,
+                    on: item.available === 2,
                 })
             }
         });
@@ -70,8 +71,7 @@ class Markup extends React.Component {
                     <ScrollView style={style.leftButtonsContainer}>
                         <ButtonsScrollable
                             changeForm={this.props.changeForm}
-                            data={this.props.makets.M}
-                            children={this.props.makets.children}
+                            data={this.props.makets}
                             flag={"layout"}
                         />
                     </ScrollView>
@@ -97,12 +97,11 @@ class Markup extends React.Component {
                         >
                             <View style={{ flex: 1, backgroundColor: "#fff" }}>
                                 <ModalInner/>
-                                <Text>{this.props.prop}</Text>
                             </View>
                         </Modal>
                     </View>
                     <ScrollView style={style.rightButtonsContainer}>
-                        <ButtonsScrollable data={[1, 2, 3, 4, 5]} flag={"saw"}/>
+                        <ButtonsScrollable data={[{id: 1}, {id: 2}, {id: 3}, {id: 4}, {id: 5}]} flag={"saw"}/>
                     </ScrollView>
                 </View>
 
@@ -151,19 +150,15 @@ const style = StyleSheet.create({
         borderColor: "#000",
     },
     leftButtonsContainer: {
-        height: 850,
         width: 75,
         flexGrow: 0,
         flexShrink: 0,
-        overflow: "scroll",
         backgroundColor: "#000",
     },
     rightButtonsContainer: {
-        minHeight: 850,
         width: 75,
         flexGrow: 0,
         flexShrink: 0,
-        overflow: "scroll",
         backgroundColor: "#000",
     }
 });

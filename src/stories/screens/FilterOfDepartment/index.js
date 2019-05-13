@@ -155,7 +155,6 @@ class FilterOfDepartment extends React.Component {
     }
 
     render() {
-        console.log(this.props, "props");
         let index = 0;
         const data = [
             {key: index++, label: "Red Apples"},
