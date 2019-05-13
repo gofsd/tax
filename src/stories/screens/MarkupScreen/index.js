@@ -101,7 +101,7 @@ class Markup extends React.Component {
                         </Modal>
                     </View>
                     <ScrollView style={style.rightButtonsContainer}>
-                        <ButtonsScrollable data={[{id: 1}, {id: 2}, {id: 3}, {id: 4}, {id: 5}]} flag={"saw"}/>
+                        <ButtonsScrollable data={[{id: 1, on: true}, {id: 2, on: true}]} flag={"saw"}/>
                     </ScrollView>
                 </View>
 
