@@ -33,3 +33,5 @@ export const forestries = "/api/tax/profile";
 // }
 export const layout = "/api/tax/data";
 
+export const saveLayouts = "/api/tax/data/save";
+

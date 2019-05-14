@@ -1,13 +1,14 @@
 // @flow
 import { connect } from "react-redux";
 import FilterOfDepartment from "../../stories/screens/FilterOfDepartment";
-
+import { getMaquette, getForestries } from "../../actions/api";
 
 
 
 
 const mapDispatchToProps = dispatch => ({
-
+    getQuarters: async(params) => await dispatch(getMaquette(params)),
+    getForestries: async(params) => await dispatch(getForestries(params))
 });
 
 const mapStateToProps = state => ({

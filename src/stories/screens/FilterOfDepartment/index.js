@@ -21,6 +21,7 @@ import {
     Footer,
     FooterTab,
 } from "native-base";
+import { StyleSheet } from "react-native";
 import ModalSelector from "react-native-modal-selector";
 import ActionButton from "react-native-action-button";
 
@@ -42,6 +43,7 @@ State
 
 
 import SectionedMultiSelect from "react-native-sectioned-multi-select";
+import RNPicker from "rn-modal-picker";
 
 // This is how you can load a local icon
 // You can remove this if you'd like
@@ -154,23 +156,58 @@ class FilterOfDepartment extends React.Component {
         //return this.props.KAIG.map((it, idx, arr) => ({label: it.NAME, id: idx}));
     }
 
+    state = {
+        forestries:[],
+        quartal: [],
+        selected2: {}
+    }
+
+
+    onValueChange2 = (idx, value, CODE) => {
+        const {selected2} = this.state;
+        selected2[CODE] = value;
+        this.setState({
+            selected2
+        });
+    }
+
+    componentDidMount() {
+        this.getQuarters();
+        this.getForestries();
+    }
+
+    getForestries = async() => {
+        const forestries = (await this.props.getForestries()).data.forestries;
+        console.log();
+        this.setState({forestries: forestries.map(it => { const item = this.props.KAIG.find(x => x.KAIG == it.kaig); return {name: item.NAME, id: item.KAIG};})});
+    }
+
+    getQuarters = async () => {
+        const quartal = (await this.props.getQuarters({
+    "table": "M00",
+    "kalg": 13050101,
+    "kaig": 1
+})).data.map(it=> ({id: it.KAWN, name: it.KAWN}));
+        console.log(quartal, "from get qurtels`");
+        this.setState({quartal});
+    }
+
+
+
+
+
     render() {
+        console.log(this.props, this.state, "from other day");
+        // console.log(this.props.getMequette());
+        //  console.log(this.props.getForestries());
+
         let index = 0;
         const data = [
-            {key: index++, label: "Red Apples"},
-            {key: index++, label: "Cherries"},
-            {key: index++, label: "Cranberries"},
-            {key: index++, label: "Pink Grapefruit"},
-            {key: index++, label: "Raspberries"},
-            {key: index++, label: "Beets"},
-            {key: index++, label: "Red Peppers"},
-            {key: index++, label: "Radishes"},
-            {key: index++, label: "Radicchio"},
-            {key: index++, label: "Red Onions"},
-            {key: index++, label: "Red Potatoes"},
-            {key: index++, label: "Rhubarb"},
-            {key: index++, label: "Tomatoes"}
+            {name: "Some name", id: 1},
+            {name: "Sem data", id:2}
         ];
+        if (this.state.forestries.length == 0 || this.state.quartal.length == 0)
+        {return <View />;}
         return (
             <Container style={styles.container}>
                 <Header style={{backgroundColor: "#333"}}>
@@ -183,26 +220,47 @@ class FilterOfDepartment extends React.Component {
                 <Content>
                     <Form>
                         <Body>
-                        <View style={{width: 1000, height: 1000}}>
+                        <View >
 
+           <RNPicker
+          dataSource={this.state.forestries}
+          dummyDataSource={this.state.forestries}
+          defaultValue={false}
+          pickerTitle={"Лicництво"}
+          showSearchBar={true}
+          disablePicker={false}
+          changeAnimation={"none"}
+          searchBarPlaceHolder={"Пошук"}
+          showPickerTitle={true}
+          pickerStyle={Styles.pickerStyle}
+          selectedLabel={this.state.selected2.KAIG}
+          placeHolderLabel={this.state.placeHolderText}
+          selectLabelTextStyle={Styles.selectLabelTextStyle}
+          placeHolderTextStyle={Styles.placeHolderTextStyle}
+          dropDownImageStyle={Styles.dropDownImageStyle}
+          selectedValue={(idx, value) =>this.onValueChange2(idx, value, "KAIG")}
+        />
 
-                            <ModalSelector
-                                data={/*this.props.KAIG.map((it, idx, arr) => ({label: it.NAME, id: it.KAIG}))*/ []}
-                                initValue="Оберiть лiсництво"
-                                supportedOrientations={["landscape"]}
-                                accessible={true}
-                                scrollViewAccessibilityLabel={"Scrollable options"}
-                                cancelButtonAccessibilityLabel={"Cancel Button"}
-                                onChange={this.selectFilter}/>
-                            <ModalSelector
-                                data={this.state.quartal}
-                                initValue="Оберiть квартал"
-                                supportedOrientations={["landscape"]}
-                                accessible={true}
-                                scrollViewAccessibilityLabel={"Scrollable options"}
-                                cancelButtonAccessibilityLabel={"Cancel Button"}
-                                onChange={this.selectFilter}/>
-                            <Button style={{backgroundColor: "#333"}} full info
+           <RNPicker
+          dataSource={this.state.quartal}
+          dummyDataSource={this.state.quartal}
+          defaultValue={false}
+          pickerTitle={"Квартал"}
+          showSearchBar={true}
+          disablePicker={false}
+          changeAnimation={"none"}
+          searchBarPlaceHolder={"Пошук"}
+          showPickerTitle={true}
+          pickerStyle={Styles.pickerStyle}
+          selectedLabel={this.state.selected2.KAWN}
+          placeHolderLabel={this.state.placeHolderText}
+          selectLabelTextStyle={Styles.selectLabelTextStyle}
+          placeHolderTextStyle={Styles.placeHolderTextStyle}
+          dropDownImageStyle={Styles.dropDownImageStyle}
+          selectedValue={(idx, value) =>this.onValueChange2(idx, value, "KAWN")}
+        />
+
+                           <Button style={{backgroundColor: "#333"}} full info
                                     onPress={() => this.props.navigation.navigate("BlankPage")}>
                                 <Text>Шукати</Text>
                             </Button>
@@ -233,5 +291,69 @@ class FilterOfDepartment extends React.Component {
 FilterOfDepartment.defaultProps = {
     list: ["First ittem", "second item"],
 };
+const Styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center"
+  },
 
+  searchBarContainerStyle: {
+    marginBottom: 10,
+    flexDirection: "row",
+    height: 40,
+    shadowOpacity: 1.0,
+    shadowRadius: 5,
+    shadowOffset: {
+      width: 1,
+      height: 1
+    },
+    backgroundColor: "rgba(255,255,255,1)",
+    shadowColor: "#d3d3d3",
+    borderRadius: 10,
+    elevation: 3,
+    marginLeft: 10,
+    marginRight: 10
+  },
+
+  selectLabelTextStyle: {
+    color: "#000",
+    textAlign: "left",
+    width: "99%",
+    padding: 10,
+    flexDirection: "row"
+  },
+  placeHolderTextStyle: {
+    color: "#D3D3D3",
+    padding: 10,
+    textAlign: "left",
+    width: "99%",
+    flexDirection: "row"
+  },
+  dropDownImageStyle: {
+    marginLeft: 10,
+    width: 10,
+    height: 10,
+    alignSelf: "center"
+  },
+
+  pickerStyle: {
+    marginLeft: 18,
+    elevation:3,
+    paddingRight: 25,
+    marginRight: 10,
+    marginBottom: 2,
+    shadowOpacity: 1.0,
+    shadowOffset: {
+      width: 1,
+      height: 1
+    },
+    borderWidth:1,
+    shadowRadius: 10,
+    backgroundColor: "rgba(255,255,255,1)",
+    shadowColor: "#d3d3d3",
+    borderRadius: 5,
+    flexDirection: "row"
+  }
+});
 export default FilterOfDepartment;

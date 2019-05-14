@@ -45,8 +45,17 @@ export const selectMaquette = ( schemaName = "M01", id = "1_1_1" ) => async disp
 
 export const exportMaquette = (schemaName = "M01") => async (dispatch, getState) => {
     const schema = schemas[schemaName];
+    console.log("export maquette 1");
     const realm = await Realm.open({schema: [schema], deleteRealmIfMigrationNeeded: true});
-    const result = realmToPlainObject(realm.objects(schema.name));
+    console.log(realm, "2");
+
+const start = new Date().getTime();
+    const result = realm.objects(schema.name);
+    console.log(result.length, "length collection");
+    const end = new Date().getTime();
+    console.log(end - start, JSON.stringify(result), "end parse" );
+
+
     realm.close();
     return result;
 };

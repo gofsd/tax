@@ -22,9 +22,7 @@ import {
     FooterTab,
     Item
 } from "native-base";
-import {ScrollView, StyleSheet} from "react-native";
-import ModalSelector from "react-native-modal-selector";
-import ActionButton from "react-native-action-button";
+import { StyleSheet} from "react-native";
 // import SearchableDropdown from "react-native-searchable-dropdown";
 import RNPicker from "rn-modal-picker";
 
@@ -43,14 +41,10 @@ class MaquetteForm extends React.Component {
         return null;
       }
 
-      // const items = {data.filter(it=>{ return it.NAME != null;}).map((it, idx, arr) => ({
-      // name: it.NAME,
-      // id: {`${CODE}_${idx}`}
-      // })))}
 
       const items = data.filter(it => it.NAME != null).map((it, idx) => ({
         name: it.NAME,
-        id: `${CODE}_${idx}`
+        id: idx
       }) );
 
       console.info(items);
@@ -58,78 +52,25 @@ class MaquetteForm extends React.Component {
 		return (
       <View>
 			<Text style={{fontSize: 17, marginLeft: 5, marginTop: 5}}>{lable}</Text>
-			{/* <Item style={{flexDirection: "column", borderColor: "#d9d9d9", borderLeftWidth: 2, borderRightWidth: 2, borderTopWidth: 2, marginLeft: 0, marginTop: 5, borderRadius: 8, flex: 0, height: 50}} picker>
-              <Picker
-                mode="dropdown"
-                iosIcon={<Icon name="arrow-down" />}
-                style={{ width:"100%", borderLeftWidth: 2, borderColor: "#d9d9d9" }}
-                itemStyle={{marginTop: 50}}
-                placeholder="Select"
-                placeholderStyle={{ color: "#bfc6ea" }}
-                placeholderIconColor="#007aff"
-                selectedValue={this.state.selected2[CODE]}
-                onValueChange={this.onValueChange2}
-              >
-							{/* {data.filter(it=>{
-								return it.NAME != null;
-							}).map((it, idx, arr) =>
-              ({
-              name: it.NAME,
-              id: {`${CODE}_${idx}`}
-              }))} */}
-
-              {/* </Picker> */}
-            {/* // </Item> */ }
-            {/* ///// */}
-            <RNPicker
+           <RNPicker
           dataSource={items}
           dummyDataSource={items}
           defaultValue={false}
-          pickerTitle={"Country Picker"}
+          pickerTitle={lable}
           showSearchBar={true}
           disablePicker={false}
           changeAnimation={"none"}
-          searchBarPlaceHolder={"Search....."}
+          searchBarPlaceHolder={"Пошук"}
           showPickerTitle={true}
-          // searchBarContainerStyle={this.props.searchBarContainerStyle}
           pickerStyle={Styles.pickerStyle}
-          selectedLabel={this.onValueChange2}
+          selectedLabel={this.state.selected2[CODE]}
           placeHolderLabel={this.state.placeHolderText}
           selectLabelTextStyle={Styles.selectLabelTextStyle}
           placeHolderTextStyle={Styles.placeHolderTextStyle}
           dropDownImageStyle={Styles.dropDownImageStyle}
-          // dropDownImage={require("./res/ic_drop_down.png")}
-          selectedValue={this.state.selected2[CODE]}
+          selectedValue={(idx, value) =>this.onValueChange2(idx, value, CODE)}
         />
-            
-            {/* <SearchableDropdown
-        onTextChange={items}
-        this.state.selected2[CODE]
-        onItemSelect={this.onValueChange2}
-        containerStyle={{ padding: 5 }}
-        textInputStyle={{
-          padding: 12,
-          borderWidth: 1,
-          borderColor: "#ccc",
-          borderRadius: 5,
-        }}
-        itemStyle={{
-          padding: 10,
-          marginTop: 2,
-          backgroundColor: "#ddd",
-          borderColor: "#bbb",
-          borderWidth: 1,
-          borderRadius: 5,
-        }}
-        itemTextStyle={{ color: "#222" }}
-        itemsContainerStyle={{ maxHeight: 140 }}
-        items={items}
-        defaultIndex={1}
-        placeholder="placeholder"
-        resetValue={false}
-        underlineColorAndroid="transparent"
-      /> */}
-            </View>
+           </View>
 );
   }
 
@@ -143,7 +84,7 @@ class MaquetteForm extends React.Component {
   }
 
     chooseInput = (item) => {
-        const {maquette, changeLandCategory} = this.props;
+        const { changeLandCategory} = this.props;
         if (!item.RELATION) {
             return this.inputItem(item, item.CODE);
         } else {
@@ -158,10 +99,9 @@ class MaquetteForm extends React.Component {
         selected2: {}
     }
 
-    onValueChange2 = (value, some) => {
-        const params = value.split("_");
+    onValueChange2 = (idx, value, CODE) => {
         const {selected2} = this.state;
-        selected2[params[0]] = value;
+        selected2[CODE] = value;
         this.setState({
             selected2
         });
