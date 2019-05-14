@@ -30,7 +30,7 @@ export const getSaws = (KAWN = 1, schemaName = "M01" ) => async (dispatch) => {
 export const getQuartels = (KAIG = 1, schemaName = "M00" ) => async (dispatch) => {
     const schema = schemas[schemaName];
     const realm = await Realm.open({schema: [schema], deleteRealmIfMigrationNeeded: true});
-    const result = realm.objects(schema.name);
+    const result = realm.objects(schema.name).snapshot();
     realm.close();
     return result;
 };
@@ -58,7 +58,7 @@ const start = new Date().getTime();
 
 export const importMaquette = (schemaName = "M00", data = []) => async dispatch => {
     const schema = schemas[schemaName];
-    Realm.open({schema: [schema], deleteRealmIfMigrationNeeded: true})
+    Realm.open({schema: [schema], deleteRealmIfMigrationNeeded: true, inMemory : true})
       .then(realm => {
        realm.write(() => {
            //realm.create(schema.name, [{id: `${data[0].KAIG}_${data[0].KAWN}_${data[0].KAVN}`, ...data[0]}], true);
