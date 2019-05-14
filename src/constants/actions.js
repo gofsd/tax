@@ -7,3 +7,4 @@ export const CHANGE_MAQUETTE = "CHANGE_MAQUETTE";
 export const CREATE_MAKETS = 'CREATE_MAKETS';
 export const SET_MAKETS = 'SET_MAKETS';
 export const SELECT_SAW = '';
+export const SET_SAW = 'SET_SAW';

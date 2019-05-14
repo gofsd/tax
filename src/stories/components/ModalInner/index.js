@@ -51,7 +51,7 @@ class ModalInner extends React.Component {
     };
 
     renderSaws = () => {
-        const { saws } = this.props;
+        const { saws, setSaw } = this.props;
 
         return saws.map((item) => {
             return <ListItem key={`saws${item.id}`}>
@@ -59,6 +59,7 @@ class ModalInner extends React.Component {
                 <Right>
                     <Switch
                         value={item.on}
+                        onValueChange={(e) => {setSaw(item.id, e); this.forceUpdate()}}
                     />
                 </Right>
             </ListItem>

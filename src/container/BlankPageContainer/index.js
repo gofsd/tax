@@ -9,7 +9,7 @@ import { changeForm, createMakets, selectSaw } from "../../actions/filter";
 const mapDispatchToProps = dispatch => ({
 	changeForm: (name) => dispatch(changeForm(name)),
 	createMakets: (M, children) => dispatch(createMakets(M, children)),
-	selectSaw: (id) => dispatch(selectSaw(id))
+	selectSaw: (id) => dispatch(selectSaw(id)),
 });
 
 const mapStateToProps = state => ({

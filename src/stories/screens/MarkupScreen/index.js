@@ -123,7 +123,7 @@ class Markup extends React.Component {
                         </Modal>
                     </View>
                     <ScrollView style={style.rightButtonsContainer}>
-                        <ButtonsScrollable data={this.getSaws()} flag={"saw"}/>
+                        <ButtonsScrollable data={this.getSaws()} flag={"saw"} selectSaw={this.props.selectSaw}/>
                     </ScrollView>
                 </View>
 
