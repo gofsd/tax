@@ -9,7 +9,5 @@ const openCB = (some) => {
 };
 
 
-export default new Promise((resolve, reject) => {
-    return SQLite.openDatabase("tax.db", "1.0", "Test Database", 200000, resolve, reject);
-})
-;
+const connect = () => SQLite.openDatabase("tax.db", "1.0", "Test Database", 200000, openCB, errorCB);
+export default connect;
