@@ -14,7 +14,7 @@ class Markup extends React.Component {
             maquette: "M01",
             maqByCategory: props.maket_availability.filter(item => item.kakz === 3 && (item.available === 1 || item.available === 2)),
             isVisible: false,
-            isVisible2: false,
+            isVisible2: true,
         };
     }
 
