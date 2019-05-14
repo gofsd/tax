@@ -14,7 +14,7 @@ export const initMetadata = () => async (dispatch, getState) => {
     params.STRUCTURERBD.forEach(item => params[item.RELATION] = metadata[item.RELATION]);
 
 console.log("after set params");
-    //await dispatch(exportAllMaquette());
+    await dispatch(importMaquetteFromServer());
 
 
     dispatch({
@@ -25,8 +25,11 @@ console.log("after set params");
 
 export const importMaquetteFromServer = () => async(dispatch, getState) => {
     const forestries = (await dispatch(getForestries())).data.forestries;
-    let maquetteData = (await dispatch(getMaquette({...forestries[0], table: "M01"}))).data;
-    await dispatch(importMaquette("M01", maquetteData));
+    for (let i = 0; i < forestries.length; i++) {
+     let maquetteData = (await dispatch(getMaquette({...forestries[i], table: "M01"}))).data;
+     await dispatch(importMaquette("M00", maquetteData));
+
+    }
 };
    console.log("start export");
  const  errorCB = (err) => {

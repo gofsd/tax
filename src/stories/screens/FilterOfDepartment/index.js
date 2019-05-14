@@ -159,7 +159,8 @@ class FilterOfDepartment extends React.Component {
     state = {
         forestries:[],
         quartal: [],
-        selected2: {}
+        selected2: {},
+        fromTable: []
     }
 
 
@@ -174,22 +175,30 @@ class FilterOfDepartment extends React.Component {
     componentDidMount() {
         this.getQuarters();
         this.getForestries();
+        this.getFromTable();
     }
 
     getForestries = async() => {
+        console.log("forest");
         const forestries = (await this.props.getForestries()).data.forestries;
         console.log();
         this.setState({forestries: forestries.map(it => { const item = this.props.KAIG.find(x => x.KAIG == it.kaig); return {name: item.NAME, id: item.KAIG};})});
     }
 
     getQuarters = async () => {
+        console.log("quarter");
         const quartal = (await this.props.getQuarters({
     "table": "M00",
     "kalg": 13050101,
     "kaig": 1
 })).data.map(it=> ({id: it.KAWN, name: it.KAWN}));
-        console.log(quartal, "from get qurtels`");
         this.setState({quartal});
+    }
+
+    getFromTable = async() => {
+        console.log("FROM TABLE START");
+      const fromTable = await this.props.getQuartels();
+      this.setState({fromTable});
     }
 
 
@@ -206,8 +215,8 @@ class FilterOfDepartment extends React.Component {
             {name: "Some name", id: 1},
             {name: "Sem data", id:2}
         ];
-        if (this.state.forestries.length == 0 || this.state.quartal.length == 0)
-        {return <View />;}
+        if (this.state.forestries.length == 0 || this.state.quartal.length == 0 || this.state.fromTable.length == 0)
+        {return <View ><Text>{this.state.fromTable.length}</Text></View>;}
         return (
             <Container style={styles.container}>
                 <Header style={{backgroundColor: "#333"}}>

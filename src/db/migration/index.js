@@ -51,9 +51,7 @@ export const schemas = metadata.STRUCTURERBD.reduce((ac, item, i, arr) => {
 
 
 
-console.log(schemas, "after all");
 const arrSchemas = Object.keys(schemas).map(item => schemas[item]);
-console.log(arrSchemas);
 const CarSchema = {
   name: "Car",
   properties: {
