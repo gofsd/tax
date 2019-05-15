@@ -13,30 +13,35 @@ import {
     Title,
     ListItem,
     Switch,
-    Right
+    Right,
+    Left,
 } from "native-base";
 
 class ModalInner extends React.Component {
     renderItems = () => {
         const { data, setMakets } = this.props;
         return data.M.map((item) => {
-            return (item.availability === 1) ? <ListItem key={`list${item.id}`}>
-                <Body><Text>{`M${(item.id < 10) ? "0" : ""}${item.id}`}</Text></Body>
+            return (item.availability === 1) ? <View><ListItem key={`list${item.id}`}>
+                <Left><Text>{`M${(item.id < 10) ? "0" : ""}${item.id}`}</Text></Left>
+                <Body><Text>Тут буде назва макету {`M${(item.id < 10) ? "0" : ""}${item.id}`}</Text></Body>
                 <Right>
                     <Switch
                         value={item.on}
                         onValueChange={(e) => {setMakets('M', item.id, e); this.forceUpdate()}}
                     />
                 </Right>
-            </ListItem> : null;
+            </ListItem>{(item.id === 9)
+                ? <View style={{borderTopWidth: 1, borderBottomWidth: 1, borderColor: '#000'}}>{this.renderChildren()}</View>
+                : null}</View> : null;
         })
     };
 
-    renderChildren = () =>{
+    renderChildren = () => {
         const { data, setMakets } = this.props;
         return data.children.map((item) => {
             return (item.availability === 1) ? <ListItem key={`listchildren${item.id}`}>
-                <Body><Text>{`M10.${item.id}`}</Text></Body>
+                <Left><Text>{`M10.${item.id}`}</Text></Left>
+                <Body><Text>Тут буде назва макету {`M10.${item.id}`}</Text></Body>
                 <Right>
                     <Switch
                         value={item.on}
@@ -47,8 +52,21 @@ class ModalInner extends React.Component {
         })
     };
 
-    componentDidMount() {
-    }
+    renderSaws = () => {
+        const { saws, setSaw } = this.props;
+
+        return saws.map((item) => {
+            return <ListItem key={`saws${item.id}`}>
+                <Left><Text>{`${item.id}`}</Text></Left>
+                <Right>
+                    <Switch
+                        value={item.on}
+                        onValueChange={(e) => {setSaw(item.id, e); this.forceUpdate()}}
+                    />
+                </Right>
+            </ListItem>
+        })
+    };
 
     render() {
         return <Container>
@@ -58,13 +76,9 @@ class ModalInner extends React.Component {
                 </Body>
             </Header>
             <Content>
-                {this.renderItems()}
-                <Header style={{backgroundColor: "#333", height: 64}} androidStatusBarColor={"#333"}>
-                    <Body>
-                    <Title style={{width: "100%", margin: "auto"}}>{'Оберіть можливі макети M10'}</Title>
-                    </Body>
-                </Header>
-                {this.renderChildren()}
+                {(this.props.flag === 'layout') ? <View>
+                    {this.renderItems()}
+                </View> : this.renderSaws()}
             </Content>
             <Footer>
                 <FooterTab style={{backgroundColor: "#333"}}>

@@ -3,12 +3,13 @@ import { connect } from "react-redux";
 
 import BlankPage from "../../stories/screens/MarkupScreen";
 import MForm from "../MaquetteForm";
-import { changeForm, createMakets } from "../../actions/filter";
+import { changeForm, createMakets, selectSaw } from "../../actions/filter";
 
 
 const mapDispatchToProps = dispatch => ({
 	changeForm: (name) => dispatch(changeForm(name)),
-	createMakets: (M, children) => dispatch(createMakets(M, children))
+	createMakets: (M, children) => dispatch(createMakets(M, children)),
+	selectSaw: (id) => dispatch(selectSaw(id)),
 });
 
 const mapStateToProps = state => ({
@@ -25,8 +26,9 @@ const mapStateToProps = state => ({
 	MForm,
 	maket_availability: state.metadata.maket_availability,
 
-	makets: state.mainForm.makets,
-
+	makets: state.mainForm.saws[state.mainForm.selectedSaw],
+	saws: state.mainForm.saws,
+	selectedSaw: state.mainForm.selectedSaw,
 	selectedKakz: 3,
 	// quarter_num: state.filter.kv_num,
 	// forestry_name: state.filter.name,
