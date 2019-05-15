@@ -16,6 +16,7 @@ import {
     Right,
     Left,
 } from "native-base";
+import { StyleSheet } from "react-native";
 
 class ModalInner extends React.Component {
     renderItems = () => {
@@ -72,9 +73,23 @@ class ModalInner extends React.Component {
         return <Container>
             <Header style={{backgroundColor: "#333", height: 64}} androidStatusBarColor={"#333"}>
                 <Body>
-                    <Title style={{width: "100%", margin: "auto"}}>{'Оберіть можливі макети'}</Title>
+                    <Title style={{width: "100%", margin: "auto"}}>{(this.props.flag === 'layout') ? 'Оберіть можливі макети' : 'Оберіть виділи'}</Title>
                 </Body>
             </Header>
+            <View style={{flex: -1, flexDirection: "row"}}>
+                <Button style={style.buttonPagination} onPress={() => {
+                    this.props.unsetAll(this.props.flag);
+                    if (this.props.flag === 'layout') this.forceUpdate();
+                }}>
+                    <Text>Вимкнути всі</Text>
+                </Button>
+                <Button style={style.buttonPagination} onPress={() => {
+                    this.props.setAll(this.props.flag);
+                    if (this.props.flag === 'layout') this.forceUpdate();
+                }}>
+                    <Text>Ввімкнути всі</Text>
+                </Button>
+            </View>
             <Content>
                 {(this.props.flag === 'layout') ? <View>
                     {this.renderItems()}
@@ -82,7 +97,7 @@ class ModalInner extends React.Component {
             </Content>
             <Footer>
                 <FooterTab style={{backgroundColor: "#333"}}>
-                    <Button vertical>
+                    <Button vertical onPress={() => this.props.close()}>
                         <Icon name="paper"/>
                         <Text>Підтвердити</Text>
                     </Button>
@@ -91,5 +106,16 @@ class ModalInner extends React.Component {
         </Container>
     }
 }
+
+const style = StyleSheet.create({
+    buttonPagination: {
+        justifyContent: "center",
+        backgroundColor: "#333333",
+        borderStyle: "solid",
+        borderWidth: 1,
+        flex: 1,
+        borderColor: "#000",
+    },
+});
 
 export default ModalInner;
