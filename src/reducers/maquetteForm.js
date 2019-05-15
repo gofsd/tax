@@ -1,4 +1,13 @@
-import { GET_MAQUETTE, CHANGE_MAQUETTE, CREATE_MAKETS, SET_MAKETS, SELECT_SAW, SET_SAW } from "../constants/actions";
+import {
+    GET_MAQUETTE,
+    CHANGE_MAQUETTE,
+    CREATE_MAKETS,
+    SET_MAKETS,
+    SELECT_SAW,
+    SET_SAW,
+    SET_ALL,
+    UNSET_ALL,
+} from "../constants/actions";
 
 const initialState = {
     name: "M01",
@@ -22,6 +31,18 @@ const createSaws = (data) => {
     }
 
     return saws;
+};
+
+const setUnset = (state, on, flag) => {
+    if (flag === 'saw') {
+        state.saws = state.saws.map((saw) => {return {...saw, on: on}})
+    }
+    if (flag === 'layout') {
+        state.saws[state.selectedSaw].M = state.saws[state.selectedSaw].M.map((item) => {return {...item, on: on}});
+        state.saws[state.selectedSaw].children = state.saws[state.selectedSaw].children.map((item) => {return {...item, on: on}})
+    }
+
+    return state
 };
 
 const setMakets = (id, arr, value) => {
@@ -53,6 +74,10 @@ export default function (state = initialState, action) {
         case SET_SAW:
             state.saws[payload.id - 1].on = payload.value;
             return Object.assign({}, state);
+        case SET_ALL:
+            return Object.assign({}, setUnset(state, true, payload));
+        case UNSET_ALL:
+            return Object.assign({}, setUnset(state, false, payload));
         default:
             break;
     }

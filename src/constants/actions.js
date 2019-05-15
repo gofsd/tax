@@ -8,3 +8,5 @@ export const CREATE_MAKETS = 'CREATE_MAKETS';
 export const SET_MAKETS = 'SET_MAKETS';
 export const SELECT_SAW = '';
 export const SET_SAW = 'SET_SAW';
+export const SET_ALL = 'SET_ALL';
+export const UNSET_ALL = 'UNSET_ALL';

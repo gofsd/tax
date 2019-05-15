@@ -4,6 +4,7 @@ import { ScrollView, StyleSheet, View, Alert } from "react-native";
 import ButtonsScrollable from "../../../stories/components/ButtonsScrollable";
 import ModalInner from "../../../container/ModalContainer";
 import Modal from "react-native-modal";
+import Accordion from '../../../stories/components/Acordion'
 // import { Drawer } from "react-native-router-flux";
 
 class Markup extends React.Component {
@@ -60,6 +61,10 @@ class Markup extends React.Component {
         })
     };
 
+    closeModal = () => {
+        this.setState({isVisible: false, isVisible2: false})
+    };
+
     render() {
         return (
             <Container>
@@ -104,6 +109,7 @@ class Markup extends React.Component {
                                 this.setState({lantCatId: id});
                             }}/>
                         </ScrollView>
+                        <Accordion/>
                         <Modal
                             isVisible={this.state.isVisible}
                             onSwipeComplete={() => this.setState({ isVisible: false })}
@@ -111,7 +117,7 @@ class Markup extends React.Component {
                             onBackdropPress={() => this.setState({ isVisible: false })}
                         >
                             <View style={{ flex: 1, backgroundColor: "#fff" }}>
-                                <ModalInner flag={'layout'}/>
+                                <ModalInner flag={'layout'} close={this.closeModal}/>
                             </View>
                         </Modal>
                         <Modal
@@ -121,7 +127,7 @@ class Markup extends React.Component {
                             onBackdropPress={() => this.setState({ isVisible2: false })}
                         >
                             <View style={{ flex: 1, backgroundColor: "#fff" }}>
-                                <ModalInner flag={'saw'}/>
+                                <ModalInner flag={'saw'} close={this.closeModal}/>
                             </View>
                         </Modal>
                     </View>
