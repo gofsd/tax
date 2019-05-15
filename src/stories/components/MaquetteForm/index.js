@@ -22,9 +22,9 @@ import {
     FooterTab,
     Item
 } from "native-base";
-import {ScrollView} from "react-native";
-import ModalSelector from "react-native-modal-selector";
-import ActionButton from "react-native-action-button";
+import { StyleSheet} from "react-native";
+// import SearchableDropdown from "react-native-searchable-dropdown";
+import RNPicker from "rn-modal-picker";
 
 
 import styles from "./styles";
@@ -33,48 +33,45 @@ import styles from "./styles";
 class MaquetteForm extends React.Component {
 
 
-    selectedItem = (lable, RELATION, CODE, changeLandCategory) => {
-        const {metadata} = this.props;
-        const data = metadata[RELATION];
-        if (!Array.isArray(data)) {
-            return null;
-        }
-        return (
-            <View key={`${RELATION}${CODE}${lable}`}>
-                <Text style={{fontSize: 17, marginLeft: 5, marginTop: 5}}>{lable}</Text>
-                <Item style={{
-                    flexDirection: "column",
-                    borderColor: "#d9d9d9",
-                    borderLeftWidth: 2,
-                    borderRightWidth: 2,
-                    borderTopWidth: 2,
-                    marginLeft: 0,
-                    marginTop: 5,
-                    borderRadius: 8,
-                    flex: 0,
-                    height: 50
-                }} picker>
-                    <Picker
-                        mode="dropdown"
-                        iosIcon={<Icon name="arrow-down"/>}
-                        style={{width: "100%", borderLeftWidth: 2, borderColor: "#d9d9d9"}}
-                        itemStyle={{marginTop: 50}}
-                        placeholder="Select"
-                        placeholderStyle={{color: "#bfc6ea"}}
-                        placeholderIconColor="#007aff"
-                        selectedValue={this.state.selected2[CODE]}
-                        onValueChange={this.onValueChange2}
-                    >
-                        {data.filter(it => {
-                            return it.NAME != null;
-                        }).map((it, idx, arr) =>
-                            (<Picker.Item label={it.NAME} value={`${CODE}_${idx}`} key={`${CODE}_${idx}`}/>))}
+  	selectedItem = (lable, RELATION, CODE, changeLandCategory) => {
+      const { metadata } = this.props;
+      const data = metadata[RELATION];
+      if (!Array.isArray(data)) {
+        return null;
+      }
 
-                    </Picker>
-                </Item>
-            </View>
-        );
-    }
+
+      const items = data.filter(it => it.NAME != null).map((it, idx) => ({
+        name: it.NAME,
+        id: idx
+      }) );
+
+      console.info(items);
+
+		return (
+      <View>
+			<Text style={{fontSize: 17, marginLeft: 5, marginTop: 5}}>{lable}</Text>
+           <RNPicker
+          dataSource={items}
+          dummyDataSource={items}
+          defaultValue={false}
+          pickerTitle={lable}
+          showSearchBar={true}
+          disablePicker={false}
+          changeAnimation={"none"}
+          searchBarPlaceHolder={"Пошук"}
+          showPickerTitle={true}
+          pickerStyle={Styles.pickerStyle}
+          selectedLabel={this.state.selected2[CODE]}
+          placeHolderLabel={this.state.placeHolderText}
+          selectLabelTextStyle={Styles.selectLabelTextStyle}
+          placeHolderTextStyle={Styles.placeHolderTextStyle}
+          dropDownImageStyle={Styles.dropDownImageStyle}
+          selectedValue={(idx, value) =>this.onValueChange2(idx, value, CODE)}
+        />
+           </View>
+);
+  }
 
     inputItem = (item) => {
         const {NAME} = item;
@@ -100,7 +97,7 @@ class MaquetteForm extends React.Component {
     }
 
     chooseInput = (item) => {
-        const {maquette, changeLandCategory} = this.props;
+        const { changeLandCategory} = this.props;
         if (!item.RELATION) {
             return this.inputItem(item, item.CODE);
         } else {
@@ -115,10 +112,9 @@ class MaquetteForm extends React.Component {
         selected2: {}
     }
 
-    onValueChange2 = (value, some) => {
-        const params = value.split("_");
+    onValueChange2 = (idx, value, CODE) => {
         const {selected2} = this.state;
-        selected2[params[0]] = value;
+        selected2[CODE] = value;
         this.setState({
             selected2
         });
@@ -140,5 +136,70 @@ class MaquetteForm extends React.Component {
 MaquetteForm.defaultProps = {
     list: ["First ittem", "second item"],
 };
+const Styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+
+  searchBarContainerStyle: {
+    marginBottom: 10,
+    flexDirection: "row",
+    height: 40,
+    shadowOpacity: 1.0,
+    shadowRadius: 5,
+    shadowOffset: {
+      width: 1,
+      height: 1
+    },
+    backgroundColor: "rgba(255,255,255,1)",
+    shadowColor: "#d3d3d3",
+    borderRadius: 10,
+    elevation: 3,
+    marginLeft: 10,
+    marginRight: 10
+  },
+
+  selectLabelTextStyle: {
+    color: "#000",
+    textAlign: "left",
+    width: "99%",
+    padding: 10,
+    flexDirection: "row"
+  },
+  placeHolderTextStyle: {
+    color: "#D3D3D3",
+    padding: 10,
+    textAlign: "left",
+    width: "99%",
+    flexDirection: "row"
+  },
+  dropDownImageStyle: {
+    marginLeft: 10,
+    width: 10,
+    height: 10,
+    alignSelf: "center"
+  },
+
+  pickerStyle: {
+    marginLeft: 18,
+    elevation:3,
+    paddingRight: 25,
+    marginRight: 10,
+    marginBottom: 2,
+    shadowOpacity: 1.0,
+    shadowOffset: {
+      width: 1,
+      height: 1
+    },
+    borderWidth:1,
+    shadowRadius: 10,
+    backgroundColor: "rgba(255,255,255,1)",
+    shadowColor: "#d3d3d3",
+    borderRadius: 5,
+    flexDirection: "row"
+  }
+});
 
 export default MaquetteForm;

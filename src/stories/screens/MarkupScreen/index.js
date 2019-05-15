@@ -4,6 +4,7 @@ import { ScrollView, StyleSheet, View, Alert } from "react-native";
 import ButtonsScrollable from "../../../stories/components/ButtonsScrollable";
 import ModalInner from "../../../container/ModalContainer";
 import Modal from "react-native-modal";
+// import { Drawer } from "react-native-router-flux";
 
 class Markup extends React.Component {
     constructor(props) {
@@ -19,7 +20,7 @@ class Markup extends React.Component {
     }
 
     componentDidMount() {
-        this.findAvailable()
+        this.findAvailable();
     }
 
     findAvailable = () => {
@@ -34,18 +35,18 @@ class Markup extends React.Component {
                     id: Number(item.tabl),
                     availability: item.available,
                     on: item.available === 2,
-                })
+                });
             }
             if (item.kakz === selectedKakz && item.subtable !== 0 && item.available !== 0) {
                 maketsM10.push({
                     id: Number(item.subtable),
                     availability: item.available,
                     on: item.available === 2,
-                })
+                });
             }
         });
 
-        createMakets(makets, maketsM10)
+        createMakets(makets, maketsM10);
     };
 
     getSaws = () => {
@@ -72,7 +73,9 @@ class Markup extends React.Component {
                     <Title style={{width: "100%", margin: "auto"}}>{"Лiсництво 1, квартал 1, видiл 1, Поточний"}</Title>
                     </Body>
                     <Right>
-                        <Button transparent>
+                        <Button
+                        transparent
+                        onPress={() => this.props.navigation.navigate("SidebarM")}>
                             <Icon name="more"/>
                         </Button>
                     </Right>

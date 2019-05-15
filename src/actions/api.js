@@ -21,10 +21,24 @@ export const loginRequest = (params = {}) => async (dispatch, getState) => {
 
 };
 
-export const getMaquette = (params = {}) => async (dispatch, getState) => {
+export const getMaquette = (params = {
+    "table": "M10",
+    "kalg": 13050101,
+    "kaig": 1
+}) => async (dispatch, getState) => {
     try {
         const response = await tax.post(urls.layout, params);
         return response;
+    } catch (error) {
+        return error.response;
+    }
+};
+
+export const setMaquette = (data = {}) => async(dispatch, getState) => {
+    try {
+        const response = await tax.post(urls.saveLayouts, data);
+        return response;
+
     } catch (error) {
         return error.response;
     }
