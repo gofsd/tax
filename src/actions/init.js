@@ -15,15 +15,12 @@ export const initMetadata = () => async (dispatch, getState) => {
     const { seeded, cached } = getState().init;
     if (!seeded){
       console.log("IN SEEDS, change");
-      try {
         const metadata = (await dispatch(getMetadata())).data;
         const dictionaries = (await dispatch(getDictionaries())).data;
-      } catch (er) {
-        console.log(er, "console.log");
-      }
+
 
       console.log(metadata,  "from init in if");
-      dispatch(setMetadata({ metadata }));
+      dispatch(setMetadata({ metadata, dictionaries }));
       await dispatch(startMigration());
       await dispatch(startSeeding());
       dispatch(setSeeds(true));
@@ -37,11 +34,11 @@ export const initMetadata = () => async (dispatch, getState) => {
     } catch (err) {
       console.info(err, "from init db");
     }
-    //dispatch(importMaquetteFromServer());
-    // dispatch({
-    //     type: INIT_METADATA,
-    //     payload: params
-    // });
+    dispatch(importMaquetteFromServer());
+    dispatch({
+        type: INIT_METADATA,
+        payload: { metadata: params, dictionaries: params}
+    });
 };
 
 export const importMaquetteFromServer = () => async(dispatch, getState) => {
