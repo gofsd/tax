@@ -315,7 +315,7 @@ const Styles = StyleSheet.create({
     flexDirection: "row"
   },
   placeHolderTextStyle: {
-    color: "#D3D3D3",
+    color: "#000",
     padding: 10,
     textAlign: "left",
     width: "99%",
@@ -330,20 +330,13 @@ const Styles = StyleSheet.create({
 
   pickerStyle: {
     marginLeft: 18,
-    elevation:3,
     paddingRight: 25,
-    marginRight: 10,
+    marginRight: 18,
     marginBottom: 2,
-    shadowOpacity: 1.0,
-    shadowOffset: {
-      width: 1,
-      height: 1
-    },
-    borderWidth:1,
-    shadowRadius: 10,
+    borderWidth:2,
     backgroundColor: "rgba(255,255,255,1)",
-    shadowColor: "#d3d3d3",
-    borderRadius: 5,
+    borderColor: "#D9D5DC",
+    borderRadius: 8,
     flexDirection: "row"
   }
 });

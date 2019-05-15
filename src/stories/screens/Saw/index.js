@@ -34,11 +34,10 @@ class Saw extends React.Component<Props, State> {
       <Container style={styles.container}>
         <Header>
           <Left>
-            <Button transparent>
+            <Button transparent onPress={() => this.props.navigation.navigate("MarkupScreen")}>
               <Icon
                 active
                 name="arrow-back"
-                onPress={() => this.props.navigation.navigate("BlankPage")}
               />
             </Button>
           </Left>
