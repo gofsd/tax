@@ -9,19 +9,30 @@ const setMigration = (payload) => ({type: SET_MIGRATION, payload});
 const setSeeds = (payload) => ({type: SET_SEEDS, payload});
 
 
+export const startMigration = () => async (dispatch, getState) => {
+    const { struct } = getState().metadata;
+    console.log(struct, "start migration");
+    return false;
+};
+
+export const startSeeding = () => async (dispatch, getState) => {
+    const { metadata } = getState();
+    console.log("FROM SEEDING", metadata);
+    return false;
+};
+
 export const initDb = () => async (dispatch, getState) => {
     const { migrated, seeded, connected} = getState().init;
     dispatch(setConnection(true));
-    if (false) {
-                dispatch(setMigration(true));
-
+    if (migrated) {
+        dispatch(setMigration(true));
         db.transaction(tx => {
             Object.keys(ddl).reduce((ac, tableName) => tx.executeSql(ddl[tableName], [],(tx, result) => {
-                    console.log(ddl[tableName], "from init db query in");
+                console.log(ddl[tableName], "from init db query in");
             }), "");
         });
     }
-dispatch(importMaquette());
+
     if (!seeded) {
 
     }
@@ -73,13 +84,13 @@ export const exportMaquette = (schemaName = "M00") => async () => {
 
 export const importMaquette = (tableName = "M00", data = []) => async dispatch => new Promise((resolve, reject) => {
        db.transaction(tx => {
-       const queryString = `INSERT INTO ${tableName} (${Object.keys(data[0]).map(it => `'${it}'`).join(",")})
+        let queryString = `INSERT INTO ${tableName} (${Object.keys(data[0]).map(it => `'${it}'`).join(",")})
             VALUES ${data.reduce((ac, item) => {
                 return ac += `(${Object.values(item).map(it => typeof it === "string" ? `'${it}'` : it == null ? "NULL" : it).join(",")}),`;
             }, "")}`.slice(0, -1);
-        const newStr = queryString + ";";
+        queryString = queryString + ";";
         data = null;
-        tx.executeSql(newStr,
+        tx.executeSql(queryString,
             [], (tx, result) =>{console.log(result,tx, "from executesql");  return resolve(result);}
         );
     });

@@ -14,7 +14,7 @@ const persistConfig = {
 };
 const persistedReducer = persistReducer(persistConfig, reducer);
 
-export default function configureStore(onCompletion: () => void): any {
+export default function configureStore(onCompletion) {
   const enhancer = composeWithDevTools(
     applyMiddleware(thunk),
   );

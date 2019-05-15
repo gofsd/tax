@@ -1,11 +1,34 @@
 import  * as metadata from "../db/seeds";
-import { INIT_METADATA } from "../constants/actions";
-import { getForestries, getMaquette, setMaquette } from "./api";
-import { importMaquette, initDb, exportMaquette } from "./db";
+import { INIT_METADATA, SET_SEEDS } from "../constants/actions";
+import { getForestries, getMaquette, setMaquette, getMetadata, getDictionaries } from "./api";
+import { importMaquette, initDb, exportMaquette, startMigration, startSeeding } from "./db";
+
+
+export const setSeeds = (payload) => ({type: SET_SEEDS, payload});
+
+
+export const setMetadata = (payload) => ({ type: INIT_METADATA, payload });
 
 
 export const initMetadata = () => async (dispatch, getState) => {
     console.log("start init");
+    const { seeded, cached } = getState().init;
+    if (!seeded){
+      console.log("IN SEEDS, change");
+      try {
+        const metadata = (await dispatch(getMetadata())).data;
+        const dictionaries = (await dispatch(getDictionaries())).data;
+      } catch (er) {
+        console.log(er, "console.log");
+      }
+
+      console.log(metadata,  "from init in if");
+      dispatch(setMetadata({ metadata }));
+      await dispatch(startMigration());
+      await dispatch(startSeeding());
+      dispatch(setSeeds(true));
+    }
+
     const { STRUCTURERBD, maket_availability, struct } = metadata;
     const params = { STRUCTURERBD, maket_availability, struct };
     params.STRUCTURERBD.forEach(item => params[item.RELATION] = metadata[item.RELATION]);
@@ -15,10 +38,10 @@ export const initMetadata = () => async (dispatch, getState) => {
       console.info(err, "from init db");
     }
     //dispatch(importMaquetteFromServer());
-    dispatch({
-        type: INIT_METADATA,
-        payload: params
-    });
+    // dispatch({
+    //     type: INIT_METADATA,
+    //     payload: params
+    // });
 };
 
 export const importMaquetteFromServer = () => async(dispatch, getState) => {

@@ -28,18 +28,7 @@ import ActionButton from "react-native-action-button";
 
 import styles from "./styles";
 
-export
-interface
-Props
-{
-    navigation: any;
-    list: any;
-}
-export
-interface
-State
-{
-}
+
 
 
 import SectionedMultiSelect from "react-native-sectioned-multi-select";
