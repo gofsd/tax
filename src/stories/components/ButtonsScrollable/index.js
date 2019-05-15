@@ -88,8 +88,9 @@ class ButtonsScrollable extends React.Component {
     handlePress = (flag, i) => {
         const { changeForm, selectSaw } = this.props;
 
-        if (flag === "layout" && this.state.layout !== i) {changeForm(`M${(i < 10) ? "0" : ""}${i}`);}
+        if (flag === "layout" && this.state.layout !== i) changeForm(`M${(i < 10) ? "0" : ""}${i}`);
         if (flag === 'saw' && this.state.saw !== i) selectSaw(i);
+        if (flag === 'children' && this.state.children !== i) changeForm(`M`);
 
         this.setState({[flag]: i});
     };

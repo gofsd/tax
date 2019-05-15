@@ -25,9 +25,8 @@ import {
 import {StyleSheet} from "react-native";
 // import SearchableDropdown from "react-native-searchable-dropdown";
 import RNPicker from "rn-modal-picker";
-
-
 import styles from "./styles";
+import Accordion from '../../components/Acordion'
 
 
 class MaquetteForm extends React.Component {
@@ -120,12 +119,14 @@ class MaquetteForm extends React.Component {
     render() {
 
         return (
-            <Form style={{height: 1000}}>
-                {
-                    this.props.metadata.struct.filter(item => item.TABL === this.props.maquetteName).filter(item => item.num).map(this.chooseInput)
-                }
-            </Form>
-
+            <View>
+                <Form>
+                    {
+                        this.props.metadata.struct.filter(item => item.TABL === this.props.maquetteName).filter(item => item.num).map(this.chooseInput)
+                    }
+                </Form>
+                {(this.props.maquetteName === 'M10') ? <Accordion/> : null}
+            </View>
         );
     }
 }
