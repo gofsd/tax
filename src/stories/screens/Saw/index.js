@@ -47,7 +47,7 @@ class Saw extends React.Component<Props, State> {
           </Body>
         </Header>
         <Content>
-          <Button style={{width: "90%", marginLeft: "5%", backgroundColor: "greenyellow", justifyContent: "center", marginTop: 10}}>
+          <Button style={{width: "90%", marginLeft: "5%", backgroundColor: "#333", justifyContent: "center", marginTop: 10}}>
             <Text>Завантажити</Text>
           </Button>
 

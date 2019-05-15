@@ -221,7 +221,7 @@ class FilterOfDepartment extends React.Component {
                     <Form>
                         <Body>
                         <View >
-         <Text style={{marginLeft: 10}}>Оберіть лісництво</Text>
+         <Text style={{marginLeft: 15, marginTop: 10, marginBottom: 5}}>Оберіть лісництво</Text>
            <RNPicker
           dataSource={this.state.forestries}
           dummyDataSource={this.state.forestries}
@@ -241,7 +241,7 @@ class FilterOfDepartment extends React.Component {
           selectedValue={(idx, value) =>this.onValueChange2(idx, value, "KAIG")}
         />
 
-         <Text style={{marginLeft: 10}}>Оберіть квартали</Text>
+         <Text style={{marginLeft: 15, marginTop: 10, marginBottom: 5}}>Оберіть квартали</Text>
            <RNPicker
           dataSource={this.state.quartal}
           dummyDataSource={this.state.quartal}
@@ -260,11 +260,12 @@ class FilterOfDepartment extends React.Component {
           dropDownImageStyle={Styles.dropDownImageStyle}
           selectedValue={(idx, value) =>this.onValueChange2(idx, value, "KAWN")}
         />
-
+                          <View padder>
                            <Button style={{backgroundColor: "#333"}} full info
                                     onPress={() => this.props.navigation.navigate("BlankPage")}>
                                 <Text>Шукати</Text>
                             </Button>
+                            </View>
 
                         </View>
 
