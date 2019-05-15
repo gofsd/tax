@@ -30,7 +30,9 @@ class ModalInner extends React.Component {
                         onValueChange={(e) => {setMakets('M', item.id, e); this.forceUpdate()}}
                     />
                 </Right>
-            </ListItem>{(item.id === 9) ? this.renderChildren() : null}</View> : null;
+            </ListItem>{(item.id === 9)
+                ? <View style={{borderTopWidth: 1, borderBottomWidth: 1, borderColor: '#000'}}>{this.renderChildren()}</View>
+                : null}</View> : null;
         })
     };
 
