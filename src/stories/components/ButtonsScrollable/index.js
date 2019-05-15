@@ -58,7 +58,7 @@ class ButtonsScrollable extends React.Component {
         if (flag === 'saw') {
             data.map((item, index) => {
                 buttons.push({
-                    id: (item.on) ? item.id : null,
+                    id: item.id,
                     flag: flag,
                     isActive: index === 0,
                 });
@@ -86,8 +86,10 @@ class ButtonsScrollable extends React.Component {
     };
 
     handlePress = (flag, i) => {
-        const { changeForm } = this.props;
+        const { changeForm, selectSaw } = this.props;
+
         if (flag === "layout" && this.state.layout !== i) {changeForm(`M${(i < 10) ? "0" : ""}${i}`);}
+        if (flag === 'saw' && this.state.saw !== i) selectSaw(i);
 
         this.setState({[flag]: i});
     };

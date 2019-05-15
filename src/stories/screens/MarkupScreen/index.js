@@ -4,6 +4,7 @@ import { ScrollView, StyleSheet, View, Alert } from "react-native";
 import ButtonsScrollable from "../../../stories/components/ButtonsScrollable";
 import ModalInner from "../../../container/ModalContainer";
 import Modal from "react-native-modal";
+import Accordion from '../../../stories/components/Acordion'
 // import { Drawer } from "react-native-router-flux";
 
 class Markup extends React.Component {
@@ -15,6 +16,7 @@ class Markup extends React.Component {
             maquette: "M01",
             maqByCategory: props.maket_availability.filter(item => item.kakz === 3 && (item.available === 1 || item.available === 2)),
             isVisible: false,
+            isVisible2: true,
         };
     }
 
@@ -46,6 +48,21 @@ class Markup extends React.Component {
         });
 
         createMakets(makets, maketsM10);
+    };
+
+    getSaws = () => {
+        const { saws } = this.props;
+
+        return saws.map((saw) => {
+            return {
+                id: (saw.on) ? saw.id : null,
+                on: saw.on,
+            }
+        })
+    };
+
+    closeModal = () => {
+        this.setState({isVisible: false, isVisible2: false})
     };
 
     render() {
@@ -92,6 +109,7 @@ class Markup extends React.Component {
                                 this.setState({lantCatId: id});
                             }}/>
                         </ScrollView>
+                        <Accordion/>
                         <Modal
                             isVisible={this.state.isVisible}
                             onSwipeComplete={() => this.setState({ isVisible: false })}
@@ -99,12 +117,22 @@ class Markup extends React.Component {
                             onBackdropPress={() => this.setState({ isVisible: false })}
                         >
                             <View style={{ flex: 1, backgroundColor: "#fff" }}>
-                                <ModalInner/>
+                                <ModalInner flag={'layout'} close={this.closeModal}/>
+                            </View>
+                        </Modal>
+                        <Modal
+                            isVisible={this.state.isVisible2}
+                            onSwipeComplete={() => this.setState({ isVisible2: false })}
+                            swipeDirection="left"
+                            onBackdropPress={() => this.setState({ isVisible2: false })}
+                        >
+                            <View style={{ flex: 1, backgroundColor: "#fff" }}>
+                                <ModalInner flag={'saw'} close={this.closeModal}/>
                             </View>
                         </Modal>
                     </View>
                     <ScrollView style={style.rightButtonsContainer}>
-                        <ButtonsScrollable data={[{id: 1}, {id: 2}, {id: 3}, {id: 4}, {id: 5}]} flag={"saw"}/>
+                        <ButtonsScrollable data={this.getSaws()} flag={"saw"} selectSaw={this.props.selectSaw}/>
                     </ScrollView>
                 </View>
 
@@ -133,7 +161,12 @@ class Markup extends React.Component {
                             <Icon active name="paper"/>
                             <Text>Зберегти</Text>
                         </Button>
-                        <Button vertical style={{width: 75, height: 75, flex: 0, backgroundColor: "#333", borderWidth: 1, borderColor: "#000"}}>
+                        <Button
+                            vertical style={{width: 75, height: 75, flex: 0, backgroundColor: "#333", borderWidth: 1, borderColor: "#000"}}
+                            onPress={() => {
+                                this.setState({isVisible2: true});
+                            }}
+                        >
                             <Icon name="add-circle"/>
                         </Button>
                     </FooterTab>

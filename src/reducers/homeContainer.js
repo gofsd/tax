@@ -3,7 +3,7 @@ const initialState = {
 	isLoading: true,
 };
 
-export default function(state: any = initialState, action: Function) {
+export default function(state = initialState, action) {
 	if (action.type === "FETCH_LIST_SUCCESS") {
 		return {
 			...state,

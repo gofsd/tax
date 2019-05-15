@@ -5,16 +5,16 @@ import { persistStore, persistReducer } from "redux-persist";
 import reducer from "../reducers";
 import { composeWithDevTools } from "redux-devtools-extension";
 import storage from "redux-persist/lib/storage";
-import connect from "../db";
 
 
 const persistConfig = {
     key: "root",
-    storage
+    storage,
+    whitelist: ["metadata", "init"]
 };
 const persistedReducer = persistReducer(persistConfig, reducer);
 
-export default function configureStore(onCompletion: () => void): any {
+export default function configureStore(onCompletion) {
   const enhancer = composeWithDevTools(
     applyMiddleware(thunk),
   );

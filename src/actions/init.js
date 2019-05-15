@@ -1,70 +1,62 @@
 import  * as metadata from "../db/seeds";
-import { INIT_METADATA } from "../constants/actions";
-import { getForestries, getMaquette, setMaquette } from "./api";
-import { importMaquette, exportMaquette } from "./db";
-import { schemas } from "../db/migration";
-import SQLite from "react-native-sqlite-storage";
+import { INIT_METADATA, SET_SEEDS } from "../constants/actions";
+import { getForestries, getMaquette, setMaquette, getMetadata, getDictionaries } from "./api";
+import { importMaquette, initDb, exportMaquette, startMigration, startSeeding } from "./db";
+
+
+export const setSeeds = (payload) => ({type: SET_SEEDS, payload});
+
+
+export const setMetadata = (payload) => ({ type: INIT_METADATA, payload });
 
 
 export const initMetadata = () => async (dispatch, getState) => {
     console.log("start init");
-   const { STRUCTURERBD, maket_availability, struct } = metadata;
-    console.log(metadata, "from init");
+    const { seeded, cached } = getState().init;
+    if (!seeded){
+      console.log("IN SEEDS, change");
+        const metadata = (await dispatch(getMetadata())).data;
+        const dictionaries = (await dispatch(getDictionaries())).data;
+
+
+      console.log(metadata,  "from init in if");
+      dispatch(setMetadata({ metadata, dictionaries }));
+      await dispatch(startMigration());
+      await dispatch(startSeeding());
+      dispatch(setSeeds(true));
+    }
+
+    const { STRUCTURERBD, maket_availability, struct } = metadata;
     const params = { STRUCTURERBD, maket_availability, struct };
     params.STRUCTURERBD.forEach(item => params[item.RELATION] = metadata[item.RELATION]);
-
-console.log("after set params");
-    //await dispatch(exportAllMaquette());
-
-
+    try {
+      const result = await dispatch(initDb());
+    } catch (err) {
+      console.info(err, "from init db");
+    }
+    dispatch(importMaquetteFromServer());
     dispatch({
         type: INIT_METADATA,
-        payload: params
+        payload: { metadata: params, dictionaries: params}
     });
 };
 
 export const importMaquetteFromServer = () => async(dispatch, getState) => {
     const forestries = (await dispatch(getForestries())).data.forestries;
-    let maquetteData = (await dispatch(getMaquette({...forestries[0], table: "M01"}))).data;
-    await dispatch(importMaquette("M01", maquetteData));
-};
-   console.log("start export");
- const  errorCB = (err) => {
-  console.log("SQL Error: " + err);
+    const start = new Date().getTime();
+    for (let i = 0; i < forestries.length; i++) {
+      let maquetteData = (await dispatch(getMaquette({...forestries[i], table: "M00"}))).data;
+      await dispatch(importMaquette("M00", maquetteData));
+    }
+    const end = new Date().getTime();
+    console.log("TIME TIME", end - start);
+
 };
 
-const successCB = ()=>{
-  console.log("SQL executed fine");
-};
-
-const openCB = ()  => {
-  console.log("Database OPENED");
-};
 export const exportAllMaquette = () => async (dispatch, getState) => {
-
-
-var db = SQLite.openDatabase("test.db", "1.0", "Test Database", 200000, openCB, errorCB);
-db.transaction((tx) => {
-  tx.executeSql("SELECT * FROM Employees a, Departments b WHERE a.department = b.department_id", [], (tx, results) => {
-      console.log("Query completed");
-
-      // Get rows with Web SQL Database spec compliance.
-
-      var len = results.rows.length;
-      for (let i = 0; i < len; i++) {
-        let row = results.rows.item(i);
-        console.log(`Employee name: ${row.name}, Dept Name: ${row.deptName}`);
-      }
-
-      // Alternatively, you can use the non-standard raw method.
-
-      /*
-        let rows = results.rows.raw(); // shallow copy of rows Array
-
-        rows.map(row => console.log(`Employee name: ${row.name}, Dept Name: ${row.deptName}`));
-      */
-    });
-});
-   const result = (await dispatch(exportMaquette()));
-   console.log("end export", result);
+  const forestries = (await dispatch(getForestries())).data.forestries;
+  for (let i = 0; i < forestries.length; i++) {
+    const maquetteData = await dispatch(exportMaquette("M00"));
+    await dispatch(setMaquette({data: maquetteData, ...forestries[i]}));
+  }
 };

@@ -53,3 +53,22 @@ export const getForestries = (params = {}) => async (dispatch, getState) => {
     }
 }
 ;
+
+export const getMetadata = () => async (dispatch, getState) => {
+    try {
+        const response = await tax.get(urls.metadata);
+        return response;
+    } catch (error) {
+        return error.response;
+    }
+};
+
+export const getDictionaries = () => async(dispatch, getState) => {
+    try {
+        const response = await tax.get(urls.dictionaries);
+        return response;
+    } catch (error) {
+        return error.response;
+    }
+}
+;
