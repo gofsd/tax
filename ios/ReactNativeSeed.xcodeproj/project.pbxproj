@@ -46,6 +46,7 @@
 		A0EBC75B25E44CE1B1663AE0 /* RNModalPickerTests.xctest in Resources */ = {isa = PBXBuildFile; fileRef = A390EEF8F9A04B77BD94A924 /* RNModalPickerTests.xctest */; };
 		CD837FD9B22544F380401C67 /* RNModalPicker-tvOS.app in Resources */ = {isa = PBXBuildFile; fileRef = 9BF17080DBC848FCB727F5FB /* RNModalPicker-tvOS.app */; };
 		FC72D68F8DE14EAD994EC0B2 /* RNModalPicker-tvOSTests.xctest in Resources */ = {isa = PBXBuildFile; fileRef = 6B22C53E5DD64094A408ECC0 /* RNModalPicker-tvOSTests.xctest */; };
+		84DE27F652D04139AB75492A /* libSQLite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADF988F5A0A746FFAC8BCE8D /* libSQLite.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -363,6 +364,8 @@
 		A390EEF8F9A04B77BD94A924 /* RNModalPickerTests.xctest */ = {isa = PBXFileReference; name = "RNModalPickerTests.xctest"; path = "RNModalPickerTests.xctest"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.cfbundle; explicitFileType = undefined; includeInIndex = 0; };
 		9BF17080DBC848FCB727F5FB /* RNModalPicker-tvOS.app */ = {isa = PBXFileReference; name = "RNModalPicker-tvOS.app"; path = "RNModalPicker-tvOS.app"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.application; explicitFileType = undefined; includeInIndex = 0; };
 		6B22C53E5DD64094A408ECC0 /* RNModalPicker-tvOSTests.xctest */ = {isa = PBXFileReference; name = "RNModalPicker-tvOSTests.xctest"; path = "RNModalPicker-tvOSTests.xctest"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.cfbundle; explicitFileType = undefined; includeInIndex = 0; };
+		12FD5A798FC946CFBD6695A0 /* SQLite.xcodeproj */ = {isa = PBXFileReference; name = "SQLite.xcodeproj"; path = "../node_modules/react-native-sqlite-storage/src/ios/SQLite.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		ADF988F5A0A746FFAC8BCE8D /* libSQLite.a */ = {isa = PBXFileReference; name = "libSQLite.a"; path = "libSQLite.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -397,6 +400,7 @@
 				62FF983864D6465B859F1F34 /* libRNDeviceInfo.a in Frameworks */,
 				92C19D34B12B4A19AF0E77BA /* RNModalPicker.app in Resources */,
 				A0EBC75B25E44CE1B1663AE0 /* RNModalPickerTests.xctest in Resources */,
+				84DE27F652D04139AB75492A /* libSQLite.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -591,6 +595,7 @@
 				D2C120BD58DB4EABA4544DB2 /* RealmReact.xcodeproj */,
 				05B43448FD36473FB7E2F264 /* RNDeviceInfo.xcodeproj */,
 				6596D9F0A11E486985E542BC /* RNModalPicker.xcodeproj */,
+				12FD5A798FC946CFBD6695A0 /* SQLite.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1224,12 +1229,14 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/realm/src/**",
 					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 					"$(SRCROOT)\..\node_modules\rn-modal-picker\ios\RNModalPicker",
+					"$(SRCROOT)/../node_modules/react-native-sqlite-storage/src/ios",
 				);
 			};
 			name = Debug;
@@ -1257,12 +1264,14 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/realm/src/**",
 					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 					"$(SRCROOT)\..\node_modules\rn-modal-picker\ios\RNModalPicker",
+					"$(SRCROOT)/../node_modules/react-native-sqlite-storage/src/ios",
 				);
 			};
 			name = Release;
@@ -1287,6 +1296,7 @@
 					"$(SRCROOT)/../node_modules/realm/src/**",
 					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 					"$(SRCROOT)\..\node_modules\rn-modal-picker\ios\RNModalPicker",
+					"$(SRCROOT)/../node_modules/react-native-sqlite-storage/src/ios",
 				);
 			};
 			name = Debug;
@@ -1310,6 +1320,7 @@
 					"$(SRCROOT)/../node_modules/realm/src/**",
 					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 					"$(SRCROOT)\..\node_modules\rn-modal-picker\ios\RNModalPicker",
+					"$(SRCROOT)/../node_modules/react-native-sqlite-storage/src/ios",
 				);
 			};
 			name = Release;
@@ -1346,12 +1357,14 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/realm/src/**",
 					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 					"$(SRCROOT)\..\node_modules\rn-modal-picker\ios\RNModalPicker",
+					"$(SRCROOT)/../node_modules/react-native-sqlite-storage/src/ios",
 				);
 			};
 			name = Debug;
@@ -1388,12 +1401,14 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/realm/src/**",
 					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 					"$(SRCROOT)\..\node_modules\rn-modal-picker\ios\RNModalPicker",
+					"$(SRCROOT)/../node_modules/react-native-sqlite-storage/src/ios",
 				);
 			};
 			name = Release;
@@ -1429,12 +1444,14 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/realm/src/**",
 					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 					"$(SRCROOT)\..\node_modules\rn-modal-picker\ios\RNModalPicker",
+					"$(SRCROOT)/../node_modules/react-native-sqlite-storage/src/ios",
 				);
 			};
 			name = Debug;
@@ -1470,12 +1487,14 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/realm/src/**",
 					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 					"$(SRCROOT)\..\node_modules\rn-modal-picker\ios\RNModalPicker",
+					"$(SRCROOT)/../node_modules/react-native-sqlite-storage/src/ios",
 				);
 			};
 			name = Release;

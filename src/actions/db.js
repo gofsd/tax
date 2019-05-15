@@ -1,7 +1,42 @@
 import Realm from "realm";
-import { schemas } from "../db/migration";
+import { schemas, migration } from "../db/migration";
+import connect from "../db/connect";
+import * as ddl from "../db/migration/ddl";
+import { SET_MIGRATION, SET_CONNECTION, SET_SEEDS } from "../constants/actions";
+const db = connect();
+const setConnection = (payload) => ({type: SET_CONNECTION, payload});
+const setMigration = (payload) => ({type: SET_MIGRATION, payload});
+const setSeeds = (payload) => ({type: SET_SEEDS, payload});
 
 
+export const startMigration = () => async (dispatch, getState) => {
+    const { struct } = getState().metadata;
+    console.log(struct, "start migration");
+    return false;
+};
+
+export const startSeeding = () => async (dispatch, getState) => {
+    const { metadata } = getState();
+    console.log("FROM SEEDING", metadata);
+    return false;
+};
+
+export const initDb = () => async (dispatch, getState) => {
+    const { migrated, seeded, connected} = getState().init;
+    dispatch(setConnection(true));
+    if (migrated) {
+        dispatch(setMigration(true));
+        db.transaction(tx => {
+            Object.keys(ddl).reduce((ac, tableName) => tx.executeSql(ddl[tableName], [],(tx, result) => {
+                console.log(ddl[tableName], "from init db query in");
+            }), "");
+        });
+    }
+
+    if (!seeded) {
+
+    }
+};
 function realmToPlainObject(realmObj) {
   return JSON.parse(JSON.stringify(realmObj));
 }
@@ -27,10 +62,10 @@ export const getSaws = (KAWN = 1, schemaName = "M01" ) => async (dispatch) => {
 
 };
 
-export const getQuartels = (KAIG = 1, schemaName = "M01" ) => async (dispatch) => {
+export const getQuartels = (KAIG = 1, schemaName = "M00" ) => async (dispatch) => {
     const schema = schemas[schemaName];
     const realm = await Realm.open({schema: [schema], deleteRealmIfMigrationNeeded: true});
-    const result = realmToPlainObject(realm.filtered("TRUEPREDICATE SORT(KAIG ASC) DISTINCT(KAIG)"));
+    const result = realm.objects(schema.name).snapshot();
     realm.close();
     return result;
 };
@@ -38,44 +73,25 @@ export const getQuartels = (KAIG = 1, schemaName = "M01" ) => async (dispatch) =
 export const selectMaquette = ( schemaName = "M01", id = "1_1_1" ) => async dispatch => {
     const schema = schemas[schemaName];
     const realm = await Realm.open({schema: [schema], deleteRealmIfMigrationNeeded: true});
-    const result = realmToPlainObject(realm.objects(schema.name).filtered(`id = "${id}"`));
+    const result = realmToPlainObject(realm.objects(schema.name));
     realm.close();
     return result;
 };
 
-export const exportMaquette = (schemaName = "M01") => async (dispatch, getState) => {
-    const schema = schemas[schemaName];
-    console.log("export maquette 1");
-    const realm = await Realm.open({schema: [schema], deleteRealmIfMigrationNeeded: true});
-    console.log(realm, "2");
-
-const start = new Date().getTime();
-    const result = realm.objects(schema.name);
-    console.log(result.length, "length collection");
-    const end = new Date().getTime();
-    console.log(end - start, JSON.stringify(result), "end parse" );
-
-
-    realm.close();
-    return result;
+export const exportMaquette = (schemaName = "M00") => async () => {
+   return new Promise((resolve, reject) => db.executeSql(`select * from ${schemaName};`, [], (tx)=> resolve(tx.rows.raw())));
 };
 
-export const importMaquette = (schemaName = "M01", data = []) => async dispatch => {
-    const schema = schemas[schemaName];
-    Realm.open({schema: [schema], deleteRealmIfMigrationNeeded: true})
-      .then(realm => {
-       console.log(realm,schema, "realm obj");
-       realm.write(() => {
-           console.log({id: `${data[0].KAIG}_${data[0].KAWN}_${data[0].KAVN}`, ...data[0]},data.length, "debug");
-           //realm.create(schema.name, [{id: `${data[0].KAIG}_${data[0].KAWN}_${data[0].KAVN}`, ...data[0]}], true);
-           for ( let i = 0; i < data.length; i++){
-            realm.create(schema.name, {id: `${data[i].KAIG}_${data[i].KAWN}_${data[i].KAVN}`, ...data[i]}, true);
-           }
-       });
-       realm.close();
-
-  })
-  .catch(error => {
-    console.log(error, "realm error");
-  });
-};
+export const importMaquette = (tableName = "M00", data = []) => async dispatch => new Promise((resolve, reject) => {
+       db.transaction(tx => {
+        let queryString = `INSERT INTO ${tableName} (${Object.keys(data[0]).map(it => `'${it}'`).join(",")})
+            VALUES ${data.reduce((ac, item) => {
+                return ac += `(${Object.values(item).map(it => typeof it === "string" ? `'${it}'` : it == null ? "NULL" : it).join(",")}),`;
+            }, "")}`.slice(0, -1);
+        queryString = queryString + ";";
+        data = null;
+        tx.executeSql(queryString,
+            [], (tx, result) =>{console.log(result,tx, "from executesql");  return resolve(result);}
+        );
+    });
+});
