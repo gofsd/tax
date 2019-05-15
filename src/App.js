@@ -4,8 +4,10 @@ import { StackNavigator, DrawerNavigator } from "react-navigation";
 import { Root } from "native-base";
 import Login from "./container/LoginContainer";
 import Home from "./container/HomeContainer";
+import Saw from "./stories/screens/Saw";
 import BlankPage from "./container/BlankPageContainer";
 import Sidebar from "./container/SidebarContainer";
+import SidebarM from "./container/SidebarMarkup";
 import Search from "./stories/screens/Search";
 //import FilterOfForestry from "./stories/screens/FilterOfForestry";
 import FilterOfForestry from "./container/FilterForestryContainer";
@@ -26,12 +28,14 @@ const getStackNavigator = (defaultScreen) => StackNavigator(
 		Login: { screen: Login },
 		BlankPage: { screen: BlankPage },
 		Home: { screen: Home },
+		Saw: { screen: Saw},
 		Search: { screen: Search },
 		Drawer: { screen: Drawer },
 		FilterOfForestry:{ screen: FilterOfForestry },
 		FilterOfDepartment: { screen: FilterOfDepartment },
 		SelectDepartmentsAndMaquette: { screen: SelectDepartmentsAndMaquette },
-		MarkupScreen: { screen: MarkupScreen }
+		MarkupScreen: { screen: MarkupScreen },
+		SidebarM: { screen: SidebarM }
 	},
 	{
 		initialRouteName: defaultScreen ? defaultScreen : "Login",

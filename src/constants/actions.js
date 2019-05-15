@@ -12,3 +12,7 @@ export const SET_SEEDS = "SET_SEEDS";
 export const START_EXPORT = "START_EXPORT";
 export const START_IMPORT = "START_IMPORT";
 export const END_CACHING = "END_CACHING";
+export const SELECT_SAW = "";
+export const SET_SAW = "SET_SAW";
+export const SET_ALL = "SET_ALL";
+export const UNSET_ALL = "UNSET_ALL";

@@ -210,7 +210,7 @@ class FilterOfDepartment extends React.Component {
                     <Form>
                         <Body>
                         <View >
-
+         <Text style={{marginLeft: 10}}>Оберіть лісництво</Text>
            <RNPicker
           dataSource={this.state.forestries}
           dummyDataSource={this.state.forestries}
@@ -230,6 +230,7 @@ class FilterOfDepartment extends React.Component {
           selectedValue={(idx, value) =>this.onValueChange2(idx, value, "KAIG")}
         />
 
+         <Text style={{marginLeft: 10}}>Оберіть квартали</Text>
            <RNPicker
           dataSource={this.state.quartal}
           dummyDataSource={this.state.quartal}
