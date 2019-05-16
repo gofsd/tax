@@ -16,8 +16,8 @@ import {
     Right,
     Left,
 } from "native-base";
-import {StyleSheet} from 'react-native';
-import MaquetteForm from '../../../stories/components/MaquetteForm';
+import {StyleSheet} from "react-native";
+import MaquetteForm from "../../../stories/components/MaquetteForm";
 
 class Accordion extends React.Component {
     state = {
@@ -26,19 +26,19 @@ class Accordion extends React.Component {
 
     getItem = (id, isOpen) => {
         return <View key={`accordionItem${id}`}>
-            <View style={style.buttonsContainer}>
+            <View style={style.buttonsContainerAccordion}>
                 <Button style={style.buttonContent} onPress={() => this.openCloseItem(id)}>
                     <Text style={style.textColor}>Тут буде назва обраної породи</Text>
-                    <Icon style={style.textColor} name={(isOpen) ? 'arrow-up' : 'arrow-down'}/>
+                    <Icon style={style.textColor} name={(isOpen) ? "arrow-dropup" : "arrow-dropdown"}/>
                 </Button>
                 <Button style={style.buttonDelete} onPress={() => this.deleteItem(id)}>
-                    <Icon style={style.deleteIcon} name={'trash'}/>
+                    <Icon style={style.deleteIcon} name={"trash"}/>
                 </Button>
             </View>
             {(isOpen) ? <View>
                 <MaquetteForm/>
             </View> : null}
-        </View>
+        </View>;
     };
 
     addItem = () => {
@@ -50,7 +50,7 @@ class Accordion extends React.Component {
     openCloseItem = (id) => {
         this.setState((prev) => ({
             items: prev.items.map((item) => {
-                return (item) ? {...item, isOpen: (item.id === id) ? !item.isOpen : item.isOpen} : null
+                return (item) ? {...item, isOpen: (item.id === id) ? !item.isOpen : item.isOpen} : null;
             })
         }));
     };
@@ -62,47 +62,81 @@ class Accordion extends React.Component {
     };
 
     render() {
-        return <View>
+        return <View style={style.containerAcordion}>
             <View style={style.buttonsContainer}>
-                <Text>Порода</Text>
-                <Button style={style.addButton} onPress={() => this.addItem()}><Icon style={style.textColor} name={'add'}/></Button>
+                <Text style={style.textAddButton}>Порода</Text>
+                <Button style={style.addButton} onPress={() => this.addItem()}><Icon style={style.textColor} name={"add-circle"}/></Button>
             </View>
             {this.state.items.map((item) => (item) ? this.getItem(item.id, item.isOpen) : null)}
-        </View>
+        </View>;
     }
 }
 
 const style = StyleSheet.create({
+    containerAcordion: {
+        borderWidth: 2,
+        borderRadius: 8,
+        borderColor: "#ddd",
+        width: "96%",
+        marginLeft: 5,
+        marginBottom: 15
+    },
     buttonsContainer: {
-        flexDirection: 'row',
-        width: '100%',
+        flexDirection: "row",
+        width: "100%",
+        justifyContent: "space-between",
+        backgroundColor: "#ddd",
+        alignItems: "center",
+    },
+    buttonsContainerAccordion: {
+        flexDirection: "row",
+        width: "100%",
+        justifyContent: "space-between",
+        backgroundColor: "#ddd",
+        alignItems: "center",
+        marginTop: 5,
     },
     buttonContent: {
-        width: '90%',
-        backgroundColor: '#fff',
-        borderColor: '#555',
+        width: "90%",
+        backgroundColor: "#fff",
+        borderColor: "#555",
         borderWidth: 1,
+        paddingRight: 10
     },
     buttonDelete: {
-        width: '10%',
-        backgroundColor: '#fff',
-        borderColor: '#555',
+        paddingTop: 0,
+        paddingBottom: 0,
+        backgroundColor: "#ddd",
         borderWidth: 1,
+        alignItems: "center",
+        borderColor: "transparent",
+        width: "10%",
+        justifyContent: "center"
     },
     deleteIcon: {
-        color: '#000',
-        marginLeft: 15,
+        color: "#000",
+        marginLeft: 0,
         marginRight: 0,
     },
     addButton: {
-        height: 20,
-        backgroundColor: '#fff',
-        borderColor: '#555',
+        paddingTop: 0,
+        paddingBottom: 0,
+        backgroundColor: "#ddd",
         borderWidth: 1,
-        marginLeft: 10,
+        alignItems: "center",
+        borderColor: "transparent",
+        width: "10%",
+        justifyContent: "center"
+    },
+    textAddButton: {
+    //   width: "90%",
+      marginLeft: 10
     },
     textColor: {
-        color: '#000'
+        color: "#000",
+        marginRight: 0,
+        marginLeft: 0,
+        // margin: "auto"
     },
 });
 

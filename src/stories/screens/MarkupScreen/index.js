@@ -108,8 +108,8 @@ class Markup extends React.Component {
                             <this.state.MForm stateIn={"Поточний"} changeLandCategory={(id) => {
                                 this.setState({lantCatId: id});
                             }}/>
+                            <Accordion/>
                         </ScrollView>
-                        <Accordion/>
                         <Modal
                             isVisible={this.state.isVisible}
                             onSwipeComplete={() => this.setState({ isVisible: false })}
