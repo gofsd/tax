@@ -22,7 +22,7 @@ import {
     FooterTab,
     Item
 } from "native-base";
-import {StyleSheet} from "react-native";
+import {StyleSheet, ScrollView} from "react-native";
 // import SearchableDropdown from "react-native-searchable-dropdown";
 import RNPicker from "rn-modal-picker";
 
@@ -124,10 +124,12 @@ class MaquetteForm extends React.Component {
     render() {
 
         return (
-            <Form style={{height: 1000}}>
+            <Form>
+                <ScrollView>
                 {
                     this.props.metadata.struct.filter(item => item.TABL === this.props.maquetteName).filter(item => item.num).map(this.chooseInput)
                 }
+                </ScrollView>
             </Form>
 
         );
