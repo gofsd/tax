@@ -210,7 +210,7 @@ class FilterOfDepartment extends React.Component {
                     <Form>
                         <Body>
                         <View >
-         <Text style={{marginLeft: 10}}>Оберіть лісництво</Text>
+         <Text style={{marginLeft: 15, marginTop: 10, marginBottom: 5}}>Оберіть лісництво</Text>
            <RNPicker
           dataSource={this.state.forestries}
           dummyDataSource={this.state.forestries}
@@ -230,7 +230,7 @@ class FilterOfDepartment extends React.Component {
           selectedValue={(idx, value) =>this.onValueChange2(idx, value, "KAIG")}
         />
 
-         <Text style={{marginLeft: 10}}>Оберіть квартали</Text>
+         <Text style={{marginLeft: 15, marginTop: 10, marginBottom: 5}}>Оберіть квартали</Text>
            <RNPicker
           dataSource={this.state.quartal}
           dummyDataSource={this.state.quartal}
@@ -249,11 +249,12 @@ class FilterOfDepartment extends React.Component {
           dropDownImageStyle={Styles.dropDownImageStyle}
           selectedValue={(idx, value) =>this.onValueChange2(idx, value, "KAWN")}
         />
-
+                          <View padder>
                            <Button style={{backgroundColor: "#333"}} full info
                                     onPress={() => this.props.navigation.navigate("BlankPage")}>
                                 <Text>Шукати</Text>
                             </Button>
+                            </View>
 
                         </View>
 
@@ -314,7 +315,7 @@ const Styles = StyleSheet.create({
     flexDirection: "row"
   },
   placeHolderTextStyle: {
-    color: "#D3D3D3",
+    color: "#000",
     padding: 10,
     textAlign: "left",
     width: "99%",
@@ -329,20 +330,13 @@ const Styles = StyleSheet.create({
 
   pickerStyle: {
     marginLeft: 18,
-    elevation:3,
     paddingRight: 25,
-    marginRight: 10,
+    marginRight: 18,
     marginBottom: 2,
-    shadowOpacity: 1.0,
-    shadowOffset: {
-      width: 1,
-      height: 1
-    },
-    borderWidth:1,
-    shadowRadius: 10,
+    borderWidth:2,
     backgroundColor: "rgba(255,255,255,1)",
-    shadowColor: "#d3d3d3",
-    borderRadius: 5,
+    borderColor: "#D9D5DC",
+    borderRadius: 8,
     flexDirection: "row"
   }
 });
