@@ -1,22 +1,36 @@
 import Realm from "realm";
 import { schemas, migration } from "../db/migration";
 import connect from "../db/connect";
-import * as ddl from "../db/migration/ddl";
+import * as ddl from "../db/migration";
 import { SET_MIGRATION, SET_CONNECTION, SET_SEEDS } from "../constants/actions";
 const db = connect();
 const setConnection = (payload) => ({type: SET_CONNECTION, payload});
 const setMigration = (payload) => ({type: SET_MIGRATION, payload});
-const setSeeds = (payload) => ({type: SET_SEEDS, payload});
 
 
 export const startMigration = () => async (dispatch, getState) => {
     const { struct } = getState().metadata;
-    console.log(struct, "start migration");
-    return false;
+    const arrayOfQeuries = ddl.generateTables(struct);
+    const { migrated, seeded, connected} = getState().init;
+    console.log(arrayOfQeuries, "FROM MIGRATION");
+    dispatch(setConnection(true));
+    if (!migrated) {
+        dispatch(setMigration(true));
+        db.transaction(tx => {
+            arrayOfQeuries.forEach((query) => tx.executeSql(query, [], (tx, result) => {
+                console.log(query, tx, result, "from init db query in");
+            }));
+        });
+    }
+
+    if (!seeded) {
+
+    }
 };
 
 export const startSeeding = () => async (dispatch, getState) => {
-    const { metadata } = getState();
+    const { metadata, init: { seeded } } = getState();
+
     console.log("FROM SEEDING", metadata);
     return false;
 };
@@ -37,6 +51,7 @@ export const initDb = () => async (dispatch, getState) => {
 
     }
 };
+
 function realmToPlainObject(realmObj) {
   return JSON.parse(JSON.stringify(realmObj));
 }

@@ -13,7 +13,7 @@ export const setMetadata = (payload) => ({ type: INIT_METADATA, payload });
 export const initMetadata = () => async (dispatch, getState) => {
     console.log("start init");
     const { seeded, cached } = getState().init;
-    if (!seeded){
+    if (true){
       console.log("IN SEEDS, change");
         const metadata = (await dispatch(getMetadata())).data;
         const dictionaries = (await dispatch(getDictionaries())).data;
@@ -30,11 +30,10 @@ export const initMetadata = () => async (dispatch, getState) => {
     const params = { STRUCTURERBD, maket_availability, struct };
     params.STRUCTURERBD.forEach(item => params[item.RELATION] = metadata[item.RELATION]);
     try {
-      const result = await dispatch(initDb());
+     // const result = await dispatch(initDb());
     } catch (err) {
       console.info(err, "from init db");
     }
-    dispatch(importMaquetteFromServer());
     dispatch({
         type: INIT_METADATA,
         payload: { metadata: params, dictionaries: params}
