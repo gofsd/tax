@@ -4,7 +4,7 @@ import { ScrollView, StyleSheet, View, Alert } from "react-native";
 import ButtonsScrollable from "../../../stories/components/ButtonsScrollable";
 import ModalInner from "../../../container/ModalContainer";
 import Modal from "react-native-modal";
-import Accordion from '../../../stories/components/Acordion'
+import Accordion from "../../../stories/components/Acordion";
 // import { Drawer } from "react-native-router-flux";
 
 class Markup extends React.Component {
@@ -57,12 +57,12 @@ class Markup extends React.Component {
             return {
                 id: (saw.on) ? saw.id : null,
                 on: saw.on,
-            }
-        })
+            };
+        });
     };
 
     closeModal = () => {
-        this.setState({isVisible: false, isVisible2: false})
+        this.setState({isVisible: false, isVisible2: false});
     };
 
     render() {
@@ -71,7 +71,7 @@ class Markup extends React.Component {
                 <Header style={{backgroundColor: "#333", height: 64}} androidStatusBarColor={"#333"}>
                     <Left>
                         <Button transparent>
-                            <Icon name="arrow-back"/>
+                            <Icon name="arrow-back" onPress={() => this.props.navigation.navigate("FilterOfDepartment")}/>
                         </Button>
                     </Left>
                     <Body>
@@ -117,7 +117,7 @@ class Markup extends React.Component {
                             onBackdropPress={() => this.setState({ isVisible: false })}
                         >
                             <View style={{ flex: 1, backgroundColor: "#fff" }}>
-                                <ModalInner flag={'layout'} close={this.closeModal}/>
+                                <ModalInner flag={"layout"} close={this.closeModal}/>
                             </View>
                         </Modal>
                         <Modal
@@ -127,7 +127,7 @@ class Markup extends React.Component {
                             onBackdropPress={() => this.setState({ isVisible2: false })}
                         >
                             <View style={{ flex: 1, backgroundColor: "#fff" }}>
-                                <ModalInner flag={'saw'} close={this.closeModal}/>
+                                <ModalInner flag={"saw"} close={this.closeModal}/>
                             </View>
                         </Modal>
                     </View>

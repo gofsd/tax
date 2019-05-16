@@ -19,7 +19,7 @@ class Login extends React.Component{
             />
 						<Title>Таксатор</Title>
 						<View padder>
-							<Text style={{ color: Platform.OS === "ios" ? "#000" : "#FFF" }}>
+							<Text style={{ color: Platform.OS === "ios" ? "#000" : "#FFF", paddingBottom: 15 }}>
 								{`ID пристрою: ${DeviceUUID}`}
 							</Text>
 						</View>
@@ -33,8 +33,7 @@ class Login extends React.Component{
 						</Button>
 					</View>
 				</Content>
-				<Footer style={{ backgroundColor: "transparent" }}>
-				</Footer>
+				<Footer style={{ backgroundColor: "transparent" }} />
 			</Container>
 		);
 	}
