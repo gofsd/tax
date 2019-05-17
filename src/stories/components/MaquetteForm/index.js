@@ -22,7 +22,7 @@ import {
     FooterTab,
     Item
 } from "native-base";
-import {StyleSheet} from "react-native";
+import {StyleSheet, ScrollView} from "react-native";
 // import SearchableDropdown from "react-native-searchable-dropdown";
 import RNPicker from "rn-modal-picker";
 import styles from "./styles";
@@ -45,7 +45,7 @@ class MaquetteForm extends React.Component {
 
         return (
             <View>
-                <Text style={{fontSize: 17, marginLeft: 5, marginTop: 5}}>{lable}</Text>
+                <Text style={{fontSize: 17, marginLeft: 12, marginTop: 5}}>{lable}</Text>
                 <RNPicker
                     dataSource={items}
                     dummyDataSource={items}
@@ -78,14 +78,18 @@ class MaquetteForm extends React.Component {
                 borderColor: "#000",
                 marginTop: 5
             }}>
-                <Label style={{marginLeft: 5, marginBottom: 5, color: "#000"}}>{NAME}</Label>
+                <Label style={{marginLeft: 12, marginBottom: 5, color: "#000"}}>{NAME}</Label>
                 <Input style={{
-                    width: "100%",
+                    width: "96%",
                     borderRadius: 8,
                     flex: 0,
                     borderColor: "#D9D5DC",
                     borderWidth: 2,
-                    marginBottom: 5
+                    marginBottom: 5,
+                    height: 40,
+                    marginLeft: 5,
+                    paddingLeft: 10,
+                    paddingRight: 10
                 }} keyboardType="numeric"/>
             </Item>
         );
@@ -119,14 +123,15 @@ class MaquetteForm extends React.Component {
     render() {
 
         return (
-            <View>
-                <Form>
-                    {
-                        this.props.metadata.struct.filter(item => item.TABL === this.props.maquetteName).filter(item => item.num).map(this.chooseInput)
-                    }
-                </Form>
+            <Form>
+                <ScrollView>
+                {
+                    this.props.metadata.struct.filter(item => item.TABL === this.props.maquetteName).filter(item => item.num).map(this.chooseInput)
+                }
+                </ScrollView>
                 {(this.props.maquetteName === 'M10') ? <Accordion data={this.props.NDI10200003}/> : null}
-            </View>
+            </Form>
+
         );
     }
 }
@@ -136,67 +141,60 @@ MaquetteForm.defaultProps = {
 };
 const Styles = StyleSheet.create({
     container: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center"
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "center"
     },
 
     searchBarContainerStyle: {
-        marginBottom: 10,
-        flexDirection: "row",
-        height: 40,
-        shadowOpacity: 1.0,
-        shadowRadius: 5,
-        shadowOffset: {
-            width: 1,
-            height: 1
-        },
-        backgroundColor: "rgba(255,255,255,1)",
-        shadowColor: "#d3d3d3",
-        borderRadius: 10,
-        elevation: 3,
-        marginLeft: 10,
-        marginRight: 10
+      marginBottom: 10,
+      flexDirection: "row",
+      height: 40,
+      shadowOpacity: 1.0,
+      shadowRadius: 5,
+      shadowOffset: {
+        width: 1,
+        height: 1
+      },
+      backgroundColor: "rgba(255,255,255,1)",
+      shadowColor: "#d3d3d3",
+      borderRadius: 10,
+      elevation: 3,
+      marginLeft: 10,
+      marginRight: 10
     },
 
     selectLabelTextStyle: {
-        color: "#000",
-        textAlign: "left",
-        width: "99%",
-        padding: 10,
-        flexDirection: "row"
+      color: "#000",
+      textAlign: "left",
+      width: "99%",
+      padding: 10,
+      flexDirection: "row"
     },
     placeHolderTextStyle: {
-        color: "#D3D3D3",
-        padding: 10,
-        textAlign: "left",
-        width: "99%",
-        flexDirection: "row"
+      color: "#000",
+      padding: 10,
+      textAlign: "left",
+      width: "99%",
+      flexDirection: "row"
     },
     dropDownImageStyle: {
-        marginLeft: 10,
-        width: 10,
-        height: 10,
-        alignSelf: "center"
+      marginLeft: 10,
+      width: 10,
+      height: 10,
+      alignSelf: "center"
     },
 
     pickerStyle: {
-        marginLeft: 18,
-        elevation: 3,
-        paddingRight: 25,
-        marginRight: 10,
-        marginBottom: 2,
-        shadowOpacity: 1.0,
-        shadowOffset: {
-            width: 1,
-            height: 1
-        },
-        borderWidth: 1,
-        shadowRadius: 10,
-        backgroundColor: "rgba(255,255,255,1)",
-        shadowColor: "#d3d3d3",
-        borderRadius: 5,
-        flexDirection: "row"
+      marginLeft: 18,
+      paddingRight: 25,
+      marginRight: 18,
+      marginBottom: 2,
+      borderWidth:2,
+      backgroundColor: "rgba(255,255,255,1)",
+      borderColor: "#D9D5DC",
+      borderRadius: 8,
+      flexDirection: "row"
     }
 });
 

@@ -8,11 +8,13 @@ metadata.STRUCTURERBD.forEach(item => params[item.RELATION] = metadata[item.RELA
 const getRealmType = (type) => {
     switch (type) {
         case "SMALLINT":
-            return "int?";
+            return "SMALLINT";
         case "INTEGER":
-            return "int?";
+            return "INTEGER";
+        case "varchar":
+            return "text";
         default:
-            return "float?";
+            return "REAL";
     }
 };
 
@@ -50,6 +52,45 @@ export const schemas = metadata.STRUCTURERBD.reduce((ac, item, i, arr) => {
 }, {});
 
 
+export const generateTables = (struct) => {
+  const tablObj = struct.reduce((ac, it)=> {
+  if (!ac[it.tabl]){
+    ac[it.tabl] = [];
+    ac[it.tabl].push(it);
+  } else {
+    ac[it.tabl].push(it);
+  }
+  return ac;
+  }, {});
+
+  const arrayOfQueries = Object.keys(tablObj).map((it, idx) => {
+    console.log(it, tablObj[it][0]);
+    const query = `CREATE TABLE IF NOT EXISTS ${it}(
+      ${
+
+      tablObj[it].reduce((ac, it,idx, ar) => {
+      console.log(idx, ar.length - 1, it.code);
+      if ((ar.length - 1) == idx){
+    return ac += it.code + " " + it.typs + " ";
+    }
+       ac += it.code + " " + (it.typs == "varchar" ? "text" : it.typs) + ", ";
+      return ac;
+    }, "")
+
+    }
+        );`;
+
+
+    return query;
+    });
+
+    return arrayOfQueries;
+
+};
+export const generateQueryTables = (struct) => {
+  const objectOfTables = generateTables(struct);
+  console.log(objectOfTables, JSON.stringify(struct), "SSDHIGH");
+};
 
 console.log(schemas, "after all");
 const arrSchemas = Object.keys(schemas).map(item => schemas[item]);

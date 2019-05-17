@@ -27,19 +27,20 @@ export default class Sidebar extends React.Component<Props, State> {
 			<Container>
 				<Content>
 					<List
-						style={{ marginTop: 40 }}
+						style={{ marginTop: 40}}
 						dataArray={routes}
 						renderRow={data => {
 							return (
 								<ListItem
 									button
+									style={{ backgroundColor: '#333', marginBottom: 10, marginRight: 17, justifyContent: 'center'}}
 									onPress={() => {
 										data.route === "Login"
 											? this.props.navigation.dispatch(resetAction)
 											: this.props.navigation.navigate(data.route);
 									}}
 								>
-									<Text>{data.caption}</Text>
+									<Text style={{color: '#fff'}}>{data.caption}</Text>
 								</ListItem>
 							);
 						}}

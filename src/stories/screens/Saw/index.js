@@ -34,11 +34,10 @@ class Saw extends React.Component<Props, State> {
       <Container style={styles.container}>
         <Header>
           <Left>
-            <Button transparent>
+            <Button transparent onPress={() => console.log("navigate to markup")}>
               <Icon
                 active
                 name="arrow-back"
-                onPress={() => this.props.navigation.navigate("BlankPage")}
               />
             </Button>
           </Left>
@@ -47,7 +46,7 @@ class Saw extends React.Component<Props, State> {
           </Body>
         </Header>
         <Content>
-          <Button style={{width: "90%", marginLeft: "5%", backgroundColor: "greenyellow", justifyContent: "center", marginTop: 10}}>
+          <Button style={{width: "90%", marginLeft: "5%", backgroundColor: "#333", justifyContent: "center", marginTop: 10}}>
             <Text>Завантажити</Text>
           </Button>
 
