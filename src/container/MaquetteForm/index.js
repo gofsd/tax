@@ -13,6 +13,7 @@ const mapStateToProps = state => ({
     quartalquarter: 1,
     saw: state.mainForm.selectedSaw,
     metadata: state.metadata,
-    maquetteName: state.mainForm.name
+    maquetteName: state.mainForm.name,
+    NDI10200003: state.metadata.NDI10200003,
 });
 export default connect(mapStateToProps, mapDispatchToProps)(MaquetteForm);

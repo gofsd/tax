@@ -125,7 +125,7 @@ class MaquetteForm extends React.Component {
                         this.props.metadata.struct.filter(item => item.TABL === this.props.maquetteName).filter(item => item.num).map(this.chooseInput)
                     }
                 </Form>
-                {(this.props.maquetteName === 'M10') ? <Accordion/> : null}
+                {(this.props.maquetteName === 'M10') ? <Accordion data={this.props.NDI10200003}/> : null}
             </View>
         );
     }
