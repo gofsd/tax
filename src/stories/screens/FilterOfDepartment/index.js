@@ -7,23 +7,13 @@ import {
     Text,
     Button,
     Icon,
-    Left,
     Body,
-    Right,
-    List,
-    ListItem,
-    SwipeRow,
     View,
     Form,
-    Picker,
-    Label,
-    Input,
     Footer,
     FooterTab,
 } from "native-base";
 import { StyleSheet } from "react-native";
-import ModalSelector from "react-native-modal-selector";
-import ActionButton from "react-native-action-button";
 
 
 import styles from "./styles";
@@ -31,7 +21,6 @@ import styles from "./styles";
 
 
 
-import SectionedMultiSelect from "react-native-sectioned-multi-select";
 import RNPicker from "rn-modal-picker";
 
 // This is how you can load a local icon
@@ -199,7 +188,7 @@ class FilterOfDepartment extends React.Component {
         {return <View />;}
         return (
             <Container style={styles.container}>
-                <Header style={{backgroundColor: "#333"}}>
+                <Header style={{backgroundColor: "#333", width: "100%"}}>
 
                     <Body>
                     <Title>Виконавець: Дмитро</Title>
@@ -221,12 +210,12 @@ class FilterOfDepartment extends React.Component {
           changeAnimation={"none"}
           searchBarPlaceHolder={"Пошук"}
           showPickerTitle={true}
-          pickerStyle={Styles.pickerStyle}
+          pickerStyle={styles.pickerStyle}
           selectedLabel={this.state.selected2.KAIG}
           placeHolderLabel={this.state.placeHolderText}
-          selectLabelTextStyle={Styles.selectLabelTextStyle}
-          placeHolderTextStyle={Styles.placeHolderTextStyle}
-          dropDownImageStyle={Styles.dropDownImageStyle}
+          selectLabelTextStyle={styles.selectLabelTextStyle}
+          placeHolderTextStyle={styles.placeHolderTextStyle}
+          dropDownImageStyle={styles.dropDownImageStyle}
           selectedValue={(idx, value) =>this.onValueChange2(idx, value, "KAIG")}
         />
 
@@ -241,12 +230,12 @@ class FilterOfDepartment extends React.Component {
           changeAnimation={"none"}
           searchBarPlaceHolder={"Пошук"}
           showPickerTitle={true}
-          pickerStyle={Styles.pickerStyle}
+          pickerStyle={styles.pickerStyle}
           selectedLabel={this.state.selected2.KAWN}
           placeHolderLabel={this.state.placeHolderText}
-          selectLabelTextStyle={Styles.selectLabelTextStyle}
-          placeHolderTextStyle={Styles.placeHolderTextStyle}
-          dropDownImageStyle={Styles.dropDownImageStyle}
+          selectLabelTextStyle={styles.selectLabelTextStyle}
+          placeHolderTextStyle={styles.placeHolderTextStyle}
+          dropDownImageStyle={styles.dropDownImageStyle}
           selectedValue={(idx, value) =>this.onValueChange2(idx, value, "KAWN")}
         />
                           <View padder>
@@ -282,62 +271,5 @@ class FilterOfDepartment extends React.Component {
 FilterOfDepartment.defaultProps = {
     list: ["First ittem", "second item"],
 };
-const Styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center"
-  },
 
-  searchBarContainerStyle: {
-    marginBottom: 10,
-    flexDirection: "row",
-    height: 40,
-    shadowOpacity: 1.0,
-    shadowRadius: 5,
-    shadowOffset: {
-      width: 1,
-      height: 1
-    },
-    backgroundColor: "rgba(255,255,255,1)",
-    shadowColor: "#d3d3d3",
-    borderRadius: 10,
-    elevation: 3,
-    marginLeft: 10,
-    marginRight: 10
-  },
-
-  selectLabelTextStyle: {
-    color: "#000",
-    textAlign: "left",
-    width: "99%",
-    padding: 10,
-    flexDirection: "row"
-  },
-  placeHolderTextStyle: {
-    color: "#000",
-    padding: 10,
-    textAlign: "left",
-    width: "99%",
-    flexDirection: "row"
-  },
-  dropDownImageStyle: {
-    marginLeft: 10,
-    width: 10,
-    height: 10,
-    alignSelf: "center"
-  },
-
-  pickerStyle: {
-    marginLeft: 18,
-    paddingRight: 25,
-    marginRight: 18,
-    marginBottom: 2,
-    borderWidth:2,
-    backgroundColor: "rgba(255,255,255,1)",
-    borderColor: "#D9D5DC",
-    borderRadius: 8,
-    flexDirection: "row"
-  }
-});
 export default FilterOfDepartment;

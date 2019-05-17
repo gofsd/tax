@@ -16,7 +16,7 @@ import {
     Right,
     Left,
 } from "native-base";
-import { StyleSheet } from "react-native";
+import style from "./styles.js";
 
 class ModalInner extends React.Component {
     renderItems = () => {
@@ -28,13 +28,13 @@ class ModalInner extends React.Component {
                 <Right>
                     <Switch
                         value={item.on}
-                        onValueChange={(e) => {setMakets('M', item.id, e); this.forceUpdate()}}
+                        onValueChange={(e) => {setMakets("M", item.id, e); this.forceUpdate();}}
                     />
                 </Right>
             </ListItem>{(item.id === 9)
-                ? <View style={{borderTopWidth: 1, borderBottomWidth: 1, borderColor: '#000'}}>{this.renderChildren()}</View>
+                ? <View style={{borderTopWidth: 1, borderBottomWidth: 1, borderColor: "#000"}}>{this.renderChildren()}</View>
                 : null}</View> : null;
-        })
+        });
     };
 
     renderChildren = () => {
@@ -46,11 +46,11 @@ class ModalInner extends React.Component {
                 <Right>
                     <Switch
                         value={item.on}
-                        onValueChange={(e) => {setMakets('children', item.id, e); this.forceUpdate()}}
+                        onValueChange={(e) => {setMakets("children", item.id, e); this.forceUpdate();}}
                     />
                 </Right>
             </ListItem> : null;
-        })
+        });
     };
 
     renderSaws = () => {
@@ -62,36 +62,36 @@ class ModalInner extends React.Component {
                 <Right>
                     <Switch
                         value={item.on}
-                        onValueChange={(e) => {setSaw(item.id, e); this.forceUpdate()}}
+                        onValueChange={(e) => {setSaw(item.id, e); this.forceUpdate();}}
                     />
                 </Right>
-            </ListItem>
-        })
+            </ListItem>;
+        });
     };
 
     render() {
         return <Container>
             <Header style={{backgroundColor: "#333", height: 64}} androidStatusBarColor={"#333"}>
                 <Body>
-                    <Title style={{width: "100%", margin: "auto"}}>{(this.props.flag === 'layout') ? 'Оберіть можливі макети' : 'Оберіть виділи'}</Title>
+                    <Title style={{width: "100%", margin: "auto"}}>{(this.props.flag === "layout") ? "Оберіть можливі макети" : "Оберіть виділи"}</Title>
                 </Body>
             </Header>
             <View style={{flex: -1, flexDirection: "row"}}>
                 <Button style={style.buttonPagination} onPress={() => {
                     this.props.unsetAll(this.props.flag);
-                    if (this.props.flag === 'layout') this.forceUpdate();
+                    if (this.props.flag === "layout") {this.forceUpdate();}
                 }}>
                     <Text>Вимкнути всі</Text>
                 </Button>
                 <Button style={style.buttonPagination} onPress={() => {
                     this.props.setAll(this.props.flag);
-                    if (this.props.flag === 'layout') this.forceUpdate();
+                    if (this.props.flag === "layout") {this.forceUpdate();}
                 }}>
                     <Text>Ввімкнути всі</Text>
                 </Button>
             </View>
             <Content>
-                {(this.props.flag === 'layout') ? <View>
+                {(this.props.flag === "layout") ? <View>
                     {this.renderItems()}
                 </View> : this.renderSaws()}
             </Content>
@@ -103,19 +103,8 @@ class ModalInner extends React.Component {
                     </Button>
                 </FooterTab>
             </Footer>
-        </Container>
+        </Container>;
     }
 }
-
-const style = StyleSheet.create({
-    buttonPagination: {
-        justifyContent: "center",
-        backgroundColor: "#333333",
-        borderStyle: "solid",
-        borderWidth: 1,
-        flex: 1,
-        borderColor: "#000",
-    },
-});
 
 export default ModalInner;
