@@ -17,7 +17,8 @@ import {
     Left,
     Form,
 } from "native-base";
-import {StyleSheet} from "react-native";
+// import {StyleSheet} from "react-native";
+import styles from "./styles.js";
 import MaquetteForm from "../../../stories/components/MaquetteForm";
 import RNPicker from "rn-modal-picker"
 
@@ -52,13 +53,13 @@ class Accordion extends React.Component {
 
     getItem = (id, isOpen) => {
         return <View key={`accordionItem${id}`}>
-            <View style={style.buttonsContainerAccordion}>
-                <Button style={style.buttonContent} onPress={() => this.openCloseItem(id)}>
-                    <Text style={style.textColor}>{this.state.items.find((item) => item && item.id === id).selected || 'Порода не обрана'}</Text>
-                    <Icon style={style.textColor} name={(isOpen) ? 'arrow-up' : 'arrow-down'}/>
+            <View style={styles.buttonsContainerAccordion}>
+                <Button style={styles.buttonContent} onPress={() => this.openCloseItem(id)}>
+                    <Text style={styles.textColor}>{this.state.items.find((item) => item && item.id === id).selected || 'Порода не обрана'}</Text>
+                    <Icon style={styles.textColor} name={(isOpen) ? 'arrow-dropup' : 'arrow-dropdown'}/>
                 </Button>
-                <Button style={style.buttonDelete} onPress={() => this.deleteItem(id)}>
-                    <Icon style={style.deleteIcon} name={"trash"}/>
+                <Button style={styles.buttonDelete} onPress={() => this.deleteItem(id)}>
+                    <Icon style={styles.deleteIcon} name={"trash"}/>
                 </Button>
             </View>
             {(isOpen) ? <View>
@@ -94,10 +95,10 @@ class Accordion extends React.Component {
     };
 
     render() {
-        return <View style={style.containerAcordion}>
-            <View style={style.buttonsContainer}>
-                <Text style={style.textAddButton}>Порода</Text>
-                <Button style={style.addButton} onPress={() => this.addItem()}><Icon style={style.textColor} name={"add-circle"}/></Button>
+        return <View style={styles.containerAcordion}>
+            <View style={styles.buttonsContainer}>
+                <Text style={styles.textAddButton}>Порода</Text>
+                <Button style={styles.addButton} onPress={() => this.addItem()}><Icon style={styles.textColor} name={"add-circle"}/></Button>
             </View>
             {this.state.items.map((item) => (item) ? this.getItem(item.id, item.isOpen) : null)}
         </View>;

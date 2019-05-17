@@ -1,29 +1,13 @@
 import * as React from "react";
 import {
-    Container,
-    Header,
-    Title,
-    Content,
     Text,
-    Button,
-    Icon,
-    Left,
-    Body,
-    Right,
-    List,
-    ListItem,
-    SwipeRow,
     View,
     Form,
-    Picker,
     Label,
     Input,
-    Footer,
-    FooterTab,
     Item
 } from "native-base";
-import {StyleSheet, ScrollView} from "react-native";
-// import SearchableDropdown from "react-native-searchable-dropdown";
+import { ScrollView} from "react-native";
 import RNPicker from "rn-modal-picker";
 import styles from "./styles";
 import Accordion from '../../components/Acordion'
@@ -45,7 +29,7 @@ class MaquetteForm extends React.Component {
 
         return (
             <View>
-                <Text style={{fontSize: 17, marginLeft: 12, marginTop: 5}}>{lable}</Text>
+                <Text style={styles.pickerLabel}>{lable}</Text>
                 <RNPicker
                     dataSource={items}
                     dummyDataSource={items}
@@ -56,12 +40,12 @@ class MaquetteForm extends React.Component {
                     changeAnimation={"none"}
                     searchBarPlaceHolder={"Пошук"}
                     showPickerTitle={true}
-                    pickerStyle={Styles.pickerStyle}
+                    pickerStyle={styles.pickerStyle}
                     selectedLabel={this.state.selected2[CODE]}
                     placeHolderLabel={this.state.placeHolderText}
-                    selectLabelTextStyle={Styles.selectLabelTextStyle}
-                    placeHolderTextStyle={Styles.placeHolderTextStyle}
-                    dropDownImageStyle={Styles.dropDownImageStyle}
+                    selectLabelTextStyle={styles.selectLabelTextStyle}
+                    placeHolderTextStyle={styles.placeHolderTextStyle}
+                    dropDownImageStyle={styles.dropDownImageStyle}
                     selectedValue={(idx, value) => this.onValueChange2(idx, value, CODE)}
                 />
             </View>
@@ -70,27 +54,9 @@ class MaquetteForm extends React.Component {
 
     inputItem = (item) => {
         const {NAME} = item;
-        return (<Item key={NAME} style={{
-                flexDirection: "column",
-                alignItems: "flex-start",
-                borderBottomWidth: 0,
-                marginLeft: 0,
-                borderColor: "#000",
-                marginTop: 5
-            }}>
+        return (<Item key={NAME} style={styles.containerInputNumber}>
                 <Label style={{marginLeft: 12, marginBottom: 5, color: "#000"}}>{NAME}</Label>
-                <Input style={{
-                    width: "96%",
-                    borderRadius: 8,
-                    flex: 0,
-                    borderColor: "#D9D5DC",
-                    borderWidth: 2,
-                    marginBottom: 5,
-                    height: 40,
-                    marginLeft: 5,
-                    paddingLeft: 10,
-                    paddingRight: 10
-                }} keyboardType="numeric"/>
+                <Input style={styles.inputNumber} keyboardType="numeric"/>
             </Item>
         );
     };
@@ -139,63 +105,5 @@ class MaquetteForm extends React.Component {
 MaquetteForm.defaultProps = {
     list: ["First ittem", "second item"],
 };
-const Styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      alignItems: "center",
-      justifyContent: "center"
-    },
-
-    searchBarContainerStyle: {
-      marginBottom: 10,
-      flexDirection: "row",
-      height: 40,
-      shadowOpacity: 1.0,
-      shadowRadius: 5,
-      shadowOffset: {
-        width: 1,
-        height: 1
-      },
-      backgroundColor: "rgba(255,255,255,1)",
-      shadowColor: "#d3d3d3",
-      borderRadius: 10,
-      elevation: 3,
-      marginLeft: 10,
-      marginRight: 10
-    },
-
-    selectLabelTextStyle: {
-      color: "#000",
-      textAlign: "left",
-      width: "99%",
-      padding: 10,
-      flexDirection: "row"
-    },
-    placeHolderTextStyle: {
-      color: "#000",
-      padding: 10,
-      textAlign: "left",
-      width: "99%",
-      flexDirection: "row"
-    },
-    dropDownImageStyle: {
-      marginLeft: 10,
-      width: 10,
-      height: 10,
-      alignSelf: "center"
-    },
-
-    pickerStyle: {
-      marginLeft: 18,
-      paddingRight: 25,
-      marginRight: 18,
-      marginBottom: 2,
-      borderWidth:2,
-      backgroundColor: "rgba(255,255,255,1)",
-      borderColor: "#D9D5DC",
-      borderRadius: 8,
-      flexDirection: "row"
-    }
-});
 
 export default MaquetteForm;

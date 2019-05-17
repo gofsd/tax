@@ -22,14 +22,12 @@ import {
   FooterTab,
 } from "native-base";
 import ModalSelector from "react-native-modal-selector";
-import ActionButton from "react-native-action-button";
 
 
 import styles from "./styles";
 
 
 
-import SectionedMultiSelect from "react-native-sectioned-multi-select";
 
 // This is how you can load a local icon
 // You can remove this if you'd like

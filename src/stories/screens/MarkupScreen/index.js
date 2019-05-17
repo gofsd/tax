@@ -5,6 +5,7 @@ import ButtonsScrollable from "../../../stories/components/ButtonsScrollable";
 import ModalInner from "../../../container/ModalContainer";
 import Modal from "react-native-modal";
 import Accordion from "../../../stories/components/Acordion";
+import style from "./styles.js";
 // import { Drawer } from "react-native-router-flux";
 
 class Markup extends React.Component {
@@ -159,7 +160,7 @@ class Markup extends React.Component {
                             <Text>Зберегти</Text>
                         </Button>
                         <Button
-                            vertical style={{width: 75, height: 75, flex: 0, backgroundColor: "#333", borderWidth: 1, borderColor: "#000"}}
+                            vertical style={style.buttonRightAdd}
                             onPress={() => {
                                 this.setState({isVisible2: true});
                             }}
@@ -172,28 +173,5 @@ class Markup extends React.Component {
         );
     }
 }
-
-const style = StyleSheet.create({
-    buttonPagination: {
-        justifyContent: "center",
-        backgroundColor: "#333333",
-        borderStyle: "solid",
-        borderWidth: 1,
-        flex: 1,
-        borderColor: "#000",
-    },
-    leftButtonsContainer: {
-        width: 75,
-        flexGrow: 0,
-        flexShrink: 0,
-        backgroundColor: "#000",
-    },
-    rightButtonsContainer: {
-        width: 75,
-        flexGrow: 0,
-        flexShrink: 0,
-        backgroundColor: "#000",
-    }
-});
 
 export default Markup;

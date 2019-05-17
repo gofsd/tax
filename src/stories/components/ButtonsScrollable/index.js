@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Button, Text, Icon, View } from "native-base";
 import SimpleButton from "../SimpleButton";
 
 
