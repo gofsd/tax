@@ -122,7 +122,7 @@ class MaquetteForm extends React.Component {
     };
 
     render() {
-
+        console.log(this.props, "from maquete form");
         return (
             <Form style={{height: 1000}}>
                 {
