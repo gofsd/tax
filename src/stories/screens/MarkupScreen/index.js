@@ -1,12 +1,10 @@
 import * as React from "react";
 import {Container, Content, Header, Body, Title, Button, Text, Icon, Footer, Left, FooterTab, Right} from "native-base";
-import { ScrollView, StyleSheet, View, Alert } from "react-native";
+import {ScrollView, StyleSheet, View, Alert} from "react-native";
 import ButtonsScrollable from "../../../stories/components/ButtonsScrollable";
 import ModalInner from "../../../container/ModalContainer";
 import Modal from "react-native-modal";
-import Accordion from "../../../stories/components/Acordion";
 import style from "./styles.js";
-// import { Drawer } from "react-native-router-flux";
 
 class Markup extends React.Component {
     constructor(props) {
@@ -26,7 +24,7 @@ class Markup extends React.Component {
     }
 
     findAvailable = () => {
-        const { selectedKakz, maket_availability, createMakets } = this.props;
+        const {selectedKakz, maket_availability, createMakets} = this.props;
 
         let makets = [];
         let maketsM10 = [];
@@ -52,7 +50,7 @@ class Markup extends React.Component {
     };
 
     getSaws = () => {
-        const { saws } = this.props;
+        const {saws} = this.props;
 
         return saws.map((saw) => {
             return {
@@ -72,7 +70,7 @@ class Markup extends React.Component {
                 <Header style={{backgroundColor: "#333", height: 64}} androidStatusBarColor={"#333"}>
                     <Left>
                         <Button transparent>
-                            <Icon name="arrow-back" onPress={() => this.props.navigation.navigate("FilterOfDepartment")}/>
+                            <Icon name="arrow-back" onPress={() => this.props.navigation.goBack()}/>
                         </Button>
                     </Left>
                     <Body>
@@ -80,8 +78,8 @@ class Markup extends React.Component {
                     </Body>
                     <Right>
                         <Button
-                        transparent
-                        onPress={() => this.props.navigation.navigate("SidebarM")}>
+                            transparent
+                            onPress={() => this.props.navigation.navigate("SidebarM")}>
                             <Icon name="more"/>
                         </Button>
                     </Right>
@@ -109,25 +107,24 @@ class Markup extends React.Component {
                             <this.state.MForm stateIn={"Поточний"} changeLandCategory={(id) => {
                                 this.setState({lantCatId: id});
                             }}/>
-                            <Accordion/>
                         </ScrollView>
                         <Modal
                             isVisible={this.state.isVisible}
-                            onSwipeComplete={() => this.setState({ isVisible: false })}
+                            onSwipeComplete={() => this.setState({isVisible: false})}
                             swipeDirection="left"
-                            onBackdropPress={() => this.setState({ isVisible: false })}
+                            onBackdropPress={() => this.setState({isVisible: false})}
                         >
-                            <View style={{ flex: 1, backgroundColor: "#fff" }}>
+                            <View style={{flex: 1, backgroundColor: "#fff"}}>
                                 <ModalInner flag={"layout"} close={this.closeModal}/>
                             </View>
                         </Modal>
                         <Modal
                             isVisible={this.state.isVisible2}
-                            onSwipeComplete={() => this.setState({ isVisible2: false })}
+                            onSwipeComplete={() => this.setState({isVisible2: false})}
                             swipeDirection="left"
-                            onBackdropPress={() => this.setState({ isVisible2: false })}
+                            onBackdropPress={() => this.setState({isVisible2: false})}
                         >
-                            <View style={{ flex: 1, backgroundColor: "#fff" }}>
+                            <View style={{flex: 1, backgroundColor: "#fff"}}>
                                 <ModalInner flag={"saw"} close={this.closeModal}/>
                             </View>
                         </Modal>
@@ -140,7 +137,14 @@ class Markup extends React.Component {
                 <Footer style={{borderTopWidth: 1, borderColor: "#000", height: 75}}>
                     <FooterTab style={{backgroundColor: "#333"}}>
                         <Button
-                            vertical style={{width: 75, height: 75, flex: 0, backgroundColor: "#333", borderWidth: 1, borderColor: "#000"}}
+                            vertical style={{
+                            width: 75,
+                            height: 75,
+                            flex: 0,
+                            backgroundColor: "#333",
+                            borderWidth: 1,
+                            borderColor: "#000"
+                        }}
                             onPress={() => {
                                 this.setState({isVisible: true});
                             }}

@@ -15,5 +15,6 @@ const mapStateToProps = state => ({
     metadata: state.metadata,
     maquetteName: state.mainForm.name,
     NDI10200003: state.metadata.NDI10200003,
+    NDI10200005: state.metadata.NDI10200005,
 });
 export default connect(mapStateToProps, mapDispatchToProps)(MaquetteForm);

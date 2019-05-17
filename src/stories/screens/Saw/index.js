@@ -34,7 +34,7 @@ class Saw extends React.Component<Props, State> {
       <Container style={styles.container}>
         <Header>
           <Left>
-            <Button transparent onPress={() => this.props.navigation.navigate("BlankPage")}>
+            <Button transparent onPress={() => this.props.navigation.goBack()}>
               <Icon
                 active
                 name="arrow-back"

@@ -18,7 +18,6 @@ export const startMigration = () => async (dispatch, getState) => {
         dispatch(setMigration(true));
         db.transaction(tx => {
             arrayOfQeuries.forEach((query) => tx.executeSql(query, [], (tx, result) => {
-                console.log(query, tx, result, "from init db query in");
             }));
         });
     }

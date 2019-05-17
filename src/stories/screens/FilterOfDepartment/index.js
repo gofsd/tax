@@ -13,12 +13,9 @@ import {
     Footer,
     FooterTab,
 } from "native-base";
-import { StyleSheet } from "react-native";
-
+import {Keyboard} from 'react-native';
 
 import styles from "./styles";
-
-
 
 
 import RNPicker from "rn-modal-picker";
@@ -135,7 +132,7 @@ class FilterOfDepartment extends React.Component {
     }
 
     state = {
-        forestries:[],
+        forestries: [],
         quartal: [],
         selected2: {}
     }
@@ -150,28 +147,31 @@ class FilterOfDepartment extends React.Component {
     }
 
     componentDidMount() {
+        Keyboard.dismiss();
         this.getQuarters();
         this.getForestries();
     }
 
-    getForestries = async() => {
+    getForestries = async () => {
         const forestries = (await this.props.getForestries()).data.forestries;
         console.log();
-        this.setState({forestries: forestries.map(it => { const item = this.props.KAIG.find(x => x.KAIG == it.kaig); return {name: item.NAME, id: item.KAIG};})});
+        this.setState({
+            forestries: forestries.map(it => {
+                const item = this.props.KAIG.find(x => x.KAIG == it.kaig);
+                return {name: item.NAME, id: item.KAIG};
+            })
+        });
     }
 
     getQuarters = async () => {
         const quartal = (await this.props.getQuarters({
-    "table": "M00",
-    "kalg": 13050101,
-    "kaig": 1
-})).data.map(it=> ({id: it.KAWN, name: it.KAWN}));
+            "table": "M00",
+            "kalg": 13050101,
+            "kaig": 1
+        })).data.map(it => ({id: it.KAWN, name: it.KAWN}));
         console.log(quartal, "from get qurtels`");
         this.setState({quartal});
     }
-
-
-
 
 
     render() {
@@ -182,10 +182,11 @@ class FilterOfDepartment extends React.Component {
         let index = 0;
         const data = [
             {name: "Some name", id: 1},
-            {name: "Sem data", id:2}
+            {name: "Sem data", id: 2}
         ];
-        if (this.state.forestries.length == 0 || this.state.quartal.length == 0)
-        {return <View />;}
+        if (this.state.forestries.length == 0 || this.state.quartal.length == 0) {
+            return <View/>;
+        }
         return (
             <Container style={styles.container}>
                 <Header style={{backgroundColor: "#333", width: "100%"}}>
@@ -198,51 +199,51 @@ class FilterOfDepartment extends React.Component {
                 <Content>
                     <Form>
                         <Body>
-                        <View >
-         <Text style={{marginLeft: 15, marginTop: 10, marginBottom: 5}}>Оберіть лісництво</Text>
-           <RNPicker
-          dataSource={this.state.forestries}
-          dummyDataSource={this.state.forestries}
-          defaultValue={false}
-          pickerTitle={"Лicництво"}
-          showSearchBar={true}
-          disablePicker={false}
-          changeAnimation={"none"}
-          searchBarPlaceHolder={"Пошук"}
-          showPickerTitle={true}
-          pickerStyle={styles.pickerStyle}
-          selectedLabel={this.state.selected2.KAIG}
-          placeHolderLabel={this.state.placeHolderText}
-          selectLabelTextStyle={styles.selectLabelTextStyle}
-          placeHolderTextStyle={styles.placeHolderTextStyle}
-          dropDownImageStyle={styles.dropDownImageStyle}
-          selectedValue={(idx, value) =>this.onValueChange2(idx, value, "KAIG")}
-        />
+                        <View>
+                            <Text style={{marginLeft: 15, marginTop: 10, marginBottom: 5}}>Оберіть лісництво</Text>
+                            <RNPicker
+                                dataSource={this.state.forestries}
+                                dummyDataSource={this.state.forestries}
+                                defaultValue={false}
+                                pickerTitle={"Лicництво"}
+                                showSearchBar={true}
+                                disablePicker={false}
+                                changeAnimation={"none"}
+                                searchBarPlaceHolder={"Пошук"}
+                                showPickerTitle={true}
+                                pickerStyle={styles.pickerStyle}
+                                selectedLabel={this.state.selected2.KAIG}
+                                placeHolderLabel={this.state.placeHolderText}
+                                selectLabelTextStyle={styles.selectLabelTextStyle}
+                                placeHolderTextStyle={styles.placeHolderTextStyle}
+                                dropDownImageStyle={styles.dropDownImageStyle}
+                                selectedValue={(idx, value) => this.onValueChange2(idx, value, "KAIG")}
+                            />
 
-         <Text style={{marginLeft: 15, marginTop: 10, marginBottom: 5}}>Оберіть квартали</Text>
-           <RNPicker
-          dataSource={this.state.quartal}
-          dummyDataSource={this.state.quartal}
-          defaultValue={false}
-          pickerTitle={"Квартал"}
-          showSearchBar={true}
-          disablePicker={false}
-          changeAnimation={"none"}
-          searchBarPlaceHolder={"Пошук"}
-          showPickerTitle={true}
-          pickerStyle={styles.pickerStyle}
-          selectedLabel={this.state.selected2.KAWN}
-          placeHolderLabel={this.state.placeHolderText}
-          selectLabelTextStyle={styles.selectLabelTextStyle}
-          placeHolderTextStyle={styles.placeHolderTextStyle}
-          dropDownImageStyle={styles.dropDownImageStyle}
-          selectedValue={(idx, value) =>this.onValueChange2(idx, value, "KAWN")}
-        />
-                          <View padder>
-                           <Button style={{backgroundColor: "#333"}} full info
-                                    onPress={() => this.props.navigation.navigate("BlankPage")}>
-                                <Text>Шукати</Text>
-                            </Button>
+                            <Text style={{marginLeft: 15, marginTop: 10, marginBottom: 5}}>Оберіть квартали</Text>
+                            <RNPicker
+                                dataSource={this.state.quartal}
+                                dummyDataSource={this.state.quartal}
+                                defaultValue={false}
+                                pickerTitle={"Квартал"}
+                                showSearchBar={true}
+                                disablePicker={false}
+                                changeAnimation={"none"}
+                                searchBarPlaceHolder={"Пошук"}
+                                showPickerTitle={true}
+                                pickerStyle={styles.pickerStyle}
+                                selectedLabel={this.state.selected2.KAWN}
+                                placeHolderLabel={this.state.placeHolderText}
+                                selectLabelTextStyle={styles.selectLabelTextStyle}
+                                placeHolderTextStyle={styles.placeHolderTextStyle}
+                                dropDownImageStyle={styles.dropDownImageStyle}
+                                selectedValue={(idx, value) => this.onValueChange2(idx, value, "KAWN")}
+                            />
+                            <View padder>
+                                <Button style={{backgroundColor: "#333"}} full info
+                                        onPress={() => this.props.navigation.navigate("BlankPage")}>
+                                    <Text>Шукати</Text>
+                                </Button>
                             </View>
 
                         </View>

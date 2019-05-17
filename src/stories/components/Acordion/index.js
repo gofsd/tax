@@ -16,46 +16,92 @@ import {
     Right,
     Left,
     Form,
+    Item,
+    Label,
+    Input
 } from "native-base";
-// import {StyleSheet} from "react-native";
+import {StyleSheet} from "react-native";
 import styles from "./styles.js";
-import MaquetteForm from "../../../stories/components/MaquetteForm";
-import RNPicker from "rn-modal-picker"
+import RNPicker from "rn-modal-picker";
 
 class Accordion extends React.Component {
     state = {
         items: [],
     };
 
+    componentDidMount() {
+        this.addItem()
+    }
+
     renderForm = (id) => {
         return <View>
-                <Text style={{fontSize: 17, marginLeft: 5, marginTop: 5}}>{'Порода'}</Text>
-                <RNPicker
-                    dataSource={this.props.data.map((item) => {return {id: item.KASP, name: item.NAME}})}
-                    dummyDataSource={this.props.data.map((item) => {return {id: item.KASP, name: item.NAME}})}
-                    defaultValue={false}
-                    pickerTitle={'Порода'}
-                    showSearchBar={true}
-                    disablePicker={false}
-                    changeAnimation={"none"}
-                    searchBarPlaceHolder={"Пошук"}
-                    showPickerTitle={true}
-                    pickerStyle={style.pickerStyle}
-                    selectedLabel={this.state.items.find((item) => item && item.id === id).selected}
-                    placeHolderLabel={'Оберіть породу'}
-                    selectLabelTextStyle={style.selectLabelTextStyle}
-                    placeHolderTextStyle={style.placeHolderTextStyle}
-                    dropDownImageStyle={style.dropDownImageStyle}
-                    selectedValue={(idx, value) => this.selectValue(id, value)}
-                />
-            </View>
+            <Item key={'Висота, м'} style={styles.containerInputNumber}>
+                <Label style={{marginLeft: 12, marginBottom: 5, color: "#000"}}>{'Висота, м'}</Label>
+                <Input style={styles.inputNumber} keyboardType="numeric"/>
+            </Item>
+            <Item key={'Діаметр, см'} style={styles.containerInputNumber}>
+                <Label style={{marginLeft: 12, marginBottom: 5, color: "#000"}}>{'Діаметр, см'}</Label>
+                <Input style={styles.inputNumber} keyboardType="numeric"/>
+            </Item>
+            <Item key={'Відсоток ділових стовбурів'} style={styles.containerInputNumber}>
+                <Label style={{marginLeft: 12, marginBottom: 5, color: "#000"}}>{'Відсоток ділових стовбурів'}</Label>
+                <Input style={styles.inputNumber} keyboardType="numeric"/>
+            </Item>
+            <Text style={{fontSize: 17, marginLeft: 5, marginTop: 5}}>{'Порода'}</Text>
+            <RNPicker
+                dataSource={this.props.data.NDI10200003.map((item) => {
+                    return {id: item.KASP, name: item.NAME}
+                })}
+                dummyDataSource={this.props.data.NDI10200003.map((item) => {
+                    return {id: item.KASP, name: item.NAME}
+                })}
+                defaultValue={false}
+                pickerTitle={'Порода'}
+                showSearchBar={true}
+                disablePicker={false}
+                changeAnimation={"none"}
+                searchBarPlaceHolder={"Пошук"}
+                showPickerTitle={true}
+                pickerStyle={style.pickerStyle}
+                selectedLabel={this.state.items.find((item) => item && item.id === id).KASP}
+                placeHolderLabel={'Оберіть породу'}
+                selectLabelTextStyle={style.selectLabelTextStyle}
+                placeHolderTextStyle={style.placeHolderTextStyle}
+                dropDownImageStyle={style.dropDownImageStyle}
+                selectedValue={(idx, value) => this.selectValue(id, value, 'KASP')}
+            />
+            <Text style={{fontSize: 17, marginLeft: 5, marginTop: 5}}>{'Походження'}</Text>
+            <RNPicker
+                dataSource={this.props.data.NDI10200005.map((item) => {
+                    return {id: item.KAPH, name: item.NAME}
+                })}
+                dummyDataSource={this.props.data.NDI10200005.map((item) => {
+                    return {id: item.KAPH, name: item.NAME}
+                })}
+                defaultValue={false}
+                pickerTitle={'Порода'}
+                showSearchBar={true}
+                disablePicker={false}
+                changeAnimation={"none"}
+                searchBarPlaceHolder={"Пошук"}
+                showPickerTitle={true}
+                pickerStyle={style.pickerStyle}
+                selectedLabel={this.state.items.find((item) => item && item.id === id).KAPH}
+                placeHolderLabel={'Оберіть породу'}
+                selectLabelTextStyle={style.selectLabelTextStyle}
+                placeHolderTextStyle={style.placeHolderTextStyle}
+                dropDownImageStyle={style.dropDownImageStyle}
+                selectedValue={(idx, value) => this.selectValue(id, value, 'KAPH')}
+            />
+        </View>
     };
 
     getItem = (id, isOpen) => {
         return <View key={`accordionItem${id}`}>
             <View style={styles.buttonsContainerAccordion}>
                 <Button style={styles.buttonContent} onPress={() => this.openCloseItem(id)}>
-                    <Text style={styles.textColor}>{this.state.items.find((item) => item && item.id === id).selected || 'Порода не обрана'}</Text>
+                    <Text
+                        style={styles.textColor}>{this.state.items.find((item) => item && item.id === id).KASP || 'Порода не обрана'}</Text>
                     <Icon style={styles.textColor} name={(isOpen) ? 'arrow-dropup' : 'arrow-dropdown'}/>
                 </Button>
                 <Button style={styles.buttonDelete} onPress={() => this.deleteItem(id)}>
@@ -70,7 +116,7 @@ class Accordion extends React.Component {
 
     addItem = () => {
         this.setState((prev) => ({
-            items: [...prev.items, {id: prev.items.length, isOpen: false, selected: ''}]
+            items: [...prev.items, {id: prev.items.length, isOpen: true, KASP: '', KAPH: ''}]
         }));
     };
 
@@ -88,9 +134,9 @@ class Accordion extends React.Component {
         }));
     };
 
-    selectValue = (id, value) => {
+    selectValue = (id, value, flag) => {
         this.setState((prev) => ({
-            items: prev.items.map((item) => (item && item.id === id) ? {...item, selected: value} : item)
+            items: prev.items.map((item) => (item && item.id === id) ? {...item, [flag]: value} : item)
         }));
     };
 
@@ -98,7 +144,8 @@ class Accordion extends React.Component {
         return <View style={styles.containerAcordion}>
             <View style={styles.buttonsContainer}>
                 <Text style={styles.textAddButton}>Порода</Text>
-                <Button style={styles.addButton} onPress={() => this.addItem()}><Icon style={styles.textColor} name={"add-circle"}/></Button>
+                <Button style={styles.addButton} onPress={() => this.addItem()}><Icon style={styles.textColor}
+                                                                                      name={"add-circle"}/></Button>
             </View>
             {this.state.items.map((item) => (item) ? this.getItem(item.id, item.isOpen) : null)}
         </View>;
@@ -162,8 +209,8 @@ const style = StyleSheet.create({
         justifyContent: "center"
     },
     textAddButton: {
-    //   width: "90%",
-      marginLeft: 10
+        //   width: "90%",
+        marginLeft: 10
     },
     textColor: {
         color: "#000",
