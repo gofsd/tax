@@ -1,14 +1,14 @@
 import * as React from "react";
 import { Button, Text, Icon, View } from "native-base";
 import { StyleSheet } from "react-native";
-import ButtonScrollable from '../ButtonsScrollable'
+import ButtonScrollable from "../ButtonsScrollable";
 
 class SimpleButton extends React.Component {
     render() {
         const { isActive, isChildren, onPress, id, flag, children } = this.props;
-        if (id === null) return null;
+        if (id === null) {return null;}
 
-        const isM10 = id === 10 && !isChildren && flag !== 'saw';
+        const isM10 = id === 10 && !isChildren && flag !== "saw";
         const styleButton = (isActive && isChildren)
             ? style.activeM10
             : (isChildren)
@@ -24,7 +24,7 @@ class SimpleButton extends React.Component {
                 key={`${flag}${id}`}
             >
                 <Text style={(isM10) ? style.textM10 : {fontSize: 16, paddingLeft: 0, paddingRight: 0}}>
-                    {`${(flag === 'children')
+                    {`${(flag === "children")
                         ? `M10.${id}`
                         : (flag === "saw")
                             ? `${id}`
@@ -32,11 +32,11 @@ class SimpleButton extends React.Component {
                                 ? "0"
                                 : ""}${id}`}`}
                 </Text>
-                {(isM10) ? <Icon name={`${(isActive) ? 'arrow-down' : 'arrow-up'}`}
+                {(isM10) ? <Icon name={`${(isActive) ? "arrow-dropdown" : "arrow-dropup"}`}
                                  style={{marginLeft: 0, marginRight: 0, paddingRight: 4}}/> : null}
             </Button>
-            {(isM10 && isActive) ? <ButtonScrollable data={children} flag={'children'}/> : null}
-        </View>
+            {(isM10 && isActive) ? <ButtonScrollable data={children} flag={"children"}/> : null}
+        </View>;
     }
 }
 
@@ -44,42 +44,42 @@ const style = StyleSheet.create({
     button: {
         height: 75,
         width: 75,
-        justifyContent: 'center',
-        backgroundColor: '#333333',
-        borderStyle: 'solid',
+        justifyContent: "center",
+        backgroundColor: "#333333",
+        borderStyle: "solid",
         borderWidth: 1,
-        borderColor: '#000',
+        borderColor: "#000",
     },
     activeButton: {
         height: 75,
         width: 75,
         flex: 1,
-        justifyContent: 'center',
-        backgroundColor: '#555',
-        borderStyle: 'solid',
-        borderColor: '#000',
+        justifyContent: "center",
+        backgroundColor: "#555",
+        borderStyle: "solid",
+        borderColor: "#000",
     },
     m10Buttons: {
         height: 60,
         width: 60,
         padding: 0,
-        justifyContent: 'center',
-        backgroundColor: '#333',
-        borderStyle: 'solid',
+        justifyContent: "center",
+        backgroundColor: "#333",
+        borderStyle: "solid",
         borderWidth: 1,
         marginLeft: 15,
-        borderColor: '#000',
+        borderColor: "#000",
     },
     activeM10: {
         height: 60,
         width: 60,
         padding: 0,
-        justifyContent: 'center',
-        backgroundColor: '#555',
-        borderStyle: 'solid',
+        justifyContent: "center",
+        backgroundColor: "#555",
+        borderStyle: "solid",
         borderWidth: 1,
         marginLeft: 15,
-        borderColor: '#000',
+        borderColor: "#000",
     },
     textM10: {
         fontSize: 16,

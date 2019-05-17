@@ -32,5 +32,33 @@ const styles: any = StyleSheet.create({
 		marginTop: 20,
 		alignSelf: "center",
 	},
+	buttonPagination: {
+		justifyContent: "center",
+		backgroundColor: "#333333",
+		borderStyle: "solid",
+		borderWidth: 1,
+		flex: 1,
+		borderColor: "#000",
+},
+leftButtonsContainer: {
+		width: 75,
+		flexGrow: 0,
+		flexShrink: 0,
+		backgroundColor: "#000",
+},
+rightButtonsContainer: {
+		width: 75,
+		flexGrow: 0,
+		flexShrink: 0,
+		backgroundColor: "#000",
+},
+buttonRightAdd: {
+	width: 75,
+	height: 75,
+	flex: 0,
+	backgroundColor: "#333",
+	borderWidth: 1,
+	borderColor: "#000"
+}
 });
 export default styles;
