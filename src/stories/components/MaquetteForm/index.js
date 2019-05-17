@@ -9,9 +9,8 @@ import {
 } from "native-base";
 import { ScrollView} from "react-native";
 import RNPicker from "rn-modal-picker";
-
-
 import styles from "./styles";
+import Accordion from '../../components/Acordion'
 
 
 class MaquetteForm extends React.Component {
@@ -96,6 +95,7 @@ class MaquetteForm extends React.Component {
                     this.props.metadata.struct.filter(item => item.TABL === this.props.maquetteName).filter(item => item.num).map(this.chooseInput)
                 }
                 </ScrollView>
+                {(this.props.maquetteName === 'M10') ? <Accordion data={this.props.NDI10200003}/> : null}
             </Form>
 
         );

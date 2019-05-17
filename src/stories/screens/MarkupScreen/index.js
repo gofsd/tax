@@ -155,10 +155,7 @@ class Markup extends React.Component {
                             <Icon name="trash"/>
                             <Text>Видалити</Text>
                         </Button>
-                        <Button
-                            vertical
-                            onPress={() => this.findAvailable()}
-                        >
+                        <Button vertical>
                             <Icon active name="paper"/>
                             <Text>Зберегти</Text>
                         </Button>
