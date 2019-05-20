@@ -4,7 +4,7 @@ export const selectList = (tableName = "", option = {}) => async (dispatch, getS
     if (!tableName) {
         return false;
     }
-    const result = await dispatch(db.exportMaquette(tableName));
+    const result = await dispatch(db.selectFromTable(tableName, option));
     return result;
 };
 
@@ -23,7 +23,7 @@ export const deleteRows = (tableName = "", params = {}) => async (dispatch, getS
         return false;
     }
     console.log("DELETE");
-    const result = await dispatch(db.insertItem(tableName, params));
+    const result = await dispatch(db.deleteItems(tableName, params));
     return result;
 };
 
@@ -33,7 +33,7 @@ export const updateRow = (tableName = "", params = {}) => async (dispatch, getSt
     }
         console.log("UPDATE");
 
-    const result = await dispatch(db.insertItem(tableName, params));
+    const result = await dispatch(db.updateItem(tableName, params));
     return result;
 };
 
@@ -43,7 +43,7 @@ export const insertOrUpdate = (tableName = "", params = {}) => async (dispatch, 
     }
         console.log("INSERT OR UPDATE");
 
-    const result = await dispatch(db.insertItem(tableName, params));
+    const result = await dispatch(db.insertOrUpdateItem(tableName, params));
     return result;
 }
 ;
