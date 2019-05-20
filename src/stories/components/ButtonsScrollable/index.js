@@ -22,7 +22,7 @@ class ButtonsScrollable extends React.Component {
     componentWillMount() {
         const { data, flag } = this.props;
 
-        if (flag === 'children') this.createButtons(data, flag)
+        this.createButtons(data, flag)
     }
 
     createButtons = (data, flag) => {

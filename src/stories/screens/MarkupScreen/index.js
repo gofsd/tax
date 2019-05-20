@@ -3,7 +3,6 @@ import {Container, Content, Header, Body, Title, Button, Text, Icon, Footer, Lef
 import {ScrollView, StyleSheet, View, Alert} from "react-native";
 import ButtonsScrollable from "../../../stories/components/ButtonsScrollable";
 import ModalInner from "../../../container/ModalContainer";
-import Modal from "react-native-modal";
 import style from "./styles.js";
 
 class Markup extends React.Component {
@@ -65,7 +64,8 @@ class Markup extends React.Component {
     };
 
     render() {
-        return (
+        return (this.state.isVisible) ? <ModalInner flag={"layout"} close={this.closeModal}/>
+            : (this.state.isVisible2) ? <ModalInner flag={"saw"} close={this.closeModal}/> : (
             <Container>
                 <Header style={{backgroundColor: "#333", height: 64}} androidStatusBarColor={"#333"}>
                     <Left>
@@ -108,26 +108,6 @@ class Markup extends React.Component {
                                 this.setState({lantCatId: id});
                             }}/>
                         </ScrollView>
-                        <Modal
-                            isVisible={this.state.isVisible}
-                            onSwipeComplete={() => this.setState({isVisible: false})}
-                            swipeDirection="left"
-                            onBackdropPress={() => this.setState({isVisible: false})}
-                        >
-                            <View style={{flex: 1, backgroundColor: "#fff"}}>
-                                <ModalInner flag={"layout"} close={this.closeModal}/>
-                            </View>
-                        </Modal>
-                        <Modal
-                            isVisible={this.state.isVisible2}
-                            onSwipeComplete={() => this.setState({isVisible2: false})}
-                            swipeDirection="left"
-                            onBackdropPress={() => this.setState({isVisible2: false})}
-                        >
-                            <View style={{flex: 1, backgroundColor: "#fff"}}>
-                                <ModalInner flag={"saw"} close={this.closeModal}/>
-                            </View>
-                        </Modal>
                     </View>
                     <ScrollView style={style.rightButtonsContainer}>
                         <ButtonsScrollable data={this.getSaws()} flag={"saw"} selectSaw={this.props.selectSaw}/>
