@@ -11,6 +11,7 @@ import {
     View,
     Form,
     Footer,
+    Right,
     FooterTab,
 } from "native-base";
 import { StyleSheet } from "react-native";
@@ -102,7 +103,13 @@ class FilterOfDepartment extends React.Component {
                     <Body>
                     <Title>Виконавець: Дмитро</Title>
                     </Body>
-
+                    <Right>
+                        <Button
+                        transparent
+                        onPress={() => this.props.navigation.navigate("SidebarM")}>
+                            <Icon name="more"/>
+                        </Button>
+                    </Right>
                 </Header>
                 <Content>
                     <Form>
