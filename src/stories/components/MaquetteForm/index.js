@@ -104,6 +104,7 @@ class MaquetteForm extends React.Component {
     };
 
     render() {
+
         return (
             <View>{this.renderForm()}</View>
         );
