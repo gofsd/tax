@@ -76,14 +76,14 @@ class Markup extends React.Component {
                         </Button>
                     </Left>
                     <Body>
-                    <Title style={{width: "100%", margin: "auto"}}>{"Лiсництво 1, квартал 1, видiл 1, Поточний"}</Title>
+                    <Title style={{width: "100%"}}>{"Лiсництво 1, квартал 1, видiл 1, Поточний"}</Title>
                     </Body>
                     <Right>
-                        <Button
+                        {/* <Button
                         transparent
                         onPress={() => this.props.navigation.navigate("SidebarM")}>
                             <Icon name="more"/>
-                        </Button>
+                        </Button> */}
                     </Right>
                 </Header>
                 <View
