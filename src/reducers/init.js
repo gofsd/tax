@@ -1,11 +1,12 @@
-import { SET_MIGRATION, SET_CONNECTION, SET_SEEDS, START_EXPORT, START_IMPORT, END_CACHING } from "../constants/actions";
+import { SET_MIGRATION, SET_CONNECTION, SET_SEEDS, START_EXPORT, START_IMPORT, END_CACHING, SET_TABLES_META } from "../constants/actions";
 const initialState = {
     migrated: false,
     seeded: false,
     connected: false,
     exporting: false,
     importing: false,
-    cached: false
+    cached: false,
+    tablesMeta: {}
 };
 
 export default function(state = initialState, action) {
@@ -22,6 +23,8 @@ export default function(state = initialState, action) {
             return { ...state, importing: action.payload };
         case END_CACHING:
             return { ...state, cached: true };
+        case SET_TABLES_META:
+            return { ...state, tablesMeta: action.payload };
         default:
             break;
     }

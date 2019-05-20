@@ -2,42 +2,74 @@ import Realm from "realm";
 import { schemas, migration } from "../db/migration";
 import connect from "../db/connect";
 import * as ddl from "../db/migration";
-import { SET_MIGRATION, SET_CONNECTION, SET_SEEDS } from "../constants/actions";
+import { SET_MIGRATION, SET_CONNECTION, SET_SEEDS, SET_TABLES_META } from "../constants/actions";
 const db = connect();
 const setConnection = (payload) => ({type: SET_CONNECTION, payload});
 const setMigration = (payload) => ({type: SET_MIGRATION, payload});
+const setTablesMeta = (payload) => ({type: SET_TABLES_META, payload});
 
+export const importMaquette = (tableName = "M00", data = []) => async dispatch => new Promise((resolve, reject) => {
+    console.log("IMPORT MAQUETE AND OTHER", tableName, data);
+       db.transaction(tx => {
+        let queryString = `INSERT INTO ${tableName} (${Object.keys(data[0]).map(it => `'${it}'`).join(",")})
+            VALUES ${data.reduce((ac, item) => {
+                return ac += `(${Object.values(item).map(it => typeof it === "string" ? `'${it.replace(/\'/g, "''")}'` : it == null ? "NULL" : it).join(",")}),`;
+            }, "")}`.slice(0, -1);
+        queryString = queryString + ";";
+        data = null;
+        tx.executeSql(queryString,
+            [], (tx, result) =>{console.log(result,tx, "from executesql");  return resolve(result);}
+        );
+    });
+});
 
-export const startMigration = () => async (dispatch, getState) => {
-    const { struct } = getState().metadata;
-    const arrayOfQeuries = ddl.generateTables(struct);
-    const { migrated, seeded, connected} = getState().init;
-    console.log(arrayOfQeuries, "FROM MIGRATION");
-    dispatch(setConnection(true));
-    if (!migrated) {
-        dispatch(setMigration(true));
-        db.transaction(tx => {
-            arrayOfQeuries.forEach((query) => tx.executeSql(query, [], (tx, result) => {
-            }));
+export const executeQuery = (query) => new Promise((resolve, reject) => {
+            db.executeSql(query, [], (tx, result) => {
+            console.log(query, tx, result, "execute query");
+            resolve({result});
         });
-    }
+});
 
-    if (!seeded) {
-
+export const executeArrayOfQuery = (arQueries) => async(dispatch) => {
+    for (let i = 0; i < arQueries.length; i++){
+        await executeQuery(arQueries[i]);
     }
 };
 
-export const startSeeding = () => async (dispatch, getState) => {
-    const { metadata, init: { seeded } } = getState();
 
-    console.log("FROM SEEDING", metadata);
-    return false;
+
+export const startMigration = (metadata) => async (dispatch, getState) => {
+    const { struct } = metadata;
+    const arrayOfQeuries = ddl.generateTables(struct);
+    dispatch(setTablesMeta(ddl.tablesMeta(struct)));
+    const { migrated } = getState().init;
+    dispatch(setConnection(true));
+    if (true) {
+        console.log(arrayOfQeuries, "MIGRATION ARRAY");
+        await dispatch(executeArrayOfQuery(arrayOfQeuries));
+        dispatch(setMigration(true));
+    }
+    console.log("END MIGRATION");
+
+};
+
+export const startSeeding = (metadata) => async (dispatch, getState) => {
+    const { init: { seeded, tablesMeta } } = getState();
+    const arrOfTablName = Object.keys(tablesMeta);
+    console.log("from start seeds", arrOfTablName, metadata, "ARRAY SEED");
+        for (let i = 0; i < arrOfTablName.length; i++) {
+            const tableName = arrOfTablName[i];
+            console.log(tableName, metadata[tableName], "SOME TABLE");
+            if (metadata[tableName])
+            {await dispatch(importMaquette(tableName, metadata[tableName]));}
+        }
+    console.log("ENG SEEDING");
 };
 
 export const initDb = () => async (dispatch, getState) => {
     const { migrated, seeded, connected} = getState().init;
     dispatch(setConnection(true));
-    if (migrated) {
+    if (false) {
         dispatch(setMigration(true));
         db.transaction(tx => {
             Object.keys(ddl).reduce((ac, tableName) => tx.executeSql(ddl[tableName], [],(tx, result) => {
@@ -96,16 +128,3 @@ export const exportMaquette = (schemaName = "M00") => async () => {
    return new Promise((resolve, reject) => db.executeSql(`select * from ${schemaName};`, [], (tx)=> resolve(tx.rows.raw())));
 };
 
-export const importMaquette = (tableName = "M00", data = []) => async dispatch => new Promise((resolve, reject) => {
-       db.transaction(tx => {
-        let queryString = `INSERT INTO ${tableName} (${Object.keys(data[0]).map(it => `'${it}'`).join(",")})
-            VALUES ${data.reduce((ac, item) => {
-                return ac += `(${Object.values(item).map(it => typeof it === "string" ? `'${it}'` : it == null ? "NULL" : it).join(",")}),`;
-            }, "")}`.slice(0, -1);
-        queryString = queryString + ";";
-        data = null;
-        tx.executeSql(queryString,
-            [], (tx, result) =>{console.log(result,tx, "from executesql");  return resolve(result);}
-        );
-    });
-});
