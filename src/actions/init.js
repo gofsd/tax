@@ -1,4 +1,4 @@
-import { INIT_METADATA, SET_SEEDS } from "../constants/actions";
+import { INIT_METADATA, SET_SEEDS, SET_FORESTRIES } from "../constants/actions";
 import { getForestries, getMaquette, setMaquette, getMetadata, getDictionaries } from "./api";
 import { importMaquette, exportMaquette, startMigration, startSeeding } from "./db";
 
@@ -7,7 +7,7 @@ export const setSeeds = (payload) => ({type: SET_SEEDS, payload});
 
 
 export const setMetadata = (payload) => ({ type: INIT_METADATA, payload });
-
+export const setForestries = payload => ({ type: SET_FORESTRIES, payload });
 
 export const initMetadata = () => async (dispatch, getState) => {
     const { seeded } = getState().init;
@@ -27,14 +27,19 @@ export const initMetadata = () => async (dispatch, getState) => {
       console.log("END SEEDING");
       dispatch(setSeeds(true));
       console.log("END INIT DB");
+      await dispatch(importMaquetteFromServer());
     }
+
 };
 
 export const importMaquetteFromServer = () => async(dispatch, getState) => {
     const forestries = (await dispatch(getForestries())).data.forestries;
+    dispatch(setForestries(forestries));
     const start = new Date().getTime();
+    console.log(forestries, "forestries");
     for (let i = 0; i < forestries.length; i++) {
       let maquetteData = (await dispatch(getMaquette({...forestries[i], table: "M00"}))).data;
+      console.log(maquetteData, "maquetes");
       await dispatch(importMaquette("M00", maquetteData));
     }
     const end = new Date().getTime();

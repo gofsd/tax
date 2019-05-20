@@ -22,88 +22,9 @@ import styles from "./styles";
 
 
 import RNPicker from "rn-modal-picker";
+import { insert } from "../../../db/dml/dml";
 
-// This is how you can load a local icon
-// You can remove this if you'd like
 
-const items = [
-    {
-        name: "Fruits",
-        id: 0,
-        children: [
-            {
-                name: "Apple",
-                id: 10,
-            },
-            {
-                name: "Strawberry",
-                id: 17,
-            },
-            {
-                name: "Pineapple",
-                id: 13,
-            },
-            {
-                name: "Banana",
-                id: 14,
-            },
-            {
-                name: "Watermelon",
-                id: 15,
-            },
-            {
-                name: "Kiwi fruit",
-                id: 16,
-            },
-        ],
-    },
-    {
-        name: "Gems",
-        id: 1,
-        icon: {uri: "https://cdn4.iconfinder.com/data/icons/free-crystal-icons/512/Gemstone.png"}, // web uri
-        children: [
-            {
-                name: "Quartz",
-                id: 20,
-            },
-            {
-                name: "Zircon",
-                id: 21,
-            },
-            {
-                name: "Sapphire",
-                id: 22,
-            },
-            {
-                name: "Topaz",
-                id: 23,
-            },
-        ],
-    },
-    {
-        name: "Plants",
-        id: 2,
-        icon: "filter_vintage", // material icons icon name
-        children: [
-            {
-                name: "Mother In Law's Tongue",
-                id: 30,
-            },
-            {
-                name: "Yucca",
-                id: 31,
-            },
-            {
-                name: "Monsteria",
-                id: 32,
-            },
-            {
-                name: "Palm",
-                id: 33,
-            },
-        ],
-    },
-];
 
 
 class FilterOfDepartment extends React.Component {
@@ -150,24 +71,13 @@ class FilterOfDepartment extends React.Component {
     }
 
     componentDidMount() {
-        this.getQuarters();
-        this.getForestries();
-    }
+       const { select, insertItem, updateItem, deleteItems, insertOrUpdate } = this.props;
+       select("M00", {KALG: 1, KAIG: 1, KAWN: 1, KAKL: 1, KARA: 1, KAGE: 1, MAPL: 1, MAIS: 1, MARI: 1}).then(result => console.log("FROM SELECT", result));
+       insertItem("M00", {KALG: 1, KAIG: 1, KAWN: 1, KAKL: 1, KARA: 1, KAGE: 1, MAPL: 1, MAIS: 1, MARI: 1}).then(result => console.log("FROM INSERT", result));
+       updateItem("M00", {KALG: 1, KAIG: 1, KAWN: 1, KAKL: 1, KARA: 1, KAGE: 1, MAPL: 1, MAIS: 1, MARI: 1}).then(result => console.log("FROM UPDATE", result));
+       deleteItems("M00", {KALG: 1, KAIG: 1, KAWN: 1, KAKL: 1, KARA: 1, KAGE: 1, MAPL: 1, MAIS: 1, MARI: 1}).then(result => console.log("FROM DELETE", result));
+       insertOrUpdate("M00", {KALG: 1, KAIG: 1, KAWN: 1, KAKL: 1, KARA: 1, KAGE: 1, MAPL: 1, MAIS: 1, MARI: 1}).then(result => console.log("FROM INSERTORUPDATE", result));
 
-    getForestries = async() => {
-        const forestries = (await this.props.getForestries()).data.forestries;
-        console.log();
-        this.setState({forestries: forestries.map(it => { const item = this.props.KAIG.find(x => x.KAIG == it.kaig); return {name: item.NAME, id: item.KAIG};})});
-    }
-
-    getQuarters = async () => {
-        const quartal = (await this.props.getQuarters({
-    "table": "M00",
-    "kalg": 13050101,
-    "kaig": 1
-})).data.map(it=> ({id: it.KAWN, name: it.KAWN}));
-        console.log(quartal, "from get qurtels`");
-        this.setState({quartal});
     }
 
 
@@ -184,8 +94,7 @@ class FilterOfDepartment extends React.Component {
             {name: "Some name", id: 1},
             {name: "Sem data", id:2}
         ];
-        if (this.state.forestries.length == 0 || this.state.quartal.length == 0)
-        {return <View />;}
+
         return (
             <Container style={styles.container}>
                 <Header style={{backgroundColor: "#333", width: "100%"}}>

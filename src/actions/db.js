@@ -10,6 +10,9 @@ const setTablesMeta = (payload) => ({type: SET_TABLES_META, payload});
 
 export const importMaquette = (tableName = "M00", data = []) => async dispatch => new Promise((resolve, reject) => {
     console.log("IMPORT MAQUETE AND OTHER", tableName, data);
+        if (!data.length){
+            resolve();
+        }
        db.transaction(tx => {
         let queryString = `INSERT INTO ${tableName} (${Object.keys(data[0]).map(it => `'${it}'`).join(",")})
             VALUES ${data.reduce((ac, item) => {
@@ -21,6 +24,7 @@ export const importMaquette = (tableName = "M00", data = []) => async dispatch =
             [], (tx, result) =>{console.log(result,tx, "from executesql");  return resolve(result);}
         );
     });
+
 });
 
 export const executeQuery = (query) => new Promise((resolve, reject) => {
@@ -29,6 +33,10 @@ export const executeQuery = (query) => new Promise((resolve, reject) => {
             resolve({result});
         });
 });
+
+export const getDictionaries = () => async(dispatch) => {
+
+};
 
 export const executeArrayOfQuery = (arQueries) => async(dispatch) => {
     for (let i = 0; i < arQueries.length; i++){
@@ -124,7 +132,96 @@ export const selectMaquette = ( schemaName = "M01", id = "1_1_1" ) => async disp
     return result;
 };
 
-export const exportMaquette = (schemaName = "M00") => async () => {
-   return new Promise((resolve, reject) => db.executeSql(`select * from ${schemaName};`, [], (tx)=> resolve(tx.rows.raw())));
+export const exportMaquette = (schemaName = "M00") => async (dispatch) => {
+    const query = `select * from ${schemaName};`;
+   return new Promise((resolve, reject) => db.executeSql(query, [], (tx)=>{
+    resolve(tx.rows.raw());}
+   ));
 };
 
+
+export const insertItem = (tableName = "M00", params) => async dispatch => new Promise((resolve, reject) => {
+    console.log("IMPORT MAQUETE AND OTHER", tableName, params);
+        const keysParams = Object.keys(params);
+        const valuesParams = Object.keys(params);
+        if (!keysParams.length){
+            resolve();
+        }
+       db.transaction(tx => {
+        let queryString = `INSERT INTO ${tableName} (${keysParams.map(it => `'${it}'`).join(",")})
+            VALUES (${valuesParams.map(it => typeof it === "string" ? `'${it.replace(/\'/g, "''")}'` : it == null ? "NULL" : it).join(",")})`;
+        tx.executeSql(queryString,
+            [], (tx, result) =>{console.log(result,tx, "INSERTED");  return resolve(result);}
+        );
+    });
+
+});
+
+export const deleteItems = (tableName = "M00", params) => async dispatch => new Promise((resolve, reject) => {
+        const keysParams = Object.keys(params);
+        const valuesParams = Object.keys(params);
+        if (!keysParams.length){
+            resolve();
+        }
+        let selectStr = "";
+        const arLength = keysParams.length;
+        for (let i = 0; i < arLength; i++) {
+            if (i === arLength - 1){
+                selectStr += `${keysParams[i]} = ${typeof valuesParams[i] === "string" ? `'${valuesParams[i].replace(/\'/g, "''")}'` : valuesParams[i] == null ? "NULL" : valuesParams[i]}`;
+            } else {
+                selectStr += `${keysParams[i]} = ${typeof valuesParams[i] === "string" ? `'${valuesParams[i].replace(/\'/g, "''")}'` : valuesParams[i] == null ? "NULL" : valuesParams[i]} and`;
+            }
+        }
+        const deleteQuery = `DELETE FROM ${tableName} WHERE ${selectStr};`;
+       db.transaction(tx => {
+        tx.executeSql(deleteQuery,
+            [], (tx, result) =>{console.log(result,tx, "DELETED");  return resolve(result);}
+        );
+    });
+
+});
+
+export const updateItem = (tableName = "M00", params) => async dispatch => new Promise((resolve, reject) => {
+    console.log("IMPORT MAQUETE AND OTHER", tableName, params);
+        const keysParams = Object.keys(params);
+        const valuesParams = Object.keys(params);
+        if (!keysParams.length){
+            resolve();
+        }
+
+                let selectStr = "";
+        const arLength = keysParams.length;
+        for (let i = 0; i < arLength; i++) {
+            if (i === arLength - 1){
+                selectStr += `${keysParams[i]} = ${typeof valuesParams[i] === "string" ? `'${valuesParams[i].replace(/\'/g, "''")}'` : valuesParams[i] == null ? "NULL" : valuesParams[i]}`;
+            } else {
+                selectStr += `${keysParams[i]} = ${typeof valuesParams[i] === "string" ? `'${valuesParams[i].replace(/\'/g, "''")}'` : valuesParams[i] == null ? "NULL" : valuesParams[i]} and`;
+            }
+        }
+        const updateStr = `${valuesParams.map((it, idx) => typeof it === "string" ? `${keysParams[idx]} = '${it.replace(/\'/g, "''")}'` : it == null ? `${keysParams[idx]} = NULL` : `${keysParams[idx]} = ${it}`).join(",")}`;
+        const updateQuery = `UPDATE ${tableName} SET ${updateStr} WHERE ${selectStr};`;
+       db.transaction(tx => {
+
+        tx.executeSql(updateQuery,
+            [], (tx, result) =>{console.log(result,tx, "INSERTED");  return resolve(result);}
+        );
+    });
+
+});
+
+export const insertOrUpdateItem = (tableName = "M00", params) => async dispatch => new Promise((resolve, reject) => {
+    console.log("IMPORT MAQUETE AND OTHER", tableName, params);
+        const keysParams = Object.keys(params);
+        const valuesParams = Object.keys(params);
+        if (!keysParams.length){
+            resolve();
+        }
+       db.transaction(tx => {
+        let queryString = `INSERT INTO ${tableName} (${keysParams.map(it => `'${it}'`).join(",")})
+            VALUES (${valuesParams.map(it => typeof it === "string" ? `'${it.replace(/\'/g, "''")}'` : it == null ? "NULL" : it).join(",")})`;
+        tx.executeSql(queryString,
+            [], (tx, result) =>{console.log(result,tx, "INSERTED");  return resolve(result);}
+        );
+    });
+
+});

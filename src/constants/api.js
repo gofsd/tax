@@ -1,5 +1,5 @@
-//export const tax_host = "http://ec2-13-59-77-231.us-east-2.compute.amazonaws.com:4000";
-export const tax_host = "http://10.8.16.128:4001";
+export const tax_host = "http://ec2-13-59-77-231.us-east-2.compute.amazonaws.com:4000";
+//export const tax_host = "http://10.8.16.128:4001";
 export const dictionaries = "/api/tax/dictionary";
 
 //post request - {username:"test",password:"test", device_id: "xxxxxxxx"}

@@ -17,10 +17,10 @@ import {
     Left,
     Form,
 } from "native-base";
-// import {StyleSheet} from "react-native";
+import {StyleSheet} from "react-native";
 import styles from "./styles.js";
 import MaquetteForm from "../../../stories/components/MaquetteForm";
-import RNPicker from "rn-modal-picker"
+import RNPicker from "rn-modal-picker";
 
 class Accordion extends React.Component {
     state = {
@@ -29,12 +29,12 @@ class Accordion extends React.Component {
 
     renderForm = (id) => {
         return <View>
-                <Text style={{fontSize: 17, marginLeft: 5, marginTop: 5}}>{'Порода'}</Text>
+                <Text style={{fontSize: 17, marginLeft: 5, marginTop: 5}}>{"Порода"}</Text>
                 <RNPicker
-                    dataSource={this.props.data.map((item) => {return {id: item.KASP, name: item.NAME}})}
-                    dummyDataSource={this.props.data.map((item) => {return {id: item.KASP, name: item.NAME}})}
+                    dataSource={this.props.data.map((item) => {return {id: item.KASP, name: item.NAME};})}
+                    dummyDataSource={this.props.data.map((item) => {return {id: item.KASP, name: item.NAME};})}
                     defaultValue={false}
-                    pickerTitle={'Порода'}
+                    pickerTitle={"Порода"}
                     showSearchBar={true}
                     disablePicker={false}
                     changeAnimation={"none"}
@@ -42,21 +42,21 @@ class Accordion extends React.Component {
                     showPickerTitle={true}
                     pickerStyle={style.pickerStyle}
                     selectedLabel={this.state.items.find((item) => item && item.id === id).selected}
-                    placeHolderLabel={'Оберіть породу'}
+                    placeHolderLabel={"Оберіть породу"}
                     selectLabelTextStyle={style.selectLabelTextStyle}
                     placeHolderTextStyle={style.placeHolderTextStyle}
                     dropDownImageStyle={style.dropDownImageStyle}
                     selectedValue={(idx, value) => this.selectValue(id, value)}
                 />
-            </View>
+            </View>;
     };
 
     getItem = (id, isOpen) => {
         return <View key={`accordionItem${id}`}>
             <View style={styles.buttonsContainerAccordion}>
                 <Button style={styles.buttonContent} onPress={() => this.openCloseItem(id)}>
-                    <Text style={styles.textColor}>{this.state.items.find((item) => item && item.id === id).selected || 'Порода не обрана'}</Text>
-                    <Icon style={styles.textColor} name={(isOpen) ? 'arrow-dropup' : 'arrow-dropdown'}/>
+                    <Text style={styles.textColor}>{this.state.items.find((item) => item && item.id === id).selected || "Порода не обрана"}</Text>
+                    <Icon style={styles.textColor} name={(isOpen) ? "arrow-dropup" : "arrow-dropdown"}/>
                 </Button>
                 <Button style={styles.buttonDelete} onPress={() => this.deleteItem(id)}>
                     <Icon style={styles.deleteIcon} name={"trash"}/>
@@ -70,7 +70,7 @@ class Accordion extends React.Component {
 
     addItem = () => {
         this.setState((prev) => ({
-            items: [...prev.items, {id: prev.items.length, isOpen: false, selected: ''}]
+            items: [...prev.items, {id: prev.items.length, isOpen: false, selected: ""}]
         }));
     };
 

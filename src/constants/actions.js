@@ -17,3 +17,4 @@ export const SET_SAW = "SET_SAW";
 export const SET_ALL = "SET_ALL";
 export const UNSET_ALL = "UNSET_ALL";
 export const SET_TABLES_META = "SET_TABLES_META";
+export const SET_FORESTRIES = "SET_FORESTRIES";
