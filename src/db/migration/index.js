@@ -1,8 +1,8 @@
-import * as metadata from "../seeds";
+//import * as metadata from "../seeds";
 
-const { STRUCTURERBD, maket_availability } = metadata;
-const params = { STRUCTURERBD, maket_availability };
-metadata.STRUCTURERBD.forEach(item => params[item.RELATION] = metadata[item.RELATION]);
+//const { STRUCTURERBD, maket_availability } = metadata;
+//const params = { STRUCTURERBD, maket_availability };
+//metadata.STRUCTURERBD.forEach(item => params[item.RELATION] = metadata[item.RELATION]);
 
 // Define your models and their properties
 const getRealmType = (type) => {
@@ -18,38 +18,51 @@ const getRealmType = (type) => {
     }
 };
 
-const addToStructurerBdMetadata = () => {
-  Object.keys(params).forEach(metaTabl => {
-    console.log(params[metaTabl], "from add to structure bd metadata");
-  } );
-};
+// const addToStructurerBdMetadata = () => {
+//   Object.keys(params).forEach(metaTabl => {
+//     console.log(params[metaTabl], "from add to structure bd metadata");
+//   } );
+// };
 
 
-export const schemas = metadata.STRUCTURERBD.reduce((ac, item, i, arr) => {
-    if (!ac[item.TABL]) {
-        const properties = {
-          id: "string",
-          CODEGIS: "string?",
-          KALG: "int?",
-          KAIG: "int?",
-          KAWN: "int?",
-          KAVN: "int?",
-          KARN: "int?"
-        };
-        properties.state = getRealmType("INTEGER");
-        properties[item.CODE] = getRealmType(item.TYPS);
-        ac[item.TABL] = {
-            name: item.TABL,
-            primaryKey: "id",
-            properties
-        };
+// export const schemas = metadata.STRUCTURERBD.reduce((ac, item, i, arr) => {
+//     if (!ac[item.TABL]) {
+//         const properties = {
+//           id: "string",
+//           CODEGIS: "string?",
+//           KALG: "int?",
+//           KAIG: "int?",
+//           KAWN: "int?",
+//           KAVN: "int?",
+//           KARN: "int?"
+//         };
+//         properties.state = getRealmType("INTEGER");
+//         properties[item.CODE] = getRealmType(item.TYPS);
+//         ac[item.TABL] = {
+//             name: item.TABL,
+//             primaryKey: "id",
+//             properties
+//         };
+//     } else {
+//         ac[item.TABL].properties[item.CODE] = getRealmType(item.TYPS);
+//     }
+
+//     //console.log(ac, item, i, arr, 'from migration:')
+//     return ac;
+// }, {});
+
+export const tablesMeta = (struct) => {
+  const tablObj = struct.reduce((ac, it)=> {
+    if (!ac[it.tabl]){
+      ac[it.tabl] = {};
+      ac[it.tabl][it.code] = it.typs;
     } else {
-        ac[item.TABL].properties[item.CODE] = getRealmType(item.TYPS);
+      ac[it.tabl][it.code] = it.typs;
     }
-
-    //console.log(ac, item, i, arr, 'from migration:')
     return ac;
-}, {});
+    }, {});
+    return tablObj;
+};
 
 
 export const generateTables = (struct) => {
@@ -64,14 +77,12 @@ export const generateTables = (struct) => {
   }, {});
 
   const arrayOfQueries = Object.keys(tablObj).map((it, idx) => {
-    console.log(it, tablObj[it][0]);
     const query = `CREATE TABLE IF NOT EXISTS ${it}(
       ${
 
       tablObj[it].reduce((ac, it,idx, ar) => {
-      console.log(idx, ar.length - 1, it.code);
       if ((ar.length - 1) == idx){
-    return ac += it.code + " " + it.typs + " ";
+    return ac += it.code + " " + (it.typs == "varchar" ? "text" : it.typs)  + " ";
     }
        ac += it.code + " " + (it.typs == "varchar" ? "text" : it.typs) + ", ";
       return ac;
@@ -89,29 +100,27 @@ export const generateTables = (struct) => {
 };
 export const generateQueryTables = (struct) => {
   const objectOfTables = generateTables(struct);
-  console.log(objectOfTables, JSON.stringify(struct), "SSDHIGH");
 };
 
-console.log(schemas, "after all");
-const arrSchemas = Object.keys(schemas).map(item => schemas[item]);
-console.log(arrSchemas);
-const CarSchema = {
-  name: "Car",
-  properties: {
-    make:  "string",
-    model: "string",
-    miles: {type: "int", default: 0},
-  }
-};
-const PersonSchema = {
-  name: "Person",
-  properties: {
-    name:     "string",
-    birthday: "date",
-    cars:     "Car[]",
-    picture:  "data?" // optional property
-  }
-};
+// const arrSchemas = Object.keys(schemas).map(item => schemas[item]);
+// console.log(arrSchemas);
+// const CarSchema = {
+//   name: "Car",
+//   properties: {
+//     make:  "string",
+//     model: "string",
+//     miles: {type: "int", default: 0},
+//   }
+// };
+// const PersonSchema = {
+//   name: "Person",
+//   properties: {
+//     name:     "string",
+//     birthday: "date",
+//     cars:     "Car[]",
+//     picture:  "data?" // optional property
+//   }
+// };
 
 // Realm.open({schema: [CarSchema, PersonSchema]})
 //   .then(realm => {

@@ -1,55 +1,48 @@
-import  * as metadata from "../db/seeds";
-import { INIT_METADATA, SET_SEEDS } from "../constants/actions";
+import { INIT_METADATA, SET_SEEDS, SET_FORESTRIES } from "../constants/actions";
 import { getForestries, getMaquette, setMaquette, getMetadata, getDictionaries } from "./api";
-import { importMaquette, initDb, exportMaquette, startMigration, startSeeding } from "./db";
+import { importMaquette, exportMaquette, startMigration, startSeeding } from "./db";
 
 
 export const setSeeds = (payload) => ({type: SET_SEEDS, payload});
 
 
 export const setMetadata = (payload) => ({ type: INIT_METADATA, payload });
-
+export const setForestries = payload => ({ type: SET_FORESTRIES, payload });
 
 export const initMetadata = () => async (dispatch, getState) => {
-    console.log("start init");
-    const { seeded, cached } = getState().init;
-    if (true){
-      console.log("IN SEEDS, change");
-        const metadata = (await dispatch(getMetadata())).data;
-        const dictionaries = (await dispatch(getDictionaries())).data;
-
-
-      console.log(metadata,  "from init in if");
-      dispatch(setMetadata({ metadata, dictionaries }));
-      await dispatch(startMigration());
-      await dispatch(startSeeding());
+    const { seeded } = getState().init;
+    console.log("START INIT");
+    if (!seeded){
+      console.log("START GET METADATA");
+      const meta = (await dispatch(getMetadata())).data;
+      const dictionaries = (await dispatch(getDictionaries())).data;
+      console.log("GET FROM API");
+      const metadata = {...meta, ...dictionaries};
+      console.log("ENG GET METADATA", metadata);
+      //dispatch(setMetadata({ metadata, dictionaries }));
+      console.log("SET METADATA TO STORE");
+      await dispatch(startMigration(metadata));
+      console.log("END MIGRATION", metadata);
+      await dispatch(startSeeding(metadata));
+      console.log("END SEEDING");
       dispatch(setSeeds(true));
+      console.log("END INIT DB");
+      await dispatch(importMaquetteFromServer());
     }
 
-    const { STRUCTURERBD, maket_availability, struct } = metadata;
-    const params = { STRUCTURERBD, maket_availability, struct };
-    params.STRUCTURERBD.forEach(item => params[item.RELATION] = metadata[item.RELATION]);
-    try {
-     // const result = await dispatch(initDb());
-    } catch (err) {
-      console.info(err, "from init db");
-    }
-    dispatch({
-        type: INIT_METADATA,
-        payload: { metadata: params, dictionaries: params}
-    });
 };
 
 export const importMaquetteFromServer = () => async(dispatch, getState) => {
     const forestries = (await dispatch(getForestries())).data.forestries;
+    dispatch(setForestries(forestries));
     const start = new Date().getTime();
+    console.log(forestries, "forestries");
     for (let i = 0; i < forestries.length; i++) {
       let maquetteData = (await dispatch(getMaquette({...forestries[i], table: "M00"}))).data;
+      console.log(maquetteData, "maquetes");
       await dispatch(importMaquette("M00", maquetteData));
     }
     const end = new Date().getTime();
-    console.log("TIME TIME", end - start);
-
 };
 
 export const exportAllMaquette = () => async (dispatch, getState) => {
