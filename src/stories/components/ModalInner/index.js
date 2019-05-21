@@ -72,8 +72,14 @@ class ModalInner extends React.Component {
     render() {
         return <Container>
             <Header style={{backgroundColor: "#333", height: 64}} androidStatusBarColor={"#333"}>
+                <Left>
+                    <Button transparent>
+                        <Icon name="arrow-back" onPress={() => this.props.close()}/>
+                    </Button>
+                </Left>
                 <Body>
-                    <Title style={{width: "100%", margin: "auto"}}>{(this.props.flag === "layout") ? "Оберіть можливі макети" : "Оберіть виділи"}</Title>
+                    <Title style={{width: "100%", margin: "auto"}}>{(this.props.flag === "layout")
+                        ? "Оберіть можливі макети" : "Оберіть виділи"}</Title>
                 </Body>
             </Header>
             <View style={{flex: -1, flexDirection: "row"}}>

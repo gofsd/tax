@@ -9,7 +9,7 @@ import {
     UNSET_ALL,
     SET_LOADING_FORM,
     SET_STRUCT_AND_DICT,
-    MAKE_SAWS
+    MAKE_SAWS,
 } from "../constants/actions";
 
 const initialState = {
@@ -22,7 +22,7 @@ const initialState = {
 const makeSaws = (data) => {
     console.log(data, "FROM MAKE SAWS");
     return data.map((item) => {return {
-        id: item.kavn, //vot tut pomeniat id na tvoie svoistvo
+        id: item.KAVN,
         M: [],
         children: [],
         on: false,
@@ -85,6 +85,11 @@ export default function (state = initialState, action) {
             return Object.assign({}, setUnset(state, true, payload));
         case UNSET_ALL:
             return Object.assign({}, setUnset(state, false, payload));
+        case MAKE_SAWS:
+            console.log("from reducer before", state);
+            state.saws = makeSaws(payload);
+            console.log("from reducer after", state);
+            return Object.assign({}, state);
         default:
             break;
     }
