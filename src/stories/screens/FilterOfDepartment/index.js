@@ -124,8 +124,6 @@ class FilterOfDepartment extends React.Component {
             MARI: 1
         }).then(result => console.log("FROM INSERTORUPDATE", result));
         Keyboard.dismiss();
-        this.getQuarters();
-        this.getForestries();
     }
 
 
