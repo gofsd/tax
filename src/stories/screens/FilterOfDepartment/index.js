@@ -14,18 +14,13 @@ import {
     Right,
     FooterTab,
 } from "native-base";
-import { StyleSheet } from "react-native";
-
+import {Keyboard} from 'react-native';
 
 import styles from "./styles";
 
 
-
-
 import RNPicker from "rn-modal-picker";
-import { insert } from "../../../db/dml/dml";
-
-
+import {insert} from "../../../db/dml/dml";
 
 
 class FilterOfDepartment extends React.Component {
@@ -57,7 +52,7 @@ class FilterOfDepartment extends React.Component {
     }
 
     state = {
-        forestries:[],
+        forestries: [],
         quartal: [],
         selected2: {}
     }
@@ -72,17 +67,66 @@ class FilterOfDepartment extends React.Component {
     }
 
     componentDidMount() {
-       const { select, insertItem, updateItem, deleteItems, insertOrUpdate } = this.props;
-       select("M00", {KALG: 1, KAIG: 1, KAWN: 1, KAKL: 1, KARA: 1, KAGE: 1, MAPL: 1, MAIS: 1, MARI: 1}).then(result => console.log("FROM SELECT", result));
-       insertItem("M00", {KALG: 1, KAIG: 1, KAWN: 1, KAKL: 1, KARA: 1, KAGE: 1, MAPL: 1, MAIS: 1, MARI: 1}).then(result => console.log("FROM INSERT", result));
-       updateItem("M00", {KALG: 1, KAIG: 1, KAWN: 1, KAKL: 1, KARA: 1, KAGE: 1, MAPL: 1, MAIS: 1, MARI: 1}).then(result => console.log("FROM UPDATE", result));
-       deleteItems("M00", {KALG: 1, KAIG: 1, KAWN: 1, KAKL: 1, KARA: 1, KAGE: 1, MAPL: 1, MAIS: 1, MARI: 1}).then(result => console.log("FROM DELETE", result));
-       insertOrUpdate("M00", {KALG: 1, KAIG: 1, KAWN: 1, KAKL: 1, KARA: 1, KAGE: 1, MAPL: 1, MAIS: 1, MARI: 1}).then(result => console.log("FROM INSERTORUPDATE", result));
-
+        const {select, insertItem, updateItem, deleteItems, insertOrUpdate} = this.props;
+        select("M00", {
+            KALG: 1,
+            KAIG: 1,
+            KAWN: 1,
+            KAKL: 1,
+            KARA: 1,
+            KAGE: 1,
+            MAPL: 1,
+            MAIS: 1,
+            MARI: 1
+        }).then(result => console.log("FROM SELECT", result));
+        insertItem("M00", {
+            KALG: 1,
+            KAIG: 1,
+            KAWN: 1,
+            KAKL: 1,
+            KARA: 1,
+            KAGE: 1,
+            MAPL: 1,
+            MAIS: 1,
+            MARI: 1
+        }).then(result => console.log("FROM INSERT", result));
+        updateItem("M00", {
+            KALG: 1,
+            KAIG: 1,
+            KAWN: 1,
+            KAKL: 1,
+            KARA: 1,
+            KAGE: 1,
+            MAPL: 1,
+            MAIS: 1,
+            MARI: 1
+        }).then(result => console.log("FROM UPDATE", result));
+        deleteItems("M00", {
+            KALG: 1,
+            KAIG: 1,
+            KAWN: 1,
+            KAKL: 1,
+            KARA: 1,
+            KAGE: 1,
+            MAPL: 1,
+            MAIS: 1,
+            MARI: 1
+        }).then(result => console.log("FROM DELETE", result));
+        insertOrUpdate("M00", {
+            KALG: 1,
+            KAIG: 1,
+            KAWN: 1,
+            KAKL: 1,
+            KARA: 1,
+            KAGE: 1,
+            MAPL: 1,
+            MAIS: 1,
+            MARI: 1
+        }).then(result => console.log("FROM INSERTORUPDATE", result));
+        Keyboard.dismiss();
+        this.getQuarters();
+        this.getForestries();
     }
-
-
-
 
 
     render() {
@@ -93,7 +137,7 @@ class FilterOfDepartment extends React.Component {
         let index = 0;
         const data = [
             {name: "Some name", id: 1},
-            {name: "Sem data", id:2}
+            {name: "Sem data", id: 2}
         ];
 
         return (
@@ -105,8 +149,8 @@ class FilterOfDepartment extends React.Component {
                     </Body>
                     <Right>
                         <Button
-                        transparent
-                        onPress={() => this.props.navigation.navigate("SidebarM")}>
+                            transparent
+                            onPress={() => this.props.navigation.navigate("SidebarM")}>
                             <Icon name="more"/>
                         </Button>
                     </Right>
@@ -114,51 +158,51 @@ class FilterOfDepartment extends React.Component {
                 <Content>
                     <Form>
                         <Body>
-                        <View >
-         <Text style={{marginLeft: 15, marginTop: 10, marginBottom: 5}}>Оберіть лісництво</Text>
-           <RNPicker
-          dataSource={this.state.forestries}
-          dummyDataSource={this.state.forestries}
-          defaultValue={false}
-          pickerTitle={"Лicництво"}
-          showSearchBar={true}
-          disablePicker={false}
-          changeAnimation={"none"}
-          searchBarPlaceHolder={"Пошук"}
-          showPickerTitle={true}
-          pickerStyle={styles.pickerStyle}
-          selectedLabel={this.state.selected2.KAIG}
-          placeHolderLabel={this.state.placeHolderText}
-          selectLabelTextStyle={styles.selectLabelTextStyle}
-          placeHolderTextStyle={styles.placeHolderTextStyle}
-          dropDownImageStyle={styles.dropDownImageStyle}
-          selectedValue={(idx, value) =>this.onValueChange2(idx, value, "KAIG")}
-        />
+                        <View>
+                            <Text style={{marginLeft: 15, marginTop: 10, marginBottom: 5}}>Оберіть лісництво</Text>
+                            <RNPicker
+                                dataSource={this.state.forestries}
+                                dummyDataSource={this.state.forestries}
+                                defaultValue={false}
+                                pickerTitle={"Лicництво"}
+                                showSearchBar={true}
+                                disablePicker={false}
+                                changeAnimation={"none"}
+                                searchBarPlaceHolder={"Пошук"}
+                                showPickerTitle={true}
+                                pickerStyle={styles.pickerStyle}
+                                selectedLabel={this.state.selected2.KAIG}
+                                placeHolderLabel={this.state.placeHolderText}
+                                selectLabelTextStyle={styles.selectLabelTextStyle}
+                                placeHolderTextStyle={styles.placeHolderTextStyle}
+                                dropDownImageStyle={styles.dropDownImageStyle}
+                                selectedValue={(idx, value) => this.onValueChange2(idx, value, "KAIG")}
+                            />
 
-         <Text style={{marginLeft: 15, marginTop: 10, marginBottom: 5}}>Оберіть квартали</Text>
-           <RNPicker
-          dataSource={this.state.quartal}
-          dummyDataSource={this.state.quartal}
-          defaultValue={false}
-          pickerTitle={"Квартал"}
-          showSearchBar={true}
-          disablePicker={false}
-          changeAnimation={"none"}
-          searchBarPlaceHolder={"Пошук"}
-          showPickerTitle={true}
-          pickerStyle={styles.pickerStyle}
-          selectedLabel={this.state.selected2.KAWN}
-          placeHolderLabel={this.state.placeHolderText}
-          selectLabelTextStyle={styles.selectLabelTextStyle}
-          placeHolderTextStyle={styles.placeHolderTextStyle}
-          dropDownImageStyle={styles.dropDownImageStyle}
-          selectedValue={(idx, value) =>this.onValueChange2(idx, value, "KAWN")}
-        />
-                          <View padder>
-                           <Button style={{backgroundColor: "#333"}} full info
-                                    onPress={() => this.props.navigation.navigate("BlankPage")}>
-                                <Text>Шукати</Text>
-                            </Button>
+                            <Text style={{marginLeft: 15, marginTop: 10, marginBottom: 5}}>Оберіть квартали</Text>
+                            <RNPicker
+                                dataSource={this.state.quartal}
+                                dummyDataSource={this.state.quartal}
+                                defaultValue={false}
+                                pickerTitle={"Квартал"}
+                                showSearchBar={true}
+                                disablePicker={false}
+                                changeAnimation={"none"}
+                                searchBarPlaceHolder={"Пошук"}
+                                showPickerTitle={true}
+                                pickerStyle={styles.pickerStyle}
+                                selectedLabel={this.state.selected2.KAWN}
+                                placeHolderLabel={this.state.placeHolderText}
+                                selectLabelTextStyle={styles.selectLabelTextStyle}
+                                placeHolderTextStyle={styles.placeHolderTextStyle}
+                                dropDownImageStyle={styles.dropDownImageStyle}
+                                selectedValue={(idx, value) => this.onValueChange2(idx, value, "KAWN")}
+                            />
+                            <View padder>
+                                <Button style={{backgroundColor: "#333"}} full info
+                                        onPress={() => this.props.navigation.navigate("BlankPage")}>
+                                    <Text>Шукати</Text>
+                                </Button>
                             </View>
 
                         </View>

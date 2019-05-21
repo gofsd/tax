@@ -35,7 +35,7 @@ class SimpleButton extends React.Component {
                 {(isM10) ? <Icon name={`${(isActive) ? "arrow-dropdown" : "arrow-dropup"}`}
                                  style={{marginLeft: 0, marginRight: 0, paddingRight: 4}}/> : null}
             </Button>
-            {(isM10 && isActive) ? <ButtonScrollable data={children} flag={"children"}/> : null}
+            {(isM10 && isActive) ? <ButtonScrollable data={children} flag={"children"} changeForm={this.props.changeForm}/> : null}
         </View>;
     }
 }

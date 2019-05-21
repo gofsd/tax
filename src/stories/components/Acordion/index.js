@@ -16,6 +16,9 @@ import {
     Right,
     Left,
     Form,
+    Item,
+    Label,
+    Input
 } from "native-base";
 import {StyleSheet} from "react-native";
 import styles from "./styles.js";
@@ -26,6 +29,10 @@ class Accordion extends React.Component {
     state = {
         items: [],
     };
+
+    componentDidMount() {
+        this.addItem()
+    }
 
     renderForm = (id) => {
         return <View>
@@ -88,9 +95,9 @@ class Accordion extends React.Component {
         }));
     };
 
-    selectValue = (id, value) => {
+    selectValue = (id, value, flag) => {
         this.setState((prev) => ({
-            items: prev.items.map((item) => (item && item.id === id) ? {...item, selected: value} : item)
+            items: prev.items.map((item) => (item && item.id === id) ? {...item, [flag]: value} : item)
         }));
     };
 
@@ -98,7 +105,8 @@ class Accordion extends React.Component {
         return <View style={styles.containerAcordion}>
             <View style={styles.buttonsContainer}>
                 <Text style={styles.textAddButton}>Порода</Text>
-                <Button style={styles.addButton} onPress={() => this.addItem()}><Icon style={styles.textColor} name={"add-circle"}/></Button>
+                <Button style={styles.addButton} onPress={() => this.addItem()}><Icon style={styles.textColor}
+                                                                                      name={"add-circle"}/></Button>
             </View>
             {this.state.items.map((item) => (item) ? this.getItem(item.id, item.isOpen) : null)}
         </View>;
@@ -162,8 +170,8 @@ const style = StyleSheet.create({
         justifyContent: "center"
     },
     textAddButton: {
-    //   width: "90%",
-      marginLeft: 10
+        //   width: "90%",
+        marginLeft: 10
     },
     textColor: {
         color: "#000",
