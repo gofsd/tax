@@ -61,7 +61,7 @@ class MaquetteForm extends React.Component {
     };
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.saw !== nextProps.saw) this.setState({})
+        if (this.props.saw !== nextProps.saw) {this.setState({})};
     }
 
     inputItem = (item) => {
@@ -98,10 +98,10 @@ class MaquetteForm extends React.Component {
                     this.props.metadata.struct.filter(item => item.TABL === this.props.maquetteName).filter(item => item.num).map(this.chooseInput)
                 }
             </ScrollView>
-            {(this.props.maquetteName === 'M10') ? <Accordion
+            {(this.props.maquetteName === "M10") ? <Accordion
                 data={{NDI10200003: this.props.NDI10200003, NDI10200005: this.props.NDI10200005}}
             /> : null}
-        </Form>
+        </Form>;
     };
 
     onValueChange2 = (idx, value, CODE) => {
@@ -113,7 +113,6 @@ class MaquetteForm extends React.Component {
     };
 
     render() {
-<<<<<<< HEAD
         console.log(this.props, "from maquete form");
         const { load, mStruct } = this.props.form;
         if (load){
@@ -127,8 +126,7 @@ class MaquetteForm extends React.Component {
                 }
                 </ScrollView>
             </Form>
-=======
->>>>>>> 7f7cec42404309af1ed5ea5cbfb91eb4641c586c
+        );
 
         return (
             <View>{this.renderForm()}</View>
