@@ -1,7 +1,5 @@
 import seeds from "../db/seeds";
 import { SET_FILTER, CHANGE_MAQUETTE, CREATE_MAKETS, SET_MAKETS, SELECT_SAW, SET_SAW, SET_ALL, UNSET_ALL, MAKE_SAWS } from "../constants/actions";
-import console = require("console");
-
 
 const setFilter = (params) => {
     return {
