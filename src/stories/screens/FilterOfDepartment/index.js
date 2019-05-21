@@ -13,18 +13,13 @@ import {
     Footer,
     FooterTab,
 } from "native-base";
-import { StyleSheet } from "react-native";
-
+import {Keyboard} from "react-native";
 
 import styles from "./styles";
 
 
-
-
 import RNPicker from "rn-modal-picker";
-import { insert } from "../../../db/dml/dml";
-
-
+import {insert} from "../../../db/dml/dml";
 
 
 class FilterOfDepartment extends React.Component {
@@ -65,7 +60,7 @@ class FilterOfDepartment extends React.Component {
     }
 
     state = {
-        forestries:[],
+        forestries: [],
         quartal: [],
         selected2: {}
     }
@@ -90,11 +85,10 @@ class FilterOfDepartment extends React.Component {
               setMeta();
 
        setQuartals({kaig: 1, kalg: 13050101}).then(result => console.log("from set quartals", result));
+       Keyboard.dismiss();
+
 
     }
-
-
-
 
 
     render() {
@@ -105,7 +99,7 @@ class FilterOfDepartment extends React.Component {
         let index = 0;
         const data = [
             {name: "Some name", id: 1},
-            {name: "Sem data", id:2}
+            {name: "Sem data", id: 2}
         ];
 
         return (
@@ -115,7 +109,6 @@ class FilterOfDepartment extends React.Component {
                     <Body>
                     <Title>Виконавець: Дмитро</Title>
                     </Body>
-
                 </Header>
                 <Content>
                     <Form>

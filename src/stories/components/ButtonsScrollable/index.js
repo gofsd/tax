@@ -22,7 +22,7 @@ class ButtonsScrollable extends React.Component {
     componentWillMount() {
         const { data, flag } = this.props;
 
-        if (flag === "children") {this.createButtons(data, flag)};
+        this.createButtons(data, flag);
     }
 
     createButtons = (data, flag) => {
@@ -87,12 +87,9 @@ class ButtonsScrollable extends React.Component {
     handlePress = (flag, i) => {
         const { changeForm, selectSaw } = this.props;
 
-        if (flag === "layout" && this.state.layout !== i) {changeForm({name: `M${(i < 10) ? "0" : ""}${i}`});}
-        if (flag === "saw" && this.state.saw !== i){
-            selectSaw(i);
-            changeForm({saw: i});
-        }
-        if (flag === "children" && this.state.children !== i) {changeForm(`M`);}
+        if (flag === "layout" && this.state.layout !== i) {changeForm(`M${(i < 10) ? "0" : ""}${i}`);}
+        if (flag === "saw" && this.state.saw !== i) {selectSaw(i);}
+        if (flag === "children" && this.state.children !== i) {changeForm(`M10`);}
 
         this.setState({[flag]: i});
     };
@@ -109,6 +106,7 @@ class ButtonsScrollable extends React.Component {
             isChildren={button.isChildren}
             children={(button.id === 10 && flag === "layout") ? data.children : null}
             onPress={this.handlePress}
+            changeForm={this.props.changeForm}
         /> : null);
     }
 }

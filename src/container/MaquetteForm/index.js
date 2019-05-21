@@ -16,7 +16,11 @@ const mapStateToProps = state => ({
     metadata: state.metadata,
     maquetteName: state.mainForm.name,
     NDI10200003: state.metadata.NDI10200003,
+<<<<<<< HEAD
     struct: state.init.struct,
     form: state.mainForm
+=======
+    NDI10200005: state.metadata.NDI10200005,
+>>>>>>> 7f7cec42404309af1ed5ea5cbfb91eb4641c586c
 });
 export default connect(mapStateToProps, mapDispatchToProps)(MaquetteForm);
