@@ -8,7 +8,8 @@ import {
     SET_ALL,
     UNSET_ALL,
     SET_LOADING_FORM,
-    SET_STRUCT_AND_DICT
+    SET_STRUCT_AND_DICT,
+    MAKE_SAWS
 } from "../constants/actions";
 
 const initialState = {
@@ -19,6 +20,7 @@ const initialState = {
 };
 
 const makeSaws = (data) => {
+    console.log(data, "FROM MAKE SAWS");
     return data.map((item) => {return {
         id: item.kavn, //vot tut pomeniat id na tvoie svoistvo
         M: [],
@@ -49,6 +51,7 @@ const setMakets = (id, arr, value) => {
 
 export default function (state = initialState, action) {
     const { type, payload } = action;
+    console.log(action, "SSD");
 
     switch (type) {
         case SET_LOADING_FORM:
@@ -70,6 +73,10 @@ export default function (state = initialState, action) {
             return Object.assign({}, state);
         case SET_MAKETS:
             state.saws[state.selectedSaw][payload.flag] = setMakets(payload.id, state.saws[state.selectedSaw][payload.flag], payload.value);
+            return Object.assign({}, state);
+        case MAKE_SAWS:
+            console.log(payload, "from reduser");
+            state.saws = makeSaws(payload);
             return Object.assign({}, state);
         case SET_SAW:
             state.saws[payload.id - 1].on = payload.value;

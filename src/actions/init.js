@@ -53,10 +53,14 @@ export const importMaquetteFromServer = () => async(dispatch, getState) => {
       for (let k = 0; k < tablesM.length; k++){
         if (!/M/g.test(tablesM[k])) {continue;}
         console.log("IMPORT DATA FROM:", tablesM[k]);
-        let maquetteData = (await dispatch(getMaquette({...forestries[i], table: tablesM[k]}))).data;
-        await dispatch(importMaquette(tablesM[k], maquetteData));
+        let maquetteData = (await dispatch(getMaquette({...forestries[i], table: "M00"}))).data;
+        await dispatch(importMaquette("M00", maquetteData));
+        let maquetteData = (await dispatch(getMaquette({...forestries[i], table: "M01"}))).data;
+        await dispatch(importMaquette("M01", maquetteData));
+        // let maquetteData = (await dispatch(getMaquette({...forestries[i], table: tablesM[k]}))).data;
+        // await dispatch(importMaquette(tablesM[k], maquetteData));
+        break;
       }
-
     }
     const end = new Date().getTime();
 };
