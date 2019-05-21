@@ -17,12 +17,7 @@ import Modal from "react-native-modal";
 
 
 import styles from "./styles";
-export interface Props {
-  navigation: any;
-  list: any;
-}
-export interface State {}
-class Saw extends React.Component<Props, State> {
+class Saw extends React.Component{
   constructor(props) {
     super();
     this.state = {
@@ -65,7 +60,11 @@ class Saw extends React.Component<Props, State> {
                     <Title style={{width: "100%", margin: "auto"}}>{"Вивантаження"}</Title>
                 </Body>
             </Header>
-            <Content style={{backgroundColor: "#fff", flex: 1, height: 700}}/>
+            <View style={{ backgroundColor: "#fff", height: 700 }}>
+            <View style={{backgroundColor: "red", opacity: 0.5, height: 500, width: "100%"}} >
+              <View style={{backgroundColor:"green", height: 500, width: "100%"}} />
+            </View>
+            </View>
             <Footer>
                 <FooterTab style={{backgroundColor: "#333"}}>
                     <Button vertical>

@@ -13,13 +13,13 @@ export const selectSaw = (id) => {
     return {
         type: SELECT_SAW,
         payload: id,
-    }
+    };
 };
 
-export const changeForm = (name) => {
+export const changeForm = (payload) => {
     return {
         type: CHANGE_MAQUETTE,
-        payload: name
+        payload
     };
 };
 
@@ -30,7 +30,7 @@ export const createMakets = (M, children) => {
             M,
             children,
         }
-    }
+    };
 };
 
 export const setMakets = (flag, id, value) => {
@@ -41,7 +41,7 @@ export const setMakets = (flag, id, value) => {
             id,
             value,
         }
-    }
+    };
 };
 
 export const setSaw = (id, value) => {
@@ -51,19 +51,19 @@ export const setSaw = (id, value) => {
             id,
             value,
         }
-    }
+    };
 };
 
 export const setAll = (flag) => {
     return {
         type: SET_ALL,
         payload: flag,
-    }
+    };
 };
 
 export const unsetAll = (flag) => {
     return {
         type: UNSET_ALL,
         payload: flag,
-    }
+    };
 };

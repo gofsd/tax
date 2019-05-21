@@ -1,4 +1,4 @@
-import { SET_MIGRATION, SET_CONNECTION, SET_SEEDS, START_EXPORT, START_IMPORT, END_CACHING, SET_TABLES_META, SET_FORESTRIES } from "../constants/actions";
+import { SET_MIGRATION, SET_CONNECTION, SET_SEEDS, START_EXPORT, START_IMPORT, END_CACHING, SET_TABLES_META, SET_FORESTRIES, SET_QUARTALS, SET_STRUCT_AND_AVAIL } from "../constants/actions";
 const initialState = {
     migrated: false,
     seeded: false,
@@ -7,7 +7,8 @@ const initialState = {
     importing: false,
     cached: false,
     tablesMeta: {},
-    forestries: []
+    forestries: [],
+    quartels: []
 };
 
 export default function(state = initialState, action) {
@@ -28,6 +29,10 @@ export default function(state = initialState, action) {
             return { ...state, tablesMeta: action.payload };
         case SET_FORESTRIES:
             return { ...state, forestries: action.payload };
+        case SET_QUARTALS:
+            return {...state, quartels: action.payload };
+        case SET_STRUCT_AND_AVAIL:
+            return { ...state, ...action.payload };
         default:
             break;
     }

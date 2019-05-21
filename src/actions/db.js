@@ -30,21 +30,35 @@ export const importMaquette = (tableName = "M00", data = []) => async dispatch =
 export const executeQuery = (query) => new Promise((resolve, reject) => {
             db.executeSql(query, [], (tx, result) => {
             console.log(query, tx, result, "execute query");
-            resolve({result});
+            resolve(tx.rows.raw());
         });
 });
 
-export const getDictionaries = () => async(dispatch) => {
 
-};
 
 export const executeArrayOfQuery = (arQueries) => async(dispatch) => {
+    const resultAr = [];
     for (let i = 0; i < arQueries.length; i++){
-        await executeQuery(arQueries[i]);
+        resultAr[i] = await executeQuery(arQueries[i]);
     }
+    return resultAr;
 };
 
+export const executeObjectOfQuery = (objQueries) => async(dispatch) => {
+    const objKeys = Object.keys(objQueries);
+    for (let i = 0; i < objKeys.length; i++){
+        objQueries[objKeys[i]] = await executeQuery(objQueries[objKeys[i]]);
+    }
+    return objQueries;
+};
 
+export const getDictionaries = (dictionaries = []) => async(dispatch) => {
+    const dictObj = {};
+    dictionaries = dictionaries.reduce((ac, it) => { ac[it] = `SELECT * from ${it}`; return ac;}, {});
+    dictionaries = await dispatch(executeObjectOfQuery(dictionaries));
+    console.log("BEFOREAFTER", getDictionaries);
+    return dictionaries;
+};
 
 export const startMigration = (metadata) => async (dispatch, getState) => {
     const { struct } = metadata;
@@ -132,6 +146,30 @@ export const selectMaquette = ( schemaName = "M01", id = "1_1_1" ) => async disp
     return result;
 };
 
+export const selectFromTable = (tableName = "", params) => async () =>new Promise((resolve, reject) => {
+    const keysParams = Object.keys(params);
+    const valuesParams = Object.values(params);
+    if (!tableName){
+        resolve();
+    }
+    let selectStr = "";
+    const arLength = keysParams.length;
+    for (let i = 0; i < arLength; i++) {
+        if (i == arLength - 1) {
+            selectStr += `${keysParams[i]} = ${typeof valuesParams[i] === "string" ? `'${valuesParams[i].replace(/\'/g, "''")}'` : valuesParams[i] == null ? "NULL" : valuesParams[i]}`;
+        } else {
+            selectStr += `${keysParams[i]} = ${typeof valuesParams[i] === "string" ? `'${valuesParams[i].replace(/\'/g, "''")}'` : valuesParams[i] == null ? "NULL" : valuesParams[i]} and `;
+        }
+    }
+    const query = `select * from ${tableName} ${selectStr && "WHERE " + selectStr };`;
+    console.log("FORESTRIES GET", query, selectStr);
+    db.executeSql(query, [], (tx) => {
+        console.log(tableName, tx.rows.raw());
+        resolve(tx.rows.raw());
+    });
+});
+
+
 export const exportMaquette = (schemaName = "M00") => async (dispatch) => {
     const query = `select * from ${schemaName};`;
    return new Promise((resolve, reject) => db.executeSql(query, [], (tx)=>{
@@ -143,7 +181,7 @@ export const exportMaquette = (schemaName = "M00") => async (dispatch) => {
 export const insertItem = (tableName = "M00", params) => async dispatch => new Promise((resolve, reject) => {
     console.log("IMPORT MAQUETE AND OTHER", tableName, params);
         const keysParams = Object.keys(params);
-        const valuesParams = Object.keys(params);
+        const valuesParams = Object.values(params);
         if (!keysParams.length){
             resolve();
         }
@@ -159,7 +197,7 @@ export const insertItem = (tableName = "M00", params) => async dispatch => new P
 
 export const deleteItems = (tableName = "M00", params) => async dispatch => new Promise((resolve, reject) => {
         const keysParams = Object.keys(params);
-        const valuesParams = Object.keys(params);
+        const valuesParams = Object.values(params);
         if (!keysParams.length){
             resolve();
         }
@@ -169,10 +207,10 @@ export const deleteItems = (tableName = "M00", params) => async dispatch => new 
             if (i === arLength - 1){
                 selectStr += `${keysParams[i]} = ${typeof valuesParams[i] === "string" ? `'${valuesParams[i].replace(/\'/g, "''")}'` : valuesParams[i] == null ? "NULL" : valuesParams[i]}`;
             } else {
-                selectStr += `${keysParams[i]} = ${typeof valuesParams[i] === "string" ? `'${valuesParams[i].replace(/\'/g, "''")}'` : valuesParams[i] == null ? "NULL" : valuesParams[i]} and`;
+                selectStr += `${keysParams[i]} = ${typeof valuesParams[i] === "string" ? `'${valuesParams[i].replace(/\'/g, "''")}'` : valuesParams[i] == null ? "NULL" : valuesParams[i]} and `;
             }
         }
-        const deleteQuery = `DELETE FROM ${tableName} WHERE ${selectStr};`;
+        const deleteQuery = `DELETE FROM ${tableName} ${selectStr && "WHERE " + selectStr };`;
        db.transaction(tx => {
         tx.executeSql(deleteQuery,
             [], (tx, result) =>{console.log(result,tx, "DELETED");  return resolve(result);}
@@ -184,7 +222,7 @@ export const deleteItems = (tableName = "M00", params) => async dispatch => new 
 export const updateItem = (tableName = "M00", params) => async dispatch => new Promise((resolve, reject) => {
     console.log("IMPORT MAQUETE AND OTHER", tableName, params);
         const keysParams = Object.keys(params);
-        const valuesParams = Object.keys(params);
+        const valuesParams = Object.values(params);
         if (!keysParams.length){
             resolve();
         }
@@ -195,11 +233,11 @@ export const updateItem = (tableName = "M00", params) => async dispatch => new P
             if (i === arLength - 1){
                 selectStr += `${keysParams[i]} = ${typeof valuesParams[i] === "string" ? `'${valuesParams[i].replace(/\'/g, "''")}'` : valuesParams[i] == null ? "NULL" : valuesParams[i]}`;
             } else {
-                selectStr += `${keysParams[i]} = ${typeof valuesParams[i] === "string" ? `'${valuesParams[i].replace(/\'/g, "''")}'` : valuesParams[i] == null ? "NULL" : valuesParams[i]} and`;
+                selectStr += `${keysParams[i]} = ${typeof valuesParams[i] === "string" ? `'${valuesParams[i].replace(/\'/g, "''")}'` : valuesParams[i] == null ? "NULL" : valuesParams[i]} and `;
             }
         }
         const updateStr = `${valuesParams.map((it, idx) => typeof it === "string" ? `${keysParams[idx]} = '${it.replace(/\'/g, "''")}'` : it == null ? `${keysParams[idx]} = NULL` : `${keysParams[idx]} = ${it}`).join(",")}`;
-        const updateQuery = `UPDATE ${tableName} SET ${updateStr} WHERE ${selectStr};`;
+        const updateQuery = `UPDATE ${tableName} SET ${updateStr} ${selectStr && "WHERE " + selectStr };`;
        db.transaction(tx => {
 
         tx.executeSql(updateQuery,
@@ -212,7 +250,7 @@ export const updateItem = (tableName = "M00", params) => async dispatch => new P
 export const insertOrUpdateItem = (tableName = "M00", params) => async dispatch => new Promise((resolve, reject) => {
     console.log("IMPORT MAQUETE AND OTHER", tableName, params);
         const keysParams = Object.keys(params);
-        const valuesParams = Object.keys(params);
+        const valuesParams = Object.values(params);
         if (!keysParams.length){
             resolve();
         }

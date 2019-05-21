@@ -6,6 +6,7 @@ import navigation from "./navigation";
 import metadata from "./metadata";
 import mainForm from "./maquetteForm";
 import init from "./init.js";
+import filter from "./filter";
 
 const rootReducer = combineReducers({
     form: formReducer,
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
     navigation,
     metadata,
     mainForm,
-    init
+    init,
+    filter
 });
 
 export default rootReducer;
