@@ -1,6 +1,7 @@
 import * as db from "./db";
 import * as init from "./init";
 import { SET_QUARTALS, SET_STRUCT_AND_AVAIL } from "../constants/actions";
+import { makeSaws } from "../actions/filter";
 
 export const setQuartals = (payload) => ({ type: SET_QUARTALS, payload });
 
@@ -70,4 +71,10 @@ export const loadMetadata = (params) => async (dispatch, getState) => {
     const struct = await dispatch(selectList("struct"));
     const maket_availability = await dispatch(selectList("maket_availability"));
     dispatch(setStructAndAvail({struct, maket_availability}));
+};
+
+export const setSaws = () => async (dispatch, getState) => {
+    const { kaig, kawn } = this.getState().filter;
+    const saws = await dispatch(selectList("M01", { kaig, kawn }));
+    dispatch(makeSaws(saws));
 };

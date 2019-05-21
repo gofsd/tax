@@ -18,21 +18,13 @@ const initialState = {
     selectedSaw: 1,
 };
 
-const createSaws = (data) => {
-    let saws = [];
-
-    for (let i = 1; i <= 100; i++) {
-        saws.push(
-            {
-                id: i,
-                M: data.M,
-                children: data.children,
-                on: i === 1
-            }
-        );
-    }
-
-    return saws;
+const makeSaws = (data) => {
+    return data.map((item) => {return {
+        id: item.kavn, //vot tut pomeniat id na tvoie svoistvo
+        M: [],
+        children: [],
+        on: false,
+    };});
 };
 
 const setUnset = (state, on, flag) => {
@@ -74,7 +66,7 @@ export default function (state = initialState, action) {
             state.selectedSaw = payload;
             return Object.assign({}, state);
         case CREATE_MAKETS:
-            state.saws = createSaws(payload);
+            state.saws = state.saws.map((item, index) => {return {...item, M: payload.M, children: payload.children, on: index === 0};});
             return Object.assign({}, state);
         case SET_MAKETS:
             state.saws[state.selectedSaw][payload.flag] = setMakets(payload.id, state.saws[state.selectedSaw][payload.flag], payload.value);
