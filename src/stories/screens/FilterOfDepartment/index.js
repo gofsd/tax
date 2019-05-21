@@ -29,11 +29,14 @@ class FilterOfDepartment extends React.Component {
         });
     };
 
-    moveToQuartal = () => {
-        const { navigation, setFilter, forestries } = this.props;
+    moveToQuartal = async() => {
+        console.log(this.props, "move to quartal");
+        const { navigation, setFilter, forestries, setSaw } = this.props;
         const { selected2: { KAIG, KAWN } } = this.state;
         const kaigValues = forestries.filter(it=> it != null).find(it => it.NAME == KAIG);
         setFilter({ kawn: KAWN, kaig: kaigValues.KAIG, kalg: kaigValues.KALG, name: "M01", kavn: 1, current: true });
+        console.log("after set filter");
+        await setSaw();
         navigation.navigate("BlankPage");
     }
 
@@ -95,12 +98,14 @@ class FilterOfDepartment extends React.Component {
         console.log(this.props, this.state, "from other day");
         // console.log(this.props.getMequette());
         //  console.log(this.props.getForestries());
-        const { forestries, quartels, setQuartals } = this.props;
+        const { forestries, quartels, setQuartals, seeded } = this.props;
         let index = 0;
         const data = [
             {name: "Some name", id: 1},
             {name: "Sem data", id: 2}
         ];
+        if (!seeded)
+        {return (<View />);}
 
         return (
             <Container style={styles.container}>
