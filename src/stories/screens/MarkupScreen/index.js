@@ -63,7 +63,17 @@ class Markup extends React.Component {
         this.setState({isVisible: false, isVisible2: false});
     };
 
+    prepareSave = () => {
+        console.log();
+
+    }
+
+    saveForm = () => {
+
+    }
+
     render() {
+        console.log(this.state, "FROM MARKUPSCREEN", this.props);
         return (this.state.isVisible) ? <ModalInner flag={"layout"} close={this.closeModal}/>
             : (this.state.isVisible2) ? <ModalInner flag={"saw"} close={this.closeModal}/> : (
             <Container>
@@ -85,7 +95,7 @@ class Markup extends React.Component {
                     </Right>
                 </Header>
                 <View
-                    style={{backgroundColor: "#fff", flexDirection: "row", flex: 1, justifyContent: "space-between"}}
+                    style={{backgroundColor: "#222", flexDirection: "row", flex: 1, justifyContent: "space-between"}}
                 >
                     <ScrollView style={style.leftButtonsContainer}>
                         <ButtonsScrollable
@@ -139,7 +149,7 @@ class Markup extends React.Component {
                             <Icon name="trash"/>
                             <Text>Видалити</Text>
                         </Button>
-                        <Button vertical>
+                        <Button vertical onPress={this.saveForm}>
                             <Icon active name="paper"/>
                             <Text>Зберегти</Text>
                         </Button>

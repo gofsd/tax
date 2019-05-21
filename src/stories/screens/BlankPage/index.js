@@ -79,6 +79,7 @@ class BlankPage extends React.Component {
     render() {
         let MForm = this.props;
         const param = this.props.navigation.state.params;
+        console.log(this.state, this.props, "from render blank");
         return (
             <Container style={[styles.container, {flex: 1}]}>
                 <Header hasTabs>

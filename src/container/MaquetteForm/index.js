@@ -5,7 +5,7 @@ import MaquetteForm from "../../stories/components/MaquetteForm";
 
 
 const mapDispatchToProps = dispatch => ({
-    generateForm: () => dispatch(generateForm())
+    generateForm: () => dispatch(generateForm()),
 });
 
 const mapStateToProps = state => ({

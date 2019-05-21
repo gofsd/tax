@@ -21,17 +21,28 @@ class MaquetteForm extends React.Component {
     }
 
     selectedItem = (lable, RELATION, CODE, changeLandCategory) => {
-        const { dictionaries } = this.props.form;
+        const { dictionaries, currentItem } = this.props.form;
         const data = dictionaries[RELATION];
         if (!Array.isArray(data)) {
             return null;
         }
+        let curId = null;
+        let strToShow = "";
+        let curItem = "";
+        if (currentItem.length) {
+            curId = currentItem[0][CODE];
+            curItem = data.find(it => it[CODE] == curId);
+            console.log(curItem , "SSDS");
+            if (curItem)
+            {curItem = curItem.NAME;}
 
+        }
 
         const items = data.filter(it => it.NAME != null).map((it, idx) => ({
             name: it.NAME,
             id: idx
         }));
+
 
 
 
@@ -50,25 +61,36 @@ class MaquetteForm extends React.Component {
                     showPickerTitle={true}
                     pickerStyle={styles.pickerStyle}
                     selectedLabel={this.state.selected2[CODE]}
-                    placeHolderLabel={this.state.placeHolderText}
+                    placeHolderLabel={curItem}
                     selectLabelTextStyle={styles.selectLabelTextStyle}
                     placeHolderTextStyle={styles.placeHolderTextStyle}
                     dropDownImageStyle={styles.dropDownImageStyle}
-                    selectedValue={(idx, value) => this.onValueChange2(idx, value, CODE)}
+                    selectedValue={(id, name ) => this.onValueChange2(id, name, CODE, data )}
                 />
             </View>
         );
     };
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.saw !== nextProps.saw) {this.setState({})};
+        if (this.props.saw !== nextProps.saw) {this.setState({});}
     }
 
-    inputItem = (item) => {
-        const { NAME } = item;
-        return (<Item key={NAME} style={styles.containerInputNumber}>
-                <Label style={{marginLeft: 12, marginBottom: 5, color: "#000"}}>{NAME}</Label>
-                <Input style={styles.inputNumber} keyboardType="numeric"/>
+    onChangeInputValue = (value, code) => {
+        const { inputs } = this.state;
+        inputs[code] = value;
+        this.setState({ inputs });
+    }
+
+    inputItem = (item, code) => {
+        const { currentItem } = this.props.form;
+        const { name } = item;
+        let curItVal = currentItem.length && currentItem[0][code];
+        curItVal = String(curItVal);
+        console.log(curItVal, "FROM INPUT");
+        return (
+            <Item key={name} style={styles.containerInputNumber}>
+                <Label style={{marginLeft: 12, marginBottom: 5, color: "#000"}}>{name}</Label>
+                <Input style={styles.inputNumber} onChangeText={(val )=> this.onChangeInputValue(val, code)} keyboardType="numeric" value={curItVal}/>
             </Item>
         );
     };
@@ -88,6 +110,7 @@ class MaquetteForm extends React.Component {
     };
 
     state = {
+        inputs: {},
         selected2: {}
     };
 
@@ -104,16 +127,20 @@ class MaquetteForm extends React.Component {
         </Form>;
     };
 
-    onValueChange2 = (idx, value, CODE) => {
-        const {selected2} = this.state;
+    onValueChange2 = (idx, value, CODE, data) => {
+        console.log(idx, value, CODE,data, "ON VALUECHANGE");
+        const item = data.find(it => it.NAME ===  value);
+        const { selected2, inputs } = this.state;
         selected2[CODE] = value;
+        inputs[CODE] = item[CODE];
         this.setState({
-            selected2
+            selected2,
+            inputs
         });
     };
 
     render() {
-        console.log(this.props, "from maquete form");
+        console.log(this.props, this.state,"from maquete form");
         const { load, mStruct } = this.props.form;
         if (load){
             return <View />;

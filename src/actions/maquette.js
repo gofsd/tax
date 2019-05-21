@@ -20,10 +20,11 @@ export const generateForm = () => async (dispatch, getState) => {
     } = getState().filter;
 
     dispatch(setLoadingForm(true));
+    const currentItem = await dispatch(selectList(name, {kawn, kaig, kalg, kavn}));
     const mStruct = await dispatch(selectList("struct", {tabl: name}));
     const dict = mStruct.filter(it => it.relation != "").map(it => it.relation);
     const dictionaries = await dispatch(getDictionaries(dict));
-    dispatch(setStructAndDictionaries({mStruct, dictionaries}));
+    dispatch(setStructAndDictionaries({mStruct, dictionaries, currentItem }));
     dispatch(setLoadingForm(false));
     console.log("AFTER GET DICT", dictionaries);
 };

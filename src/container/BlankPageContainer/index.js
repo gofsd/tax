@@ -4,14 +4,17 @@ import { connect } from "react-redux";
 import BlankPage from "../../stories/screens/MarkupScreen";
 import MForm from "../MaquetteForm";
 import { changeForm, createMakets, selectSaw } from "../../actions/filter";
-import { loadMetadata, setSaws } from "../../actions/dbApi";
+import { loadMetadata, setSaws, insertRow, updateRow } from "../../actions/dbApi";
+
 
 const mapDispatchToProps = dispatch => ({
 	changeForm: (params) => dispatch(changeForm(params)),
 	createMakets: (M, children) => dispatch(createMakets(M, children)),
 	selectSaw: (id) => dispatch(selectSaw(id)),
 	loadMaq: () => dispatch(loadMetadata()),
-	getSaws: () => dispatch(setSaws())
+	getSaws: () => dispatch(setSaws()),
+	insertForm : (params) => dispatch(insertRow(params)),
+	updateForm: (params) => dispatch(updateRow(params))
 });
 
 const mapStateToProps = state => ({
@@ -32,6 +35,8 @@ const mapStateToProps = state => ({
 	saws: state.mainForm.saws,
 	selectedSaw: state.mainForm.selectedSaw,
 	selectedKakz: 3,
+	currentItem: state.mainForm.currentItem
+
 	// quarter_num: state.filter.kv_num,
 	// forestry_name: state.filter.name,
 	// department_num: state.department,

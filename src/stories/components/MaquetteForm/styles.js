@@ -12,6 +12,7 @@ const styles: any = StyleSheet.create({
 		alignItems: "flex-start",
 		borderBottomWidth: 0,
 		marginLeft: 0,
+		color: "#fff",
 		borderColor: "#000",
 		marginTop: 5
 	},
@@ -27,6 +28,7 @@ const styles: any = StyleSheet.create({
 		borderColor: "#D9D5DC",
 		borderWidth: 2,
 		marginBottom: 5,
+		backgroundColor: "#fafafa",
 		height: 40,
 		marginLeft: 5,
 		paddingLeft: 10,

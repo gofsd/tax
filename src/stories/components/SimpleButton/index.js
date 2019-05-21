@@ -16,6 +16,7 @@ class SimpleButton extends React.Component {
                 : (isActive)
                     ? style.activeButton
                     : style.button;
+                    console.log(flag, id, "from simple button");
 
         return <View>
             <Button

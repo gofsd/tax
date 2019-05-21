@@ -51,7 +51,6 @@ const setMakets = (id, arr, value) => {
 
 export default function (state = initialState, action) {
     const { type, payload } = action;
-    console.log(action, "SSD");
 
     switch (type) {
         case SET_LOADING_FORM:
