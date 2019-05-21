@@ -15,7 +15,7 @@ class Markup extends React.Component {
             MForm: props.MForm,
             lantCatId: 3,
             maquette: "M01",
-            //maqByCategory: props.maket_availability.filter(item => item.kakz === 3 && (item.available === 1 || item.available === 2)),
+            maqByCategory: props.maket_availability.filter(item => item.kakz === 3 && (item.available === 1 || item.available === 2)),
             isVisible: false,
             isVisible2: true,
         };
@@ -31,22 +31,22 @@ class Markup extends React.Component {
         let makets = [];
         let maketsM10 = [];
 
-        // maket_availability.map((item) => {
-        //     if (item.kakz === selectedKakz && item.subtable === 0 && item.available !== 0) {
-        //         makets.push({
-        //             id: Number(item.tabl),
-        //             availability: item.available,
-        //             on: item.available === 2,
-        //         });
-        //     }
-        //     if (item.kakz === selectedKakz && item.subtable !== 0 && item.available !== 0) {
-        //         maketsM10.push({
-        //             id: Number(item.subtable),
-        //             availability: item.available,
-        //             on: item.available === 2,
-        //         });
-        //     }
-        // });
+        maket_availability.map((item) => {
+            if (item.kakz === selectedKakz && item.subtable === 0 && item.available !== 0) {
+                makets.push({
+                    id: Number(item.tabl),
+                    availability: item.available,
+                    on: item.available === 2,
+                });
+            }
+            if (item.kakz === selectedKakz && item.subtable !== 0 && item.available !== 0) {
+                maketsM10.push({
+                    id: Number(item.subtable),
+                    availability: item.available,
+                    on: item.available === 2,
+                });
+            }
+        });
 
         createMakets(makets, maketsM10);
     };

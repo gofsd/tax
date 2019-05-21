@@ -25,7 +25,7 @@ const mapStateToProps = state => ({
 	KAVQ: state.metadata.NDI15500009,
 	PPGH: state.metadata.NDI15500009,
 	MForm,
-	maket_availability: state.metadata.maket_availability,
+	maket_availability: state.init.maket_availability,
 
 	makets: state.mainForm.saws[state.mainForm.selectedSaw],
 	saws: state.mainForm.saws,
