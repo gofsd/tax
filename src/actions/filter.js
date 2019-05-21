@@ -1,5 +1,6 @@
 import seeds from "../db/seeds";
-import { SET_FILTER, CHANGE_MAQUETTE, CREATE_MAKETS, SET_MAKETS, SELECT_SAW, SET_SAW, SET_ALL, UNSET_ALL } from "../constants/actions";
+import { SET_FILTER, CHANGE_MAQUETTE, CREATE_MAKETS, SET_MAKETS, SELECT_SAW, SET_SAW, SET_ALL, UNSET_ALL, MAKE_SAWS } from "../constants/actions";
+import console = require("console");
 
 
 const setFilter = (params) => {
@@ -65,5 +66,13 @@ export const unsetAll = (flag) => {
     return {
         type: UNSET_ALL,
         payload: flag,
+    };
+};
+
+export const makeSaws = (payload) => {
+    console.log(payload, 'from make saws')
+    return {
+        type: MAKE_SAWS,
+        payload,
     };
 };

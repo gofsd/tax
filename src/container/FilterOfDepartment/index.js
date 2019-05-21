@@ -1,7 +1,7 @@
 // @flow
 import { connect } from "react-redux";
 import FilterOfDepartment from "../../stories/screens/FilterOfDepartment";
-import { selectList, insertRow, updateRow, deleteRows, insertOrUpdate, setForesteries, selectQuartals, loadMetadata } from "../../actions/dbApi";
+import { selectList, insertRow, updateRow, deleteRows, insertOrUpdate, setForesteries, selectQuartals, loadMetadata, setSaws } from "../../actions/dbApi";
 import { setFilter } from "../../actions/maquette";
 
 const mapDispatchToProps = dispatch => ({
@@ -13,10 +13,12 @@ const mapDispatchToProps = dispatch => ({
     setForestry: () =>  dispatch(setForesteries()),
     setQuartals: (params) => dispatch(selectQuartals(params)),
     setMeta: () => dispatch(loadMetadata()),
-    setFilter: (params) => dispatch(setFilter(params))
+    setFilter: (params) => dispatch(setFilter(params)),
+    setSaw: async() => await dispatch(setSaws())
 });
 
 const mapStateToProps = state => ({
+    seeded: state.init.seeded,
     KAIG: state.metadata.NDI30420000,
     //M01: state.metadata.M01.filter(item => item.KAWN === 1),
     forestries: state.init.forestries,

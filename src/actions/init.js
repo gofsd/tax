@@ -51,6 +51,7 @@ export const importMaquetteFromServer = () => async(dispatch, getState) => {
     const start = new Date().getTime();
     for (let i = 0; i < forestries.length; i++) {
       for (let k = 0; k < tablesM.length; k++){
+        if (!/M/g.test(tablesM[k])) {continue;}
         console.log("IMPORT DATA FROM:", tablesM[k]);
         let maquetteData = (await dispatch(getMaquette({...forestries[i], table: tablesM[k]}))).data;
         await dispatch(importMaquette(tablesM[k], maquetteData));
