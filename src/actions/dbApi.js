@@ -77,6 +77,6 @@ export const setSaws = () => async (dispatch, getState) => {
     const { kaig, kawn } = getState().filter;
     const saws = await dispatch(selectList("M01", { kaig, kawn }));
     console.log(saws, "from saws");
-    dispatch(makeSaws(saws));
+    await dispatch(makeSaws(saws));
     console.log("some saw entered");
 };
