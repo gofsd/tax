@@ -12,7 +12,7 @@ export const setForestries = payload => ({ type: SET_FORESTRIES, payload });
 
 export const initMetadata = () => async (dispatch, getState) => {
     const { seeded } = getState().init;
-    console.log("START INIT");
+    console.log("START INIT Track change");
     if (!seeded){
       console.log("START GET METADATA WITH IMPORT");
       const meta = (await dispatch(getMetadata())).data;
@@ -39,15 +39,21 @@ export const initMetadata = () => async (dispatch, getState) => {
 };
 
 export const importMaquetteFromServer = () => async(dispatch, getState) => {
-    const { tablesMeta } = this.getState().init;
+  console.log("start import");
+    const { tablesMeta } = getState().init;
+    console.log(tablesMeta, "metadata");
+
     const tablesM = Object.keys(tablesMeta);
     const forestries = (await dispatch(getForestries())).data.forestries;
+    console.log("getForestries");
     dispatch(setForestries(forestries));
+    console.log("after set forestries");
     const start = new Date().getTime();
     for (let i = 0; i < forestries.length; i++) {
       for (let k = 0; k < tablesM.length; k++){
-        let maquetteData = (await dispatch(getMaquette({...forestries[i], table: tablesM[i]}))).data;
-        await dispatch(importMaquette(tablesM[i], maquetteData));
+        console.log("IMPORT DATA FROM:", tablesM[k]);
+        let maquetteData = (await dispatch(getMaquette({...forestries[i], table: tablesM[k]}))).data;
+        await dispatch(importMaquette(tablesM[k], maquetteData));
       }
 
     }
