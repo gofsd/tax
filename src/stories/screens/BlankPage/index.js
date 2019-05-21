@@ -25,7 +25,7 @@ import {
 } from "native-base";
 import ModalSelector from "react-native-modal-selector";
 import styles from "./styles";
-import {StyleSheet} from 'react-native'
+import {StyleSheet} from "react-native";
 
 
 class BlankPage extends React.Component {

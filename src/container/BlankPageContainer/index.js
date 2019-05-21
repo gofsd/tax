@@ -4,12 +4,13 @@ import { connect } from "react-redux";
 import BlankPage from "../../stories/screens/MarkupScreen";
 import MForm from "../MaquetteForm";
 import { changeForm, createMakets, selectSaw } from "../../actions/filter";
-
+import { loadMetadata } from "../../actions/dbApi";
 
 const mapDispatchToProps = dispatch => ({
-	changeForm: (name) => dispatch(changeForm(name)),
+	changeForm: (params) => dispatch(changeForm(params)),
 	createMakets: (M, children) => dispatch(createMakets(M, children)),
 	selectSaw: (id) => dispatch(selectSaw(id)),
+	loadMaq: () => dispatch(loadMetadata())
 });
 
 const mapStateToProps = state => ({

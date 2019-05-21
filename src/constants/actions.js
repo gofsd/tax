@@ -18,3 +18,8 @@ export const SET_ALL = "SET_ALL";
 export const UNSET_ALL = "UNSET_ALL";
 export const SET_TABLES_META = "SET_TABLES_META";
 export const SET_FORESTRIES = "SET_FORESTRIES";
+export const SET_QUARTALS = "SET_QUARTALS";
+export const SET_STRUCT_AND_AVAIL = "SET_STRUCT_AND_AVAIL";
+export const SET_LOADING_FORM = "SET_LOADING_FORM";
+export const SET_STRUCT_AND_DICT = "SET_STRUCT_AND_DICT"
+;

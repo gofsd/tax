@@ -10,13 +10,19 @@ import {
 import { ScrollView} from "react-native";
 import RNPicker from "rn-modal-picker";
 import styles from "./styles";
-import Accordion from '../../components/Acordion'
+import Accordion from "../../components/Acordion";
 
 
 class MaquetteForm extends React.Component {
+
+    componentDidMount() {
+        const { generateForm } = this.props;
+        generateForm();
+    }
+
     selectedItem = (lable, RELATION, CODE, changeLandCategory) => {
-        const {metadata} = this.props;
-        const data = metadata[RELATION];
+        const { dictionaries } = this.props.form;
+        const data = dictionaries[RELATION];
         if (!Array.isArray(data)) {
             return null;
         }
@@ -26,6 +32,8 @@ class MaquetteForm extends React.Component {
             name: it.NAME,
             id: idx
         }));
+
+
 
         return (
             <View>
@@ -63,14 +71,15 @@ class MaquetteForm extends React.Component {
 
     chooseInput = (item) => {
         const {changeLandCategory} = this.props;
-        if (!item.RELATION) {
-            return this.inputItem(item, item.CODE);
+        console.log("CHOOSEN ITEM", item);
+        if (!item.relation) {
+            return this.inputItem(item, item.code);
         } else {
             //   return this.inputItem(item);
-            if (item.TABL === "M01" && item.CODE === "KAKZ") {
-                return this.selectedItem(item.NAME, item.RELATION, item.CODE, changeLandCategory);
+            if (item.tabl === "M01" && item.code === "KAKZ") {
+                return this.selectedItem(item.name, item.relation, item.code, changeLandCategory);
             }
-            return this.selectedItem(item.NAME, item.RELATION, item.CODE);
+            return this.selectedItem(item.name, item.relation, item.code);
         }
     };
 
@@ -88,14 +97,17 @@ class MaquetteForm extends React.Component {
 
     render() {
         console.log(this.props, "from maquete form");
+        const { load, mStruct } = this.props.form;
+        if (load){
+            return <View />;
+        }
         return (
             <Form>
                 <ScrollView>
                 {
-                    this.props.metadata.struct.filter(item => item.TABL === this.props.maquetteName).filter(item => item.num).map(this.chooseInput)
+                    mStruct.filter(item => item.tabl === this.props.maquetteName).filter(item => item.num).map(this.chooseInput)
                 }
                 </ScrollView>
-                {(this.props.maquetteName === 'M10') ? <Accordion data={this.props.NDI10200003}/> : null}
             </Form>
 
         );

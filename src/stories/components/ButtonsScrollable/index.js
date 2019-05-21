@@ -16,19 +16,19 @@ class ButtonsScrollable extends React.Component {
     componentWillReceiveProps(nextProps, nextContext) {
         const { data, flag } = nextProps;
 
-        this.createButtons(data, flag)
+        this.createButtons(data, flag);
     }
 
     componentWillMount() {
         const { data, flag } = this.props;
 
-        if (flag === 'children') this.createButtons(data, flag)
+        if (flag === "children") {this.createButtons(data, flag)};
     }
 
     createButtons = (data, flag) => {
         let buttons = [];
 
-        if (flag === 'layout') {
+        if (flag === "layout") {
             data.M.map((item, index) => {
                 buttons.push({
                     id: (item.availability === 2 || item.on) ? item.id : null,
@@ -41,7 +41,7 @@ class ButtonsScrollable extends React.Component {
 
             data.children.forEach((item) => {
                 if (item.availability === 2 || item.on) {
-                    isM10 = true
+                    isM10 = true;
                 }
             });
 
@@ -54,17 +54,17 @@ class ButtonsScrollable extends React.Component {
             }
         }
 
-        if (flag === 'saw') {
+        if (flag === "saw") {
             data.map((item, index) => {
                 buttons.push({
                     id: item.id,
                     flag: flag,
                     isActive: index === 0,
                 });
-            })
+            });
         }
 
-        if (flag === 'children') {
+        if (flag === "children") {
             data.map((item, index) => {
                 buttons.push({
                     id: (item.availability === 2 || item.on) ? item.id : null,
@@ -87,9 +87,12 @@ class ButtonsScrollable extends React.Component {
     handlePress = (flag, i) => {
         const { changeForm, selectSaw } = this.props;
 
-        if (flag === "layout" && this.state.layout !== i) changeForm(`M${(i < 10) ? "0" : ""}${i}`);
-        if (flag === 'saw' && this.state.saw !== i) selectSaw(i);
-        if (flag === 'children' && this.state.children !== i) changeForm(`M`);
+        if (flag === "layout" && this.state.layout !== i) {changeForm({name: `M${(i < 10) ? "0" : ""}${i}`});}
+        if (flag === "saw" && this.state.saw !== i){
+            selectSaw(i);
+            changeForm({saw: i});
+        }
+        if (flag === "children" && this.state.children !== i) {changeForm(`M`);}
 
         this.setState({[flag]: i});
     };
@@ -104,7 +107,7 @@ class ButtonsScrollable extends React.Component {
             flag={button.flag}
             isActive={button.id === activeID && button.flag === flag}
             isChildren={button.isChildren}
-            children={(button.id === 10 && flag === 'layout') ? data.children : null}
+            children={(button.id === 10 && flag === "layout") ? data.children : null}
             onPress={this.handlePress}
         /> : null);
     }

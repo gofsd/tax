@@ -30,21 +30,35 @@ export const importMaquette = (tableName = "M00", data = []) => async dispatch =
 export const executeQuery = (query) => new Promise((resolve, reject) => {
             db.executeSql(query, [], (tx, result) => {
             console.log(query, tx, result, "execute query");
-            resolve({result});
+            resolve(tx.rows.raw());
         });
 });
 
-export const getDictionaries = () => async(dispatch) => {
 
-};
 
 export const executeArrayOfQuery = (arQueries) => async(dispatch) => {
+    const resultAr = [];
     for (let i = 0; i < arQueries.length; i++){
-        await executeQuery(arQueries[i]);
+        resultAr[i] = await executeQuery(arQueries[i]);
     }
+    return resultAr;
 };
 
+export const executeObjectOfQuery = (objQueries) => async(dispatch) => {
+    const objKeys = Object.keys(objQueries);
+    for (let i = 0; i < objKeys.length; i++){
+        objQueries[objKeys[i]] = await executeQuery(objQueries[objKeys[i]]);
+    }
+    return objQueries;
+};
 
+export const getDictionaries = (dictionaries = []) => async(dispatch) => {
+    const dictObj = {};
+    dictionaries = dictionaries.reduce((ac, it) => { ac[it] = `SELECT * from ${it}`; return ac;}, {});
+    dictionaries = await dispatch(executeObjectOfQuery(dictionaries));
+    console.log("BEFOREAFTER", getDictionaries);
+    return dictionaries;
+};
 
 export const startMigration = (metadata) => async (dispatch, getState) => {
     const { struct } = metadata;
@@ -135,20 +149,22 @@ export const selectMaquette = ( schemaName = "M01", id = "1_1_1" ) => async disp
 export const selectFromTable = (tableName = "", params) => async () =>new Promise((resolve, reject) => {
     const keysParams = Object.keys(params);
     const valuesParams = Object.values(params);
-    if (!keysParams.length){
+    if (!tableName){
         resolve();
     }
     let selectStr = "";
     const arLength = keysParams.length;
     for (let i = 0; i < arLength; i++) {
-        if (i === arLength - 1){
+        if (i == arLength - 1) {
             selectStr += `${keysParams[i]} = ${typeof valuesParams[i] === "string" ? `'${valuesParams[i].replace(/\'/g, "''")}'` : valuesParams[i] == null ? "NULL" : valuesParams[i]}`;
         } else {
             selectStr += `${keysParams[i]} = ${typeof valuesParams[i] === "string" ? `'${valuesParams[i].replace(/\'/g, "''")}'` : valuesParams[i] == null ? "NULL" : valuesParams[i]} and `;
         }
     }
     const query = `select * from ${tableName} ${selectStr && "WHERE " + selectStr };`;
+    console.log("FORESTRIES GET", query, selectStr);
     db.executeSql(query, [], (tx) => {
+        console.log(tableName, tx.rows.raw());
         resolve(tx.rows.raw());
     });
 });

@@ -25,9 +25,10 @@ export const initMetadata = () => async (dispatch, getState) => {
       console.log("END MIGRATION", metadata);
       await dispatch(startSeeding(metadata));
       console.log("END SEEDING");
-      dispatch(setSeeds(true));
       console.log("END INIT DB");
       await dispatch(importMaquetteFromServer());
+      dispatch(setSeeds(true));
+
     }
 
 };
