@@ -23,3 +23,5 @@ export const SET_STRUCT_AND_AVAIL = "SET_STRUCT_AND_AVAIL";
 export const SET_LOADING_FORM = "SET_LOADING_FORM";
 export const SET_STRUCT_AND_DICT = "SET_STRUCT_AND_DICT";
 export const MAKE_SAWS = 'MAKE_SAWS';
+export const CLOSE_MODAL = 'CLOSE_MODAL';
+export const OPEN_MODAL = 'OPEN_MODAL';

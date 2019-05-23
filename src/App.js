@@ -4,11 +4,12 @@ import {StackNavigator, DrawerNavigator} from "react-navigation";
 import {Root} from "native-base";
 import Login from "./container/LoginContainer";
 import Home from "./container/HomeContainer";
-import Saw from "./stories/screens/Saw";
+import Saw from "./container/SawContainer";
 import BlankPage from "./container/BlankPageContainer";
 import Sidebar from "./container/SidebarContainer";
 import SidebarM from "./container/SidebarMarkup";
 import Search from "./stories/screens/Search";
+import ModalContainer from './container/ModalContainer'
 //import FilterOfForestry from "./stories/screens/FilterOfForestry";
 import FilterOfForestry from "./container/FilterForestryContainer";
 import FilterOfDepartment from "./container/FilterOfDepartment";
@@ -48,6 +49,7 @@ export default (props) => {
     const App = getStackNavigator(props.defaultScreen);
     return (
         <Root>
+            <ModalContainer/>
             <App/>
         </Root>
     );

@@ -7,6 +7,7 @@ import metadata from "./metadata";
 import mainForm from "./maquetteForm";
 import init from "./init.js";
 import filter from "./filter";
+import modal from './modal'
 
 const rootReducer = combineReducers({
     form: formReducer,
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
     metadata,
     mainForm,
     init,
-    filter
+    filter,
+    modal,
 });
 
 export default rootReducer;

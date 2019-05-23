@@ -1,17 +1,23 @@
 import { connect } from "react-redux";
-import {setMakets, setSaw, setAll, unsetAll} from '../../actions/filter'
-import ModalInner from "../../stories/components/ModalInner";
+import React from 'react';
+import Modal from "react-native-modal";
+import * as Progress from 'react-native-progress';
 
-const mapDispatchToProps = dispatch => ({
-    setMakets: (flag, id, value) => dispatch(setMakets(flag, id, value)),
-    setSaw: (id, value) => dispatch(setSaw(id, value)),
-    setAll: (flag) => dispatch(setAll(flag)),
-    unsetAll: (flag) => dispatch(unsetAll(flag)),
-});
+class ModalInner extends React.Component {
+    render() {
+        const {visible} = this.props;
+
+        return <Modal
+            visible={visible}
+            swipeDirection="left"
+        >
+            <Progress.Circle size={30} indeterminate={true}/>
+        </Modal>
+    }
+}
 
 const mapStateToProps = (state) => ({
-    data: state.mainForm.saws[state.mainForm.selectedSaw],
-    saws: state.mainForm.saws,
+    visible: state.modal.visible,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ModalInner);
+export default connect(mapStateToProps)(ModalInner);

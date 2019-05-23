@@ -1,6 +1,7 @@
 import { INIT_METADATA, SET_SEEDS, SET_FORESTRIES } from "../constants/actions";
 import { getForestries, getMaquette, setMaquette, getMetadata, getDictionaries } from "./api";
 import { importMaquette, exportMaquette, startMigration, startSeeding } from "./db";
+import { openModal, closeModal } from "./modal";
 import { tablesMeta } from "../db/migration";
 
 
@@ -13,7 +14,8 @@ export const setForestries = payload => ({ type: SET_FORESTRIES, payload });
 export const initMetadata = () => async (dispatch, getState) => {
     const { seeded } = getState().init;
     console.log("START INIT Track change");
-    if (false){
+    if (!false){
+      await dispatch(openModal());
       console.log("START GET METADATA WITH IMPORT");
       const meta = (await dispatch(getMetadata())).data;
       console.log("get dictionaries");
@@ -34,16 +36,21 @@ export const initMetadata = () => async (dispatch, getState) => {
       const end = Date.now();
       console.log("TIME TIME", end - start);
       dispatch(setSeeds(true));
-
+      await dispatch(closeModal())
     }
 
+};
+
+export const importForestries = () => async (dispatch) => {
+  const forestries = (await dispatch(getForestries())).data.forestries;
+  console.log("getForestries");
+  dispatch(setForestries(forestries));
 };
 
 export const importMaquetteFromServer = () => async(dispatch, getState) => {
   console.log("start import");
     const { tablesMeta } = getState().init;
     console.log(tablesMeta, "metadata");
-
     const tablesM = Object.keys(tablesMeta);
     const forestries = (await dispatch(getForestries())).data.forestries;
     console.log("getForestries");

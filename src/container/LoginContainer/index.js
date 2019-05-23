@@ -34,7 +34,7 @@ class LoginForm extends React.Component{
         <Input
           ref={c => (this.textInput = c)}
           placeholder={input.name === "login" ? "login" : "Password"}
-          secureTextEntry={input.name === "password" ? true : false}
+          secureTextEntry={input.name === "password"}
           {...input}
         />
       </Item>
@@ -46,7 +46,7 @@ class LoginForm extends React.Component{
     if (this.props.valid) {
         const res = await this.props.login({username, password});
         if (res.status == 200){
-          this.props.navigation.navigate("FilterOfDepartment");
+          this.props.navigation.navigate("Saw");
         } else {
           Toast.show({
             text: res.data.message,

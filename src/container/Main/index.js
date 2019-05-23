@@ -8,11 +8,11 @@ import { initMetadata } from "../../actions/init";
 
 
 class MainContainer extends React.Component {
-	componentDidMount() {
+	/*componentDidMount() {
         setTimeout(() => {
             this.props.initMetadata();
         }, 3000);
-    }
+    }*/
 
 	render() {
 		return <App {...this.props}/>;
