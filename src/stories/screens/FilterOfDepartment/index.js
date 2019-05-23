@@ -29,12 +29,12 @@ class FilterOfDepartment extends React.Component {
         });
     };
 
-    moveToQuartal = async() => {
+    moveToQuartal = async () => {
         console.log(this.props, "move to quartal");
-        const { navigation, setFilter, forestries, setSaw } = this.props;
-        const { selected2: { KAIG, KAWN } } = this.state;
-        const kaigValues = forestries.filter(it=> it != null).find(it => it.NAME == KAIG);
-        setFilter({ kawn: KAWN, kaig: kaigValues.KAIG, kalg: kaigValues.KALG, name: "M01", kavn: 1, current: true });
+        const {navigation, setFilter, forestries, setSaw} = this.props;
+        const {selected2: {KAIG, KAWN}} = this.state;
+        const kaigValues = forestries.filter(it => it != null).find(it => it.NAME == KAIG);
+        setFilter({kawn: KAWN, kaig: kaigValues.KAIG, kalg: kaigValues.KALG, name: "M01", kavn: 1, current: true});
         console.log("after set filter");
         await setSaw();
         navigation.navigate("BlankPage");
@@ -78,17 +78,67 @@ class FilterOfDepartment extends React.Component {
     }
 
     componentDidMount() {
-       const { select, insertItem, updateItem, deleteItems, insertOrUpdate, setForestry, setQuartals, setMeta } = this.props;
-       select("M00", {KALG: 1, KAIG: 1, KAWN: 1, KAKL: 1, KARA: 1, KAGE: 1, MAPL: 1, MAIS: 1, MARI: 1}).then(result => console.log("FROM SELECT", result));
-       insertItem("M00", {KALG: 1, KAIG: 1, KAWN: 1, KAKL: 1, KARA: 1, KAGE: 1, MAPL: 1, MAIS: 1, MARI: 1}).then(result => console.log("FROM INSERT", result));
-       updateItem("M00", {KALG: 1, KAIG: 1, KAWN: 1, KAKL: 1, KARA: 1, KAGE: 1, MAPL: 1, MAIS: 1, MARI: 1}).then(result => console.log("FROM UPDATE", result));
-       deleteItems("M00", {KALG: 1, KAIG: 1, KAWN: 1, KAKL: 1, KARA: 1, KAGE: 1, MAPL: 1, MAIS: 1, MARI: 1}).then(result => console.log("FROM DELETE", result));
-       insertOrUpdate("M00", {KALG: 1, KAIG: 1, KAWN: 1, KAKL: 1, KARA: 1, KAGE: 1, MAPL: 1, MAIS: 1, MARI: 1}).then(result => console.log("FROM INSERTORUPDATE", result));
-       setForestry();
-              setMeta();
+        const {select, insertItem, updateItem, deleteItems, insertOrUpdate, setForestry, setQuartals, setMeta} = this.props;
+        select("M00", {
+            KALG: 1,
+            KAIG: 1,
+            KAWN: 1,
+            KAKL: 1,
+            KARA: 1,
+            KAGE: 1,
+            MAPL: 1,
+            MAIS: 1,
+            MARI: 1
+        }).then(result => console.log("FROM SELECT", result));
+        insertItem("M00", {
+            KALG: 1,
+            KAIG: 1,
+            KAWN: 1,
+            KAKL: 1,
+            KARA: 1,
+            KAGE: 1,
+            MAPL: 1,
+            MAIS: 1,
+            MARI: 1
+        }).then(result => console.log("FROM INSERT", result));
+        updateItem("M00", {
+            KALG: 1,
+            KAIG: 1,
+            KAWN: 1,
+            KAKL: 1,
+            KARA: 1,
+            KAGE: 1,
+            MAPL: 1,
+            MAIS: 1,
+            MARI: 1
+        }).then(result => console.log("FROM UPDATE", result));
+        deleteItems("M00", {
+            KALG: 1,
+            KAIG: 1,
+            KAWN: 1,
+            KAKL: 1,
+            KARA: 1,
+            KAGE: 1,
+            MAPL: 1,
+            MAIS: 1,
+            MARI: 1
+        }).then(result => console.log("FROM DELETE", result));
+        insertOrUpdate("M00", {
+            KALG: 1,
+            KAIG: 1,
+            KAWN: 1,
+            KAKL: 1,
+            KARA: 1,
+            KAGE: 1,
+            MAPL: 1,
+            MAIS: 1,
+            MARI: 1
+        }).then(result => console.log("FROM INSERTORUPDATE", result));
+        setForestry();
+        setMeta();
 
-       setQuartals({kaig: 1, kalg: 13050101}).then(result => console.log("from set quartals", result));
-       Keyboard.dismiss();
+        setQuartals({kaig: 1, kalg: 13050101}).then(result => console.log("from set quartals", result));
+        Keyboard.dismiss();
 
 
     }
@@ -98,14 +148,15 @@ class FilterOfDepartment extends React.Component {
         console.log(this.props, this.state, "from other day");
         // console.log(this.props.getMequette());
         //  console.log(this.props.getForestries());
-        const { forestries, quartels, setQuartals, seeded } = this.props;
+        const {forestries, quartels, setQuartals, seeded} = this.props;
         let index = 0;
         const data = [
             {name: "Some name", id: 1},
             {name: "Sem data", id: 2}
         ];
-        if (!seeded)
-        {return (<View />);}
+        /*if (!seeded) {
+            return (<View/>);
+        }*/
 
         return (
             <Container style={styles.container}>
@@ -118,51 +169,64 @@ class FilterOfDepartment extends React.Component {
                 <Content>
                     <Form>
                         <Body>
-                        <View >
-         <Text style={{marginLeft: 15, marginTop: 10, marginBottom: 5}}>Оберіть лісництво</Text>
-           <RNPicker
-          dataSource={forestries.filter(it=> it != null).map(it => ({...it, name: it.NAME, id: it.KAWN}))}
-          dummyDataSource={forestries.filter(it=> it != null).map(it => ({...it, name: it.NAME, id: it.KAWN}))}
-          defaultValue={false}
-          pickerTitle={"Лicництво"}
-          showSearchBar={true}
-          disablePicker={false}
-          changeAnimation={"none"}
-          searchBarPlaceHolder={"Пошук"}
-          showPickerTitle={true}
-          pickerStyle={styles.pickerStyle}
-          selectedLabel={this.state.selected2.KAIG}
-          placeHolderLabel={this.state.placeHolderText}
-          selectLabelTextStyle={styles.selectLabelTextStyle}
-          placeHolderTextStyle={styles.placeHolderTextStyle}
-          dropDownImageStyle={styles.dropDownImageStyle}
-          selectedValue={(idx, value) =>{ const quartal = forestries.filter(it =>it != null).find(it => it.NAME == value); console.log(quartal); this.onValueChange2(idx, value, "KAIG");  setQuartals({kaig: quartal.KAIG, kalg: quartal.KALG}); }}
-        />
+                        <View>
+                            <Text style={{marginLeft: 15, marginTop: 10, marginBottom: 5}}>Оберіть лісництво</Text>
+                            <RNPicker
+                                dataSource={forestries.filter(it => it != null).map(it => ({
+                                    ...it,
+                                    name: it.NAME,
+                                    id: it.KAWN
+                                }))}
+                                dummyDataSource={forestries.filter(it => it != null).map(it => ({
+                                    ...it,
+                                    name: it.NAME,
+                                    id: it.KAWN
+                                }))}
+                                defaultValue={false}
+                                pickerTitle={"Лicництво"}
+                                showSearchBar={true}
+                                disablePicker={false}
+                                changeAnimation={"none"}
+                                searchBarPlaceHolder={"Пошук"}
+                                showPickerTitle={true}
+                                pickerStyle={styles.pickerStyle}
+                                selectedLabel={this.state.selected2.KAIG}
+                                placeHolderLabel={this.state.placeHolderText}
+                                selectLabelTextStyle={styles.selectLabelTextStyle}
+                                placeHolderTextStyle={styles.placeHolderTextStyle}
+                                dropDownImageStyle={styles.dropDownImageStyle}
+                                selectedValue={(idx, value) => {
+                                    const quartal = forestries.filter(it => it != null).find(it => it.NAME == value);
+                                    console.log(quartal);
+                                    this.onValueChange2(idx, value, "KAIG");
+                                    setQuartals({kaig: quartal.KAIG, kalg: quartal.KALG});
+                                }}
+                            />
 
-         <Text style={{marginLeft: 15, marginTop: 10, marginBottom: 5}}>Оберіть квартали</Text>
-           <RNPicker
-          dataSource={quartels.map(it => ({...it, name: it.KAWN, id: it.KAWN}))}
-          dummyDataSource={quartels.map(it => ({...it, name: it.KAWN, id: it.KAWN}))}
-          defaultValue={false}
-          pickerTitle={"Квартал"}
-          showSearchBar={true}
-          disablePicker={false}
-          changeAnimation={"none"}
-          searchBarPlaceHolder={"Пошук"}
-          showPickerTitle={true}
-          pickerStyle={styles.pickerStyle}
-          selectedLabel={this.state.selected2.KAWN}
-          placeHolderLabel={this.state.placeHolderText}
-          selectLabelTextStyle={styles.selectLabelTextStyle}
-          placeHolderTextStyle={styles.placeHolderTextStyle}
-          dropDownImageStyle={styles.dropDownImageStyle}
-          selectedValue={(idx, value) =>this.onValueChange2(idx, value, "KAWN")}
-        />
-                          <View padder>
-                           <Button style={{backgroundColor: "#333"}} full info
-                                    onPress={this.moveToQuartal}>
-                                <Text>Шукати</Text>
-                            </Button>
+                            <Text style={{marginLeft: 15, marginTop: 10, marginBottom: 5}}>Оберіть квартали</Text>
+                            <RNPicker
+                                dataSource={quartels.map(it => ({...it, name: it.KAWN, id: it.KAWN}))}
+                                dummyDataSource={quartels.map(it => ({...it, name: it.KAWN, id: it.KAWN}))}
+                                defaultValue={false}
+                                pickerTitle={"Квартал"}
+                                showSearchBar={true}
+                                disablePicker={false}
+                                changeAnimation={"none"}
+                                searchBarPlaceHolder={"Пошук"}
+                                showPickerTitle={true}
+                                pickerStyle={styles.pickerStyle}
+                                selectedLabel={this.state.selected2.KAWN}
+                                placeHolderLabel={this.state.placeHolderText}
+                                selectLabelTextStyle={styles.selectLabelTextStyle}
+                                placeHolderTextStyle={styles.placeHolderTextStyle}
+                                dropDownImageStyle={styles.dropDownImageStyle}
+                                selectedValue={(idx, value) => this.onValueChange2(idx, value, "KAWN")}
+                            />
+                            <View padder>
+                                <Button style={{backgroundColor: "#333"}} full info
+                                        onPress={this.moveToQuartal}>
+                                    <Text>Шукати</Text>
+                                </Button>
                             </View>
 
                         </View>

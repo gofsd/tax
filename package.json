@@ -45,6 +45,7 @@
     "react-native-modal": "^10.0.0",
     "react-native-modal-picker": "0.0.16",
     "react-native-modal-selector": "^1.0.3",
+    "react-native-progress": "^3.6.0",
     "react-native-router-flux": "^4.0.6",
     "react-native-searchable-dropdown": "^1.0.6",
     "react-native-sectioned-multi-select": "^0.6.6",

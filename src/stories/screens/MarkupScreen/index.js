@@ -2,7 +2,7 @@ import * as React from "react";
 import {Container, Content, Header, Body, Title, Button, Text, Icon, Footer, Left, FooterTab, Right} from "native-base";
 import {ScrollView, StyleSheet, View, Alert} from "react-native";
 import ButtonsScrollable from "../../../stories/components/ButtonsScrollable";
-import ModalInner from "../../../container/ModalContainer";
+import ModalInner from "../../../container/SelectContainer";
 import style from "./styles.js";
 
 class Markup extends React.Component {
