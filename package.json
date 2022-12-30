@@ -15,7 +15,7 @@
     "flow-bin": "0.62.0",
     "flow-typed": "2.2.3",
     "husky": "0.14.3",
-    "jest-expo": "^24.0.0",
+    "jest-expo": "^47.0.1",
     "react-test-renderer": "16.2.0"
   },
   "scripts": {
@@ -39,7 +39,7 @@
     "lodash": "4.17.4",
     "native-base": "2.3.5",
     "react": "16.2.0",
-    "react-native": "0.55.4",
+    "react-native": "0.70.6",
     "react-native-action-button": "^2.8.5",
     "react-native-device-info": "^1.6.1",
     "react-native-modal": "^10.0.0",
